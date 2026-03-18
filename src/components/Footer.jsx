@@ -25,7 +25,7 @@ export default function Footer() {
 
         <div className="flex items-center gap-4">
           <a
-            href="https://github.com/minhajuddin" // TODO: Replace with your actual GitHub URL
+            href="https://github.com/minhajuddinm" // TODO: Replace with your actual GitHub URL
             target="_blank"
             rel="noopener noreferrer"
             className="text-ink-muted hover:text-accent transition-colors"
