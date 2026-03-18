@@ -1,7 +1,7 @@
 import { useScrollReveal } from '../hooks/useScrollReveal'
 
 const INFO = [
-  { icon: '🎓', text: 'Algoma University, BCS Honours — Dec 2026' },
+  { icon: '🎓', text: 'Algoma University, BCS Honours - Dec 2026' },
   { icon: '📍', text: 'Brampton, Ontario, Canada' },
   { icon: '🔬', text: 'SLIDE Research Studio' },
   { icon: '✈️', text: 'Mitacs Globalink Intern : University of Aberdeen (May–Aug 2026)' },
