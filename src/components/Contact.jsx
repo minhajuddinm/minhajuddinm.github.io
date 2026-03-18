@@ -51,7 +51,7 @@ const CONTACT_LINKS = [
   },
   {
     label: 'GitHub',
-    value: 'github.com/minhajuddin', // TODO: Replace with your actual GitHub username
+    value: 'github.com/minhajuddinm', // TODO: Replace with your actual GitHub username
     href: 'https://github.com/minhajuddinm',
     icon: <GitHubIcon />,
   },
