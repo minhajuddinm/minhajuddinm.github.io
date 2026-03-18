@@ -4,7 +4,7 @@ const INFO = [
   { icon: '🎓', text: 'Algoma University, BCS Honours — Dec 2026' },
   { icon: '📍', text: 'Brampton, Ontario, Canada' },
   { icon: '🔬', text: 'SLIDE Research Studio' },
-  { icon: '✈️', text: 'Mitacs Globalink Intern — University of Aberdeen (May–Aug 2026)' },
+  { icon: '✈️', text: 'Mitacs Globalink Intern : University of Aberdeen (May–Aug 2026)' },
 ]
 
 const SKILLS = [
@@ -42,7 +42,7 @@ export default function About() {
               and quantum cryptography.
             </p>
             <p className="text-ink-muted leading-relaxed mb-10">
-              Research-driven and builder-minded — he writes papers and ships real things.
+              Research-driven and builder-minded - he writes papers and ships real things.
             </p>
 
             {/* Skill tags */}
