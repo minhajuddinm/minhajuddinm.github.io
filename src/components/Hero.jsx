@@ -25,7 +25,7 @@ export default function Hero() {
         </h1>
 
         <p className="text-base sm:text-lg text-ink-muted mb-10 leading-relaxed">
-          Muhammad Minhajuddin — CS Researcher &amp; Developer at Algoma University
+          Muhammad Minhajuddin - CS Researcher &amp; Developer at Algoma University
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-4">
