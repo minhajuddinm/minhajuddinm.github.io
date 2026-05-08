@@ -1,4 +1,4 @@
-import { useScrollReveal } from '../hooks/useScrollReveal'
+import { motion } from 'framer-motion'
 
 const EXPERIENCE = [
   {
@@ -49,19 +49,26 @@ const EXPERIENCE = [
   },
 ]
 
-function TimelineEntry({ entry, index }) {
-  const ref = useScrollReveal(index * 100)
+function TimelineEntry({ entry }) {
+  const itemVariants = {
+    hidden: { opacity: 0, x: -50, filter: "blur(5px)" },
+    visible: { opacity: 1, x: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: "easeOut" } }
+  }
 
   return (
-    <div ref={ref} className="reveal relative pl-9 pb-12 last:pb-0">
+    <motion.div variants={itemVariants} className="relative pl-9 pb-12 last:pb-0">
       {/* Dot */}
-      <div
-        className="absolute left-0 top-2 w-3.5 h-3.5 rounded-full bg-accent ring-4 ring-warm-bg"
+      <motion.div
+        initial={{ scale: 0, boxShadow: "0 0 0 rgba(79,70,229,0)" }}
+        whileInView={{ scale: 1, boxShadow: "0 0 20px rgba(79,70,229,0.3)" }}
+        viewport={{ once: true }}
+        transition={{ type: "spring", stiffness: 300, delay: 0.2 }}
+        className="absolute left-[3px] top-2 w-3.5 h-3.5 rounded-full bg-accent ring-4 ring-warm-bg"
         aria-hidden="true"
       />
       {/* Vertical line — hidden on last child */}
       <div
-        className="absolute left-[6px] top-5 bottom-0 w-px bg-border-soft last:hidden"
+        className="absolute left-[9px] top-5 bottom-0 w-px bg-slate-200 last:hidden"
         aria-hidden="true"
       />
 
@@ -90,28 +97,43 @@ function TimelineEntry({ entry, index }) {
           </li>
         ))}
       </ul>
-    </div>
+    </motion.div>
   )
 }
 
 export default function Experience() {
-  const headingRef = useScrollReveal()
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
+  }
 
   return (
-    <section id="experience" className="py-28 px-6 bg-white">
+    <section id="experience" className="py-28 px-6 bg-surface">
       <div className="max-w-3xl mx-auto">
-        <div ref={headingRef} className="reveal mb-16">
-          <p className="text-xs font-medium tracking-[0.2em] text-accent uppercase mb-3">
+        <motion.div 
+          initial={{ opacity: 0, y: 50, scale: 0.9, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-16"
+        >
+          <p className="text-xs font-bold tracking-[0.3em] text-accent uppercase mb-3">
             Experience
           </p>
           <h2 className="font-display text-4xl sm:text-5xl text-ink">Timeline</h2>
-        </div>
+        </motion.div>
 
-        <div className="relative">
-          {EXPERIENCE.map((entry, i) => (
-            <TimelineEntry key={entry.id} entry={entry} index={i} />
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="relative"
+        >
+          {EXPERIENCE.map((entry) => (
+            <TimelineEntry key={entry.id} entry={entry} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 
 const NAV_LINKS = [
   { label: 'About', href: '#about' },
@@ -42,15 +43,20 @@ export default function Navbar() {
   }, [])
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-warm-bg/90 backdrop-blur-md shadow-sm border-b border-border-soft'
-          : 'bg-transparent'
-      }`}
-      aria-label="Primary navigation"
+    <motion.div 
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
+      className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none"
     >
-      <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <nav
+        className={`pointer-events-auto transition-all duration-300 rounded-full px-6 py-3 flex items-center justify-between gap-8 ${
+          scrolled
+            ? 'bg-white/70 backdrop-blur-2xl shadow-lg shadow-indigo-900/5 border border-slate-200/60'
+            : 'bg-white/40 backdrop-blur-xl border border-transparent'
+        }`}
+        aria-label="Primary navigation"
+      >
         {/* Logo */}
         <a
           href="#hero"
@@ -60,19 +66,27 @@ export default function Navbar() {
         </a>
 
         {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-8" role="list">
+        <ul className="hidden md:flex items-center gap-2" role="list">
           {NAV_LINKS.map(({ label, href }) => {
             const id = href.slice(1)
+            const isActive = active === id
             return (
-              <li key={href}>
+              <li key={href} className="relative">
                 <a
                   href={href}
-                  className={`text-sm font-medium transition-colors hover:text-accent ${
-                    active === id ? 'text-accent' : 'text-ink-muted'
+                  className={`relative z-10 px-4 py-2 text-sm font-bold transition-colors ${
+                    isActive ? 'text-accent' : 'text-ink-muted hover:text-ink'
                   }`}
                 >
                   {label}
                 </a>
+                {isActive && (
+                  <motion.div
+                    layoutId="nav-indicator"
+                    className="absolute inset-0 bg-accent-soft border border-accent/10 rounded-full -z-0"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
               </li>
             )
           })}
@@ -80,47 +94,43 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden flex flex-col gap-1.5 p-2 -mr-2"
+          className="md:hidden flex flex-col gap-1.5 p-2"
           aria-label="Toggle navigation menu"
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen(prev => !prev)}
         >
-          <span
-            className={`block w-5 h-0.5 bg-ink transition-all duration-200 origin-center ${
-              menuOpen ? 'rotate-45 translate-y-2' : ''
-            }`}
-          />
-          <span
-            className={`block w-5 h-0.5 bg-ink transition-opacity duration-200 ${
-              menuOpen ? 'opacity-0' : ''
-            }`}
-          />
-          <span
-            className={`block w-5 h-0.5 bg-ink transition-all duration-200 origin-center ${
-              menuOpen ? '-rotate-45 -translate-y-2' : ''
-            }`}
-          />
+          <span className={`block w-5 h-0.5 bg-ink transition-all duration-200 origin-center ${menuOpen ? 'rotate-45 translate-y-2 bg-accent' : ''}`} />
+          <span className={`block w-5 h-0.5 bg-ink transition-opacity duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
+          <span className={`block w-5 h-0.5 bg-ink transition-all duration-200 origin-center ${menuOpen ? '-rotate-45 -translate-y-2 bg-accent' : ''}`} />
         </button>
-      </div>
+      </nav>
 
       {/* Mobile drawer */}
       {menuOpen && (
-        <div className="md:hidden bg-warm-bg/95 backdrop-blur-md border-t border-border-soft">
-          <ul className="flex flex-col py-5 px-6 gap-5" role="list">
-            {NAV_LINKS.map(({ label, href }) => (
-              <li key={href}>
-                <a
-                  href={href}
-                  className="block text-sm font-medium text-ink-muted hover:text-accent transition-colors"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {label}
-                </a>
-              </li>
-            ))}
+        <motion.div 
+          initial={{ opacity: 0, y: -10, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          className="absolute top-full mt-4 left-4 right-4 bg-white/95 backdrop-blur-2xl border border-slate-200/60 rounded-2xl shadow-2xl shadow-indigo-900/10 p-4 pointer-events-auto md:hidden"
+        >
+          <ul className="flex flex-col gap-2" role="list">
+            {NAV_LINKS.map(({ label, href }) => {
+              const id = href.slice(1)
+              const isActive = active === id
+              return (
+                <li key={href}>
+                  <a
+                    href={href}
+                    className={`block px-4 py-3 rounded-xl text-sm font-bold transition-colors ${isActive ? 'bg-accent-soft text-accent border border-accent/10' : 'text-ink-muted hover:bg-slate-50'}`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {label}
+                  </a>
+                </li>
+              )
+            })}
           </ul>
-        </div>
+        </motion.div>
       )}
-    </nav>
+    </motion.div>
   )
 }

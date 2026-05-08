@@ -1,4 +1,4 @@
-import { useScrollReveal } from '../hooks/useScrollReveal'
+import { motion } from 'framer-motion'
 
 const PROJECTS = [
   {
@@ -16,7 +16,7 @@ const PROJECTS = [
     description: 'Organized a 24-hour hackathon for Algoma University students.',
     tags: ['Event Management', 'Web', 'React'],
     github: '#', // TODO: Replace with your actual GitHub URL
-    demo: '#', // TODO: Replace with your actual demo/event URL
+    demo: 'https://thunderhacks.algomau.ca',
   },
   {
     id: 3,
@@ -25,11 +25,11 @@ const PROJECTS = [
       'Built and maintained the official site for the Algoma University Computer Science Society.',
     tags: ['React', 'TailwindCSS', 'Vite'],
     github: '#', // TODO: Replace with your actual GitHub URL
-    demo: '#', // TODO: Replace with your actual demo URL
+    demo: 'https://alcoms.ca',
   },
   {
     id: 4,
-    name: 'HYPAR AR Prototype',
+    name: 'HYPAR Platform prototype',
     description:
       'AR mobile prototype for hyper-personalized product packaging using markerless tracking.',
     tags: ['Unity', 'AR Foundation', 'C#'],
@@ -81,25 +81,31 @@ function ExternalLinkIcon() {
   )
 }
 
-function ProjectCard({ project, index }) {
-  const ref = useScrollReveal(index * 60)
+function ProjectCard({ project }) {
+  const cardVariants = {
+    hidden: { opacity: 0, y: 80, scale: 0.9, filter: "blur(10px)", rotateX: -15 },
+    visible: { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", rotateX: 0, transition: { type: 'spring', stiffness: 80, damping: 20 } }
+  }
 
   return (
-    <article
-      ref={ref}
-      className="reveal bg-white border border-border-soft rounded-2xl p-6 flex flex-col hover:-translate-y-1 hover:shadow-md transition-all duration-200"
+    <motion.article
+      variants={cardVariants}
+      whileHover={{ scale: 1.05, rotateX: 10, rotateY: 10, zIndex: 10 }}
+      layout
+      className="bg-white/80 backdrop-blur-xl border border-slate-200 rounded-3xl p-8 flex flex-col shadow-sm hover:shadow-[0_20px_40px_rgba(124,58,237,0.15)] hover:border-accent-secondary/30 transition-all duration-400 preserve-3d"
+      style={{ transformStyle: "preserve-3d" }}
     >
-      <h3 className="font-display text-xl text-ink mb-3">{project.name}</h3>
-      <p className="text-sm text-ink-muted leading-relaxed flex-1 mb-5">
+      <h3 className="font-display text-xl text-ink mb-3" style={{ transform: "translateZ(60px)" }}>{project.name}</h3>
+      <p className="text-sm text-ink-muted leading-relaxed flex-1 mb-5" style={{ transform: "translateZ(30px)" }}>
         {project.description}
       </p>
 
       {/* Tech stack tags */}
-      <div className="flex flex-wrap gap-1.5 mb-5">
+      <div className="flex flex-wrap gap-1.5 mb-5" style={{ transform: "translateZ(40px)" }}>
         {project.tags.map(tag => (
           <span
             key={tag}
-            className="px-2.5 py-1 bg-accent-soft text-accent text-xs font-medium rounded-full"
+            className="px-3 py-1 bg-accent-secondary/10 border border-accent-secondary/20 text-accent-secondary text-xs font-bold tracking-wide rounded-full"
           >
             {tag}
           </span>
@@ -107,7 +113,7 @@ function ProjectCard({ project, index }) {
       </div>
 
       {/* Links */}
-      <div className="flex items-center gap-4 pt-4 border-t border-border-soft">
+      <div className="flex items-center gap-4 pt-4 border-t border-border-soft" style={{ transform: "translateZ(10px)" }}>
         {project.github && (
           <a
             href={project.github}
@@ -133,28 +139,46 @@ function ProjectCard({ project, index }) {
           </a>
         )}
       </div>
-    </article>
+    </motion.article>
   )
 }
 
 export default function Projects() {
-  const headingRef = useScrollReveal()
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 }
+    }
+  }
 
   return (
-    <section id="projects" className="py-28 px-6">
-      <div className="max-w-5xl mx-auto">
-        <div ref={headingRef} className="reveal mb-16">
-          <p className="text-xs font-medium tracking-[0.2em] text-accent uppercase mb-3">
+    <section id="projects" className="py-28 px-6 bg-transparent">
+      <div className="max-w-5xl mx-auto perspective-1000">
+        <motion.div 
+          initial={{ opacity: 0, y: 50, scale: 0.9, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-16"
+        >
+          <p className="text-xs font-bold tracking-[0.3em] text-accent-secondary uppercase mb-3">
             Projects
           </p>
           <h2 className="font-display text-4xl sm:text-5xl text-ink">Things I've Built</h2>
-        </div>
+        </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {PROJECTS.map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i} />
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
+        >
+          {PROJECTS.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
