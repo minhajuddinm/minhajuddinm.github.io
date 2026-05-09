@@ -27,37 +27,22 @@ function LinkedInIcon() {
 }
 
 const CONTACT_LINKS = [
-  {
-    label: 'Email',
-    value: 'minhaj112204@gmail.com',
-    href: 'mailto:minhaj112204@gmail.com',
-    icon: <EmailIcon />,
-  },
-  {
-    label: 'LinkedIn',
-    value: 'linkedin.com/in/muhammad-minhajuddin76',
-    href: 'https://linkedin.com/in/muhammad-minhajuddin76',
-    icon: <LinkedInIcon />,
-  },
-  {
-    label: 'GitHub',
-    value: 'github.com/minhajuddinm',
-    href: 'https://github.com/minhajuddinm',
-    icon: <GitHubIcon />,
-  },
+  { label: 'Email',    value: 'minhaj112204@gmail.com',             href: 'mailto:minhaj112204@gmail.com',             icon: <EmailIcon />    },
+  { label: 'LinkedIn', value: 'linkedin.com/in/muhammad-minhajuddin76', href: 'https://linkedin.com/in/muhammad-minhajuddin76', icon: <LinkedInIcon /> },
+  { label: 'GitHub',   value: 'github.com/minhajuddinm',            href: 'https://github.com/minhajuddinm',           icon: <GitHubIcon />   },
 ]
 
 const INPUT_CLASS =
   'w-full px-4 py-3 bg-white border border-border-soft rounded-xl text-sm text-ink ' +
-  'placeholder:text-ink-muted/45 focus:outline-none focus:border-accent transition-colors'
+  'placeholder:text-ink-muted/40 focus:outline-none focus:border-accent transition-colors font-body'
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden:  { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] } },
 }
 
 const stagger = {
-  hidden: {},
+  hidden:  {},
   visible: { transition: { staggerChildren: 0.1 } },
 }
 
@@ -72,7 +57,6 @@ export default function Contact() {
   return (
     <section id="contact" className="py-28 px-6 bg-surface">
       <div className="max-w-5xl mx-auto">
-        {/* Heading */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -80,7 +64,7 @@ export default function Contact() {
           viewport={{ once: true, margin: '-80px' }}
           className="mb-16"
         >
-          <p className="text-xs font-bold tracking-[0.3em] text-accent uppercase mb-3">Contact</p>
+          <p className="font-mono text-xs text-accent/70 mb-3 tracking-widest">{'// contact'}</p>
           <h2 className="font-display text-4xl sm:text-5xl text-ink mb-4">Let's Connect</h2>
           <p className="text-ink-muted max-w-md leading-relaxed">
             Open to research collaborations, internship opportunities, and interesting conversations.
@@ -88,7 +72,7 @@ export default function Contact() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-16">
-          {/* Contact links */}
+          {/* Links */}
           <motion.div
             variants={stagger}
             initial="hidden"
@@ -111,7 +95,7 @@ export default function Contact() {
                   {icon}
                 </span>
                 <div>
-                  <p className="text-[10px] font-bold text-ink-muted uppercase tracking-widest mb-0.5">{label}</p>
+                  <p className="font-mono text-[10px] text-ink-muted/60 uppercase tracking-widest mb-0.5">{label}</p>
                   <p className="text-sm text-ink group-hover:text-accent transition-colors">{value}</p>
                 </div>
               </motion.a>
@@ -127,32 +111,19 @@ export default function Contact() {
             className="space-y-4"
             onSubmit={handleSubmit}
           >
-            <motion.div variants={fadeUp}>
-              <label htmlFor="name" className="block text-[10px] font-bold text-ink-muted uppercase tracking-widest mb-2">
-                Name
-              </label>
-              <input id="name" name="name" type="text" required placeholder="Your name" className={INPUT_CLASS} />
-            </motion.div>
+            {[
+              { id: 'name',    type: 'text',  label: 'Name',    placeholder: 'Your name'       },
+              { id: 'email',   type: 'email', label: 'Email',   placeholder: 'you@example.com' },
+            ].map(({ id, type, label, placeholder }) => (
+              <motion.div key={id} variants={fadeUp}>
+                <label htmlFor={id} className="block font-mono text-[10px] text-ink-muted/60 uppercase tracking-widest mb-2">{label}</label>
+                <input id={id} name={id} type={type} required placeholder={placeholder} className={INPUT_CLASS} />
+              </motion.div>
+            ))}
 
             <motion.div variants={fadeUp}>
-              <label htmlFor="email" className="block text-[10px] font-bold text-ink-muted uppercase tracking-widest mb-2">
-                Email
-              </label>
-              <input id="email" name="email" type="email" required placeholder="you@example.com" className={INPUT_CLASS} />
-            </motion.div>
-
-            <motion.div variants={fadeUp}>
-              <label htmlFor="message" className="block text-[10px] font-bold text-ink-muted uppercase tracking-widest mb-2">
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                required
-                rows={5}
-                placeholder="What's on your mind?"
-                className={`${INPUT_CLASS} resize-none`}
-              />
+              <label htmlFor="message" className="block font-mono text-[10px] text-ink-muted/60 uppercase tracking-widest mb-2">Message</label>
+              <textarea id="message" name="message" required rows={5} placeholder="What's on your mind?" className={`${INPUT_CLASS} resize-none`} />
             </motion.div>
 
             <motion.div variants={fadeUp}>
@@ -170,7 +141,7 @@ export default function Contact() {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ duration: 0.18, ease: 'easeOut' }}
-                  className="w-full px-6 py-3.5 bg-accent text-white rounded-xl text-sm font-bold shadow-md shadow-accent/20 hover:bg-accent/90 hover:shadow-accent/30 transition-all"
+                  className="w-full px-6 py-3.5 bg-accent text-white rounded-xl text-sm font-bold shadow-md shadow-accent/20 hover:bg-accent/90 transition-all"
                 >
                   Send Message
                 </motion.button>

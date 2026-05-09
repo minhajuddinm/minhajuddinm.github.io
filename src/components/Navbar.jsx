@@ -10,9 +10,9 @@ const NAV_LINKS = [
 ]
 
 export default function Navbar() {
-  const [scrolled, setScrolled]   = useState(false)
-  const [menuOpen, setMenuOpen]   = useState(false)
-  const [active,   setActive]     = useState('')
+  const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [active,   setActive]   = useState('')
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -45,7 +45,7 @@ export default function Navbar() {
       <nav
         className={`pointer-events-auto transition-all duration-300 rounded-full px-6 py-3 flex items-center justify-between gap-8 ${
           scrolled
-            ? 'bg-white/75 backdrop-blur-2xl shadow-lg shadow-stone-900/5 border border-border-soft'
+            ? 'bg-white/80 backdrop-blur-2xl shadow-lg shadow-stone-900/5 border border-border-soft'
             : 'bg-white/40 backdrop-blur-xl border border-transparent'
         }`}
         aria-label="Primary navigation"
@@ -54,7 +54,7 @@ export default function Navbar() {
           Minhaj
         </a>
 
-        <ul className="hidden md:flex items-center gap-2" role="list">
+        <ul className="hidden md:flex items-center gap-1" role="list">
           {NAV_LINKS.map(({ label, href }) => {
             const id       = href.slice(1)
             const isActive = active === id
@@ -70,8 +70,8 @@ export default function Navbar() {
                 </a>
                 {isActive && (
                   <motion.div
-                    layoutId="nav-indicator"
-                    className="absolute inset-0 bg-accent-soft border border-accent/10 rounded-full -z-0"
+                    layoutId="nav-pill"
+                    className="absolute inset-0 bg-accent-soft border border-accent/12 rounded-full -z-0"
                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                   />
                 )}
@@ -93,13 +93,12 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile drawer */}
       {menuOpen && (
         <motion.div
           initial={{ opacity: 0, y: -8, scale: 0.97 }}
           animate={{ opacity: 1, y: 0,  scale: 1    }}
           transition={{ duration: 0.2, ease: 'easeOut' }}
-          className="absolute top-full mt-3 left-4 right-4 bg-white/95 backdrop-blur-2xl border border-border-soft rounded-2xl shadow-2xl shadow-stone-900/10 p-4 pointer-events-auto md:hidden"
+          className="absolute top-full mt-3 left-4 right-4 bg-white/96 backdrop-blur-2xl border border-border-soft rounded-2xl shadow-2xl shadow-stone-900/8 p-4 pointer-events-auto md:hidden"
         >
           <ul className="flex flex-col gap-1" role="list">
             {NAV_LINKS.map(({ label, href }) => {
@@ -111,7 +110,7 @@ export default function Navbar() {
                     href={href}
                     className={`block px-4 py-3 rounded-xl text-sm font-bold transition-colors ${
                       isActive
-                        ? 'bg-accent-soft text-accent border border-accent/10'
+                        ? 'bg-accent-soft text-accent border border-accent/12'
                         : 'text-ink-muted hover:bg-warm-bg hover:text-ink'
                     }`}
                     onClick={() => setMenuOpen(false)}

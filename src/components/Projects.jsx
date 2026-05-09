@@ -13,7 +13,7 @@ const PROJECTS = [
     id: 2,
     name: 'Thunder Hacks',
     description: 'Organized a 24-hour hackathon for Algoma University students.',
-    tags: ['Event Management', 'Web', 'React'],
+    tags: ['Event Mgmt', 'Web', 'React'],
     github: '#',
     demo: 'https://thunderhacks.algomau.ca',
   },
@@ -27,7 +27,7 @@ const PROJECTS = [
   },
   {
     id: 4,
-    name: 'HYPAR Platform Prototype',
+    name: 'HYPAR Prototype',
     description: 'AR mobile prototype for hyper-personalized product packaging using markerless tracking.',
     tags: ['Unity', 'AR Foundation', 'C#'],
     github: '#',
@@ -59,7 +59,7 @@ function GitHubIcon() {
   )
 }
 
-function ExternalLinkIcon() {
+function ExternalIcon() {
   return (
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
@@ -68,7 +68,7 @@ function ExternalLinkIcon() {
 }
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 32 },
+  hidden:  { opacity: 0, y: 32 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } },
 }
 
@@ -79,47 +79,50 @@ function ProjectCard({ project }) {
       whileHover={{ y: -6 }}
       transition={{ duration: 0.22, ease: 'easeOut' }}
       layout
-      className="bg-white border border-border-soft rounded-2xl p-7 flex flex-col shadow-sm hover:shadow-[0_16px_40px_rgba(181,69,27,0.1)] hover:border-accent/20 transition-all duration-300"
+      className="group relative bg-white border border-border-soft rounded-2xl p-7 flex flex-col shadow-sm hover:shadow-[0_16px_40px_rgba(196,96,10,0.1)] hover:border-accent/20 transition-all duration-300 overflow-hidden"
     >
-      <h3 className="font-display text-xl text-ink mb-3">{project.name}</h3>
-      <p className="text-sm text-ink-muted leading-relaxed flex-1 mb-5">{project.description}</p>
+      {/* Warm glow on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl" />
 
-      <div className="flex flex-wrap gap-1.5 mb-5">
-        {project.tags.map(tag => (
-          <span
-            key={tag}
-            className="px-3 py-1 bg-warm-bg border border-border-soft text-ink-muted text-xs font-semibold tracking-wide rounded-full"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
+      <div className="relative z-10 flex flex-col flex-1">
+        <h3 className="font-display text-xl text-ink mb-3">{project.name}</h3>
+        <p className="text-sm text-ink-muted leading-relaxed flex-1 mb-5">{project.description}</p>
 
-      <div className="flex items-center gap-4 pt-4 border-t border-border-soft">
-        {project.github && (
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs font-medium text-ink-muted hover:text-accent transition-colors"
-            aria-label={`${project.name} on GitHub`}
-          >
-            <GitHubIcon />
-            <span>GitHub</span>
-          </a>
-        )}
-        {project.demo && (
-          <a
-            href={project.demo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs font-medium text-ink-muted hover:text-accent transition-colors"
-            aria-label={`${project.name} live demo`}
-          >
-            <ExternalLinkIcon />
-            <span>Live Demo</span>
-          </a>
-        )}
+        <div className="flex flex-wrap gap-1.5 mb-5">
+          {project.tags.map(tag => (
+            <span
+              key={tag}
+              className="font-mono px-2.5 py-1 bg-warm-bg border border-border-soft text-ink-muted text-[11px] tracking-wide rounded"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-4 pt-4 border-t border-border-soft">
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 font-mono text-[11px] text-ink-muted hover:text-accent transition-colors"
+              aria-label={`${project.name} on GitHub`}
+            >
+              <GitHubIcon /> GitHub
+            </a>
+          )}
+          {project.demo && (
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 font-mono text-[11px] text-ink-muted hover:text-accent transition-colors"
+              aria-label={`${project.name} live demo`}
+            >
+              <ExternalIcon /> Live
+            </a>
+          )}
+        </div>
       </div>
     </motion.article>
   )
@@ -127,7 +130,7 @@ function ProjectCard({ project }) {
 
 export default function Projects() {
   const container = {
-    hidden: {},
+    hidden:  {},
     visible: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
   }
 
@@ -141,7 +144,7 @@ export default function Projects() {
           transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="mb-16"
         >
-          <p className="text-xs font-bold tracking-[0.3em] text-accent uppercase mb-3">Projects</p>
+          <p className="font-mono text-xs text-accent/70 mb-3 tracking-widest">{'// projects'}</p>
           <h2 className="font-display text-4xl sm:text-5xl text-ink">Things I've Built</h2>
         </motion.div>
 
@@ -152,9 +155,7 @@ export default function Projects() {
           viewport={{ once: true, margin: '-80px' }}
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
         >
-          {PROJECTS.map(project => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
+          {PROJECTS.map(p => <ProjectCard key={p.id} project={p} />)}
         </motion.div>
       </div>
     </section>

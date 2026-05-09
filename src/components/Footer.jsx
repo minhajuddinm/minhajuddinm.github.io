@@ -18,27 +18,15 @@ export default function Footer() {
   return (
     <footer className="py-8 px-6 border-t border-border-soft bg-warm-bg">
       <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-4">
-        <p className="text-sm text-ink-muted">
-          Muhammad Minhajuddin &nbsp;·&nbsp; {new Date().getFullYear()} &nbsp;·&nbsp; Built with React &amp; TailwindCSS
+        <p className="font-mono text-xs text-ink-muted/60">
+          Muhammad Minhajuddin &nbsp;·&nbsp; {new Date().getFullYear()} &nbsp;·&nbsp; React + TailwindCSS
         </p>
 
         <div className="flex items-center gap-4">
-          <a
-            href="https://github.com/minhajuddinm"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-ink-muted hover:text-accent transition-colors"
-            aria-label="GitHub"
-          >
+          <a href="https://github.com/minhajuddinm" target="_blank" rel="noopener noreferrer" className="text-ink-muted hover:text-accent transition-colors" aria-label="GitHub">
             <GitHubIcon />
           </a>
-          <a
-            href="https://linkedin.com/in/muhammad-minhajuddin76"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-ink-muted hover:text-accent transition-colors"
-            aria-label="LinkedIn"
-          >
+          <a href="https://linkedin.com/in/muhammad-minhajuddin76" target="_blank" rel="noopener noreferrer" className="text-ink-muted hover:text-accent transition-colors" aria-label="LinkedIn">
             <LinkedInIcon />
           </a>
         </div>

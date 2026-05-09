@@ -5,7 +5,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #F9F7F4;
+    background-color: #FAFAF8;
   }
 
   body {
@@ -31,18 +31,20 @@
   .perspective-1000 {
     perspective: 1000px;
   }
+}
 
-  .backface-hidden {
-    backface-visibility: hidden;
-  }
+/* Infinite skill marquee */
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
-  /* Warm dot grid — slightly muted against the parchment base */
-  .dot-grid {
-    background-image: radial-gradient(
-      circle,
-      rgba(28, 24, 18, 0.055) 1.5px,
-      transparent 1.5px
-    );
-    background-size: 32px 32px;
-  }
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 24s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
 }
