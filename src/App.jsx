@@ -1,4 +1,4 @@
-import { useScroll, useSpring, motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar.jsx'
 import Hero from './components/Hero.jsx'
 import About from './components/About.jsx'
@@ -8,17 +8,31 @@ import Experience from './components/Experience.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 
-export default function App() {
-  const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
+function ScrollProgress() {
+  const [width, setWidth] = useState(0)
+
+  useEffect(() => {
+    function update() {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement
+      const total = scrollHeight - clientHeight
+      setWidth(total > 0 ? (scrollTop / total) * 100 : 0)
+    }
+    window.addEventListener('scroll', update, { passive: true })
+    return () => window.removeEventListener('scroll', update)
+  }, [])
 
   return (
+    <div
+      className="fixed top-0 left-0 h-[2px] bg-accent z-[100]"
+      style={{ width: `${width}%`, transition: 'width 0.05s linear' }}
+    />
+  )
+}
+
+export default function App() {
+  return (
     <>
-      {/* Scroll progress line */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-accent z-[100] origin-left"
-        style={{ scaleX }}
-      />
+      <ScrollProgress />
       <Navbar />
       <main>
         <Hero />

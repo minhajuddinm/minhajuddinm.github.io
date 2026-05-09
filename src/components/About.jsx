@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
-import { motion, useInView, animate } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 
 const INFO = [
   { icon: '🎓', text: 'Algoma University, BCS Honours — Dec 2026' },
@@ -20,7 +20,7 @@ const STATS = [
   { to: 2,   suffix: '',   label: 'Years Researching'},
 ]
 
-/* Animated count-up number */
+/* Animated count-up number — uses rAF, no framer-motion dependency */
 function Counter({ to, suffix }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
@@ -28,12 +28,20 @@ function Counter({ to, suffix }) {
 
   useEffect(() => {
     if (!isInView) return
-    const ctrl = animate(0, to, {
-      duration: 1.3,
-      ease: 'easeOut',
-      onUpdate: (v) => setVal(Math.floor(v)),
-    })
-    return ctrl.stop
+    const duration = 1300
+    let start = null
+    let raf
+
+    function step(timestamp) {
+      if (!start) start = timestamp
+      const progress = Math.min((timestamp - start) / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 3)
+      setVal(Math.floor(eased * to))
+      if (progress < 1) raf = requestAnimationFrame(step)
+    }
+
+    raf = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(raf)
   }, [isInView, to])
 
   return <span ref={ref}>{val}{suffix}</span>
