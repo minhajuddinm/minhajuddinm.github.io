@@ -1,131 +1,160 @@
+import { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
-export default function Hero() {
-  const containerVariants = {
-    hidden: { opacity: 0, perspective: 1000 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  }
+const HERO_WORDS = [
+  { text: 'Building',      accent: false },
+  { text: 'at',            accent: false },
+  { text: 'the',           accent: false },
+  { text: 'intersection',  accent: false },
+  { text: 'of',            accent: false },
+  { text: 'humans,',       accent: true  },
+  { text: 'technology,',   accent: false },
+  { text: 'and',           accent: false },
+  { text: 'ideas.',        accent: false },
+]
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.9, filter: "blur(10px)", rotateX: -20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      filter: "blur(0px)",
-      rotateX: 0,
-      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] },
-    },
+function MagneticButton({ href, children, primary }) {
+  const ref = useRef(null)
+  const [pos, setPos] = useState({ x: 0, y: 0 })
+
+  function handleMouseMove(e) {
+    const rect = ref.current.getBoundingClientRect()
+    const x = (e.clientX - rect.left - rect.width / 2) * 0.18
+    const y = (e.clientY - rect.top - rect.height / 2) * 0.18
+    setPos({ x, y })
   }
 
   return (
+    <motion.a
+      ref={ref}
+      href={href}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => setPos({ x: 0, y: 0 })}
+      animate={{ x: pos.x, y: pos.y }}
+      whileTap={{ scale: 0.96 }}
+      transition={{ type: 'spring', stiffness: 200, damping: 20, mass: 0.5 }}
+      className={
+        primary
+          ? 'px-8 py-3.5 bg-accent text-white rounded-full text-sm font-bold shadow-lg shadow-accent/20 hover:shadow-accent/35 transition-shadow'
+          : 'px-8 py-3.5 bg-white/80 backdrop-blur-md border border-border-soft text-ink rounded-full text-sm font-bold hover:bg-white hover:border-accent/25 transition-all'
+      }
+    >
+      {children}
+    </motion.a>
+  )
+}
+
+const wordVariant = {
+  hidden: { opacity: 0, y: 18 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } },
+}
+
+const fadeUp = (delay = 0) => ({
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1, y: 0,
+    transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94], delay },
+  },
+})
+
+export default function Hero() {
+  return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center dot-grid overflow-hidden perspective-1000 bg-warm-bg/50"
+      className="relative min-h-screen flex flex-col items-center justify-center dot-grid overflow-hidden bg-warm-bg"
     >
-      {/* Decorative Floating Blobs for Light Mode (Using mix-blend-multiply to tint the white background) */}
+      {/* Warm decorative blobs — amber/rose instead of indigo/purple */}
       <motion.div
-        animate={{
-          y: [0, -40, 0],
-          x: [0, 40, 0],
-          scale: [1, 1.3, 1],
-          rotate: [0, 180, 0],
-        }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[10%] left-[20%] w-80 h-80 bg-indigo-300/40 rounded-full blur-[100px] pointer-events-none mix-blend-multiply"
+        animate={{ y: [0, -28, 0], x: [0, 20, 0], scale: [1, 1.12, 1] }}
+        transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute top-[10%] left-[12%] w-72 h-72 bg-amber-200/35 rounded-full blur-[90px] pointer-events-none mix-blend-multiply"
       />
       <motion.div
-        animate={{
-          y: [0, 40, 0],
-          x: [0, -40, 0],
-          scale: [1, 1.4, 1],
-          rotate: [0, -180, 0],
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-[10%] right-[20%] w-96 h-96 bg-purple-300/40 rounded-full blur-[120px] pointer-events-none mix-blend-multiply"
+        animate={{ y: [0, 28, 0], x: [0, -20, 0], scale: [1, 1.18, 1] }}
+        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute bottom-[12%] right-[12%] w-80 h-80 bg-orange-200/30 rounded-full blur-[100px] pointer-events-none mix-blend-multiply"
+      />
+      <motion.div
+        animate={{ y: [0, -15, 0], scale: [1, 1.08, 1] }}
+        transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
+        className="absolute top-[45%] right-[8%] w-44 h-44 bg-rose-100/40 rounded-full blur-[60px] pointer-events-none mix-blend-multiply"
       />
 
-      {/* Soft Vignette to fade dot grid edges */}
+      {/* Radial vignette */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse 80% 70% at 50% 50%, transparent 40%, #FAFAFA 100%)',
-        }}
+        style={{ background: 'radial-gradient(ellipse 80% 70% at 50% 50%, transparent 30%, #F9F7F4 100%)' }}
         aria-hidden="true"
       />
 
-      {/* Main content */}
-      <motion.div 
-        className="relative z-10 max-w-4xl mx-auto px-6 text-center preserve-3d"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.div variants={itemVariants} className="inline-block mb-8">
-          <span className="px-5 py-2.5 rounded-full bg-accent-soft/80 border border-accent/20 text-xs font-bold tracking-[0.2em] text-accent uppercase backdrop-blur-md shadow-sm">
+      {/* Content */}
+      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+        {/* Badge */}
+        <motion.div
+          variants={fadeUp(0.15)}
+          initial="hidden"
+          animate="visible"
+          className="inline-block mb-10"
+        >
+          <span className="px-5 py-2 rounded-full bg-accent-soft border border-accent/15 text-xs font-bold tracking-[0.2em] text-accent uppercase">
             CS Researcher &nbsp;·&nbsp; Developer &nbsp;·&nbsp; Innovator
           </span>
         </motion.div>
 
-        <motion.h1 variants={itemVariants} className="font-display text-5xl sm:text-6xl lg:text-8xl text-ink leading-[1.1] mb-6 tracking-tight">
-          Building at the intersection of <span className="text-transparent bg-clip-text bg-[linear-gradient(135deg,#3730A3,#4F46E5)] font-bold drop-shadow-sm pr-2">humans</span>, technology, and ideas.
+        {/* Headline — word-by-word reveal */}
+        <motion.h1
+          className="font-display text-5xl sm:text-6xl lg:text-7xl text-ink leading-[1.12] mb-6 tracking-tight"
+          initial="hidden"
+          animate="visible"
+          variants={{ visible: { transition: { staggerChildren: 0.065, delayChildren: 0.3 } } }}
+        >
+          {HERO_WORDS.map(({ text, accent }, i) => (
+            <motion.span
+              key={i}
+              variants={wordVariant}
+              className={`inline-block mr-[0.27em] last:mr-0 ${accent ? 'text-accent italic' : ''}`}
+            >
+              {text}
+            </motion.span>
+          ))}
         </motion.h1>
 
-        <motion.p variants={itemVariants} className="text-base sm:text-xl text-ink-muted mb-12 leading-relaxed max-w-2xl mx-auto font-light">
-          Muhammad Minhajuddin — Computer Science Researcher &amp; Developer at Algoma University crafting immersive realities.
+        {/* Subtext */}
+        <motion.p
+          variants={fadeUp(0.9)}
+          initial="hidden"
+          animate="visible"
+          className="text-base sm:text-lg text-ink-muted mb-12 leading-relaxed max-w-xl mx-auto"
+        >
+          Muhammad Minhajuddin — Computer Science Researcher &amp; Developer at Algoma University.
         </motion.p>
 
-        <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center gap-5">
-          <motion.a
-            whileHover={{ scale: 1.05, y: -2, boxShadow: "0px 10px 30px rgba(55, 48, 163, 0.3)" }}
-            whileTap={{ scale: 0.95 }}
-            href="#research"
-            className="px-8 py-3.5 bg-[linear-gradient(135deg,#3730A3,#4F46E5)] text-white rounded-full text-sm font-bold transition-all shadow-lg"
-          >
-            Explore Research
-          </motion.a>
-          <motion.a
-            whileHover={{ scale: 1.05, y: -2, backgroundColor: "rgba(255,255,255,1)" }}
-            whileTap={{ scale: 0.95 }}
-            href="#projects"
-            className="px-8 py-3.5 bg-white/70 backdrop-blur-md border border-border-soft text-ink rounded-full text-sm font-bold transition-all shadow-sm"
-          >
-            View Projects
-          </motion.a>
+        {/* CTA buttons — magnetic */}
+        <motion.div
+          variants={fadeUp(1.05)}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-wrap items-center justify-center gap-4"
+        >
+          <MagneticButton href="#research" primary>Explore Research</MagneticButton>
+          <MagneticButton href="#projects">View Projects</MagneticButton>
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-ink-muted/60"
+        transition={{ delay: 2.2, duration: 0.8 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         aria-hidden="true"
       >
-        <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-accent">Scroll</span>
-        <motion.svg
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="text-accent"
-        >
-          <path d="M12 5v14M5 12l7 7 7-7" />
-        </motion.svg>
+        <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-accent/50">Scroll</span>
+        <motion.div
+          animate={{ scaleY: [1, 0.4, 1], opacity: [0.4, 1, 0.4] }}
+          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+          className="w-px h-8 bg-gradient-to-b from-accent/50 to-transparent origin-top"
+        />
       </motion.div>
     </section>
   )

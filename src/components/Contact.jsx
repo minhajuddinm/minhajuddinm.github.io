@@ -1,19 +1,9 @@
 import { useState } from 'react'
-import { useScrollReveal } from '../hooks/useScrollReveal'
+import { motion } from 'framer-motion'
 
 function EmailIcon() {
   return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
       <polyline points="22,6 12,13 2,6" />
     </svg>
@@ -51,7 +41,7 @@ const CONTACT_LINKS = [
   },
   {
     label: 'GitHub',
-    value: 'github.com/minhajuddinm', // TODO: Replace with your actual GitHub username
+    value: 'github.com/minhajuddinm',
     href: 'https://github.com/minhajuddinm',
     icon: <GitHubIcon />,
   },
@@ -59,109 +49,100 @@ const CONTACT_LINKS = [
 
 const INPUT_CLASS =
   'w-full px-4 py-3 bg-white border border-border-soft rounded-xl text-sm text-ink ' +
-  'placeholder:text-ink-muted/50 focus:outline-none focus:border-accent transition-colors'
+  'placeholder:text-ink-muted/45 focus:outline-none focus:border-accent transition-colors'
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] } },
+}
+
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+}
 
 export default function Contact() {
-  const headingRef = useScrollReveal()
-  const linksRef = useScrollReveal(100)
-  const formRef = useScrollReveal(200)
   const [sent, setSent] = useState(false)
 
   function handleSubmit(e) {
     e.preventDefault()
-    // TODO: Replace with Formspree submission or your own backend.
-    // Example with Formspree:
-    //   const data = new FormData(e.target)
-    //   await fetch('https://formspree.io/f/YOUR_FORM_ID', { method: 'POST', body: data })
     setSent(true)
   }
 
   return (
-    <section id="contact" className="py-28 px-6">
+    <section id="contact" className="py-28 px-6 bg-surface">
       <div className="max-w-5xl mx-auto">
         {/* Heading */}
-        <div ref={headingRef} className="reveal mb-16">
-          <p className="text-xs font-medium tracking-[0.2em] text-accent uppercase mb-3">
-            Contact
-          </p>
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          className="mb-16"
+        >
+          <p className="text-xs font-bold tracking-[0.3em] text-accent uppercase mb-3">Contact</p>
           <h2 className="font-display text-4xl sm:text-5xl text-ink mb-4">Let's Connect</h2>
           <p className="text-ink-muted max-w-md leading-relaxed">
             Open to research collaborations, internship opportunities, and interesting conversations.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid md:grid-cols-2 gap-16">
-          {/* Left: Contact links */}
-          <div ref={linksRef} className="reveal space-y-7">
+          {/* Contact links */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            className="space-y-7"
+          >
             {CONTACT_LINKS.map(({ label, value, href, icon }) => (
-              <a
+              <motion.a
                 key={label}
+                variants={fadeUp}
                 href={href}
                 target={href.startsWith('http') ? '_blank' : undefined}
                 rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
                 className="flex items-center gap-4 group"
               >
-                <span className="w-11 h-11 flex items-center justify-center rounded-full bg-accent-soft text-accent group-hover:bg-accent group-hover:text-white transition-colors shrink-0">
+                <span className="w-11 h-11 flex items-center justify-center rounded-full bg-accent-soft text-accent group-hover:bg-accent group-hover:text-white transition-colors duration-200 shrink-0">
                   {icon}
                 </span>
                 <div>
-                  <p className="text-[10px] font-medium text-ink-muted uppercase tracking-widest mb-0.5">
-                    {label}
-                  </p>
-                  <p className="text-sm text-ink group-hover:text-accent transition-colors">
-                    {value}
-                  </p>
+                  <p className="text-[10px] font-bold text-ink-muted uppercase tracking-widest mb-0.5">{label}</p>
+                  <p className="text-sm text-ink group-hover:text-accent transition-colors">{value}</p>
                 </div>
-              </a>
+              </motion.a>
             ))}
-          </div>
+          </motion.div>
 
-          {/* Right: Contact form */}
-          {/* TODO: Set action to your Formspree URL, e.g. https://formspree.io/f/YOUR_FORM_ID */}
-          <form
-            ref={formRef}
-            className="reveal space-y-4"
+          {/* Form */}
+          <motion.form
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            className="space-y-4"
             onSubmit={handleSubmit}
           >
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-[10px] font-medium text-ink-muted uppercase tracking-widest mb-2"
-              >
+            <motion.div variants={fadeUp}>
+              <label htmlFor="name" className="block text-[10px] font-bold text-ink-muted uppercase tracking-widest mb-2">
                 Name
               </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                placeholder="Your name"
-                className={INPUT_CLASS}
-              />
-            </div>
+              <input id="name" name="name" type="text" required placeholder="Your name" className={INPUT_CLASS} />
+            </motion.div>
 
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-[10px] font-medium text-ink-muted uppercase tracking-widest mb-2"
-              >
+            <motion.div variants={fadeUp}>
+              <label htmlFor="email" className="block text-[10px] font-bold text-ink-muted uppercase tracking-widest mb-2">
                 Email
               </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                placeholder="you@example.com"
-                className={INPUT_CLASS}
-              />
-            </div>
+              <input id="email" name="email" type="email" required placeholder="you@example.com" className={INPUT_CLASS} />
+            </motion.div>
 
-            <div>
-              <label
-                htmlFor="message"
-                className="block text-[10px] font-medium text-ink-muted uppercase tracking-widest mb-2"
-              >
+            <motion.div variants={fadeUp}>
+              <label htmlFor="message" className="block text-[10px] font-bold text-ink-muted uppercase tracking-widest mb-2">
                 Message
               </label>
               <textarea
@@ -172,21 +153,30 @@ export default function Contact() {
                 placeholder="What's on your mind?"
                 className={`${INPUT_CLASS} resize-none`}
               />
-            </div>
+            </motion.div>
 
-            {sent ? (
-              <p className="text-sm font-medium text-emerald-600 py-2">
-                Message sent — I'll be in touch soon!
-              </p>
-            ) : (
-              <button
-                type="submit"
-                className="w-full px-6 py-3 bg-accent text-white rounded-xl text-sm font-medium hover:bg-accent/90 transition-colors"
-              >
-                Send Message
-              </button>
-            )}
-          </form>
+            <motion.div variants={fadeUp}>
+              {sent ? (
+                <motion.p
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-sm font-medium text-emerald-600 py-2"
+                >
+                  Message sent — I'll be in touch soon!
+                </motion.p>
+              ) : (
+                <motion.button
+                  type="submit"
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.18, ease: 'easeOut' }}
+                  className="w-full px-6 py-3.5 bg-accent text-white rounded-xl text-sm font-bold shadow-md shadow-accent/20 hover:bg-accent/90 hover:shadow-accent/30 transition-all"
+                >
+                  Send Message
+                </motion.button>
+              )}
+            </motion.div>
+          </motion.form>
         </div>
       </div>
     </section>

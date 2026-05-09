@@ -16,16 +16,15 @@ function LinkedInIcon() {
 
 export default function Footer() {
   return (
-    <footer className="py-8 px-6 border-t border-border-soft">
+    <footer className="py-8 px-6 border-t border-border-soft bg-warm-bg">
       <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-4">
         <p className="text-sm text-ink-muted">
-          Muhammad Minhajuddin &nbsp;·&nbsp; {new Date().getFullYear()} &nbsp;·&nbsp; Built
-          with React &amp; TailwindCSS
+          Muhammad Minhajuddin &nbsp;·&nbsp; {new Date().getFullYear()} &nbsp;·&nbsp; Built with React &amp; TailwindCSS
         </p>
 
         <div className="flex items-center gap-4">
           <a
-            href="https://github.com/minhajuddinm" // TODO: Replace with your actual GitHub URL
+            href="https://github.com/minhajuddinm"
             target="_blank"
             rel="noopener noreferrer"
             className="text-ink-muted hover:text-accent transition-colors"
