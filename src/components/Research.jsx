@@ -77,7 +77,7 @@ function ResearchCard({ paper }) {
       whileHover={{ y: -6 }}
       transition={{ duration: 0.22, ease: 'easeOut' }}
       layout
-      className="group relative bg-white border border-border-soft rounded-2xl p-7 flex flex-col shadow-sm hover:shadow-[0_16px_40px_rgba(196,96,10,0.1)] hover:border-accent/20 transition-all duration-300 overflow-hidden"
+      className="group relative bg-white border border-border-soft rounded-2xl p-7 flex flex-col shadow-sm hover:shadow-[0_16px_40px_rgba(42,94,64,0.12)] hover:border-accent/20 transition-all duration-300 overflow-hidden"
     >
       {/* Warm hover glow */}
       <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl" />

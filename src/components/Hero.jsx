@@ -37,7 +37,7 @@ function GridBackground() {
       {/* Radial vignette — fades grid edges */}
       <div
         className="absolute inset-0"
-        style={{ background: 'radial-gradient(ellipse 85% 80% at 50% 50%, transparent 20%, #FAFAF8 100%)' }}
+        style={{ background: 'radial-gradient(ellipse 85% 80% at 50% 50%, transparent 20%, #F8F6F2 100%)' }}
       />
     </div>
   )

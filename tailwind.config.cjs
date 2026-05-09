@@ -4,18 +4,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        accent: '#C4600A',          // Amber — warm, distinctive, not AI
-        'accent-soft': '#FEF2E4',   // Pale amber tint
-        'warm-bg': '#FAFAF8',       // Near-white warm parchment
+        accent: '#2A5E40',          // Forest green — rich, distinctive, not AI
+        'accent-soft': '#EBF4EE',   // Pale sage tint
+        'warm-bg': '#F8F6F2',       // Warm parchment
         surface: '#FFFFFF',
-        ink: '#100F0C',             // Rich warm near-black
-        'ink-muted': '#6A6662',     // Warm mid-gray
-        'border-soft': '#E8E3DB',   // Warm beige border
+        ink: '#111710',             // Warm near-black (slight green undertone)
+        'ink-muted': '#5C6B5E',     // Warm sage-gray
+        'border-soft': '#DDE5DE',   // Soft sage-green border
       },
       fontFamily: {
         display: ['"DM Serif Display"', 'serif'],
-        body: ['"DM Sans"', 'sans-serif'],
-        mono: ['"DM Mono"', '"Fira Code"', 'ui-monospace', 'monospace'],
+        body:    ['"DM Sans"', 'sans-serif'],
+        mono:    ['"DM Mono"', '"Fira Code"', 'ui-monospace', 'monospace'],
       },
     },
   },

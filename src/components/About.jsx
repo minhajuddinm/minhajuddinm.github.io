@@ -135,7 +135,7 @@ export default function About() {
             <motion.div
               whileHover={{ y: -6 }}
               transition={{ duration: 0.22, ease: 'easeOut' }}
-              className="relative bg-white border border-border-soft rounded-2xl p-8 shadow-sm hover:shadow-[0_20px_48px_rgba(196,96,10,0.1)] hover:border-accent/20 transition-shadow duration-300 overflow-hidden"
+              className="relative bg-white border border-border-soft rounded-2xl p-8 shadow-sm hover:shadow-[0_20px_48px_rgba(42,94,64,0.12)] hover:border-accent/20 transition-shadow duration-300 overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-24 h-24 bg-accent-soft rounded-bl-full pointer-events-none" />
               <ul className="space-y-6 relative z-10">

@@ -63,7 +63,7 @@ function TimelineEntry({ entry, isLast }) {
         whileInView={{ scale: 1 }}
         viewport={{ once: true }}
         transition={{ type: 'spring', stiffness: 350, damping: 20, delay: 0.1 }}
-        className="absolute left-[3px] top-2 w-3.5 h-3.5 rounded-full bg-accent ring-4 ring-warm-bg shadow-[0_0_12px_rgba(196,96,10,0.35)]"
+        className="absolute left-[3px] top-2 w-3.5 h-3.5 rounded-full bg-accent ring-4 ring-warm-bg shadow-[0_0_12px_rgba(42,94,64,0.4)]"
         aria-hidden="true"
       />
 
