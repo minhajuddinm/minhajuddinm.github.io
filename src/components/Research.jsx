@@ -5,6 +5,7 @@ const PAPERS = [
   {
     id: 1,
     tag: 'Edge Computing',
+    category: 'computing',
     title: 'Towards Adaptive and Energy-Aware Task Offloading in Edge-Cloud Environments',
     year: '2026',
     authors: 'Minhajuddin, M. et al.',
@@ -12,10 +13,12 @@ const PAPERS = [
     abstract:
       'This paper proposes EDOA, an adaptive task offloading framework for edge-cloud environments, optimizing energy consumption and latency using a dynamic decision algorithm.',
     status: { emoji: '✅', label: 'Published', cls: 'bg-emerald-50 text-emerald-700 border border-emerald-200' },
+    topBar: 'from-emerald-400/50 via-emerald-500/50 to-emerald-400/50',
   },
   {
     id: 2,
     tag: 'HCI / AR',
+    category: 'hci',
     title: 'HYPAR: Hyper-Personalized Packaging in Augmented Reality',
     year: '2026',
     authors: 'Minhajuddin, M. et al.',
@@ -23,10 +26,12 @@ const PAPERS = [
     abstract:
       'HYPAR investigates how AR can deliver personalized packaging experiences, exploring real-time visual customization of product packaging through mobile AR interfaces.',
     status: { emoji: '🔄', label: 'Under Review', cls: 'bg-amber-50 text-amber-700 border border-amber-200' },
+    topBar: 'from-amber-400/50 via-amber-500/50 to-amber-400/50',
   },
   {
     id: 3,
     tag: 'VR / HCI',
+    category: 'hci',
     title: 'V.O.I.D.: Evaluating Locomotion Methods in Virtual Reality',
     year: '2026',
     authors: 'Minhajuddin, M. et al.',
@@ -34,10 +39,12 @@ const PAPERS = [
     abstract:
       'A comparative study evaluating different locomotion techniques in virtual reality environments, measuring comfort, presence, and task performance across methods.',
     status: { emoji: '🔄', label: 'Under Review', cls: 'bg-amber-50 text-amber-700 border border-amber-200' },
+    topBar: 'from-amber-400/50 via-amber-500/50 to-amber-400/50',
   },
   {
     id: 4,
     tag: 'Quantum Crypto',
+    category: 'quantum',
     title: 'Quantum Key Distribution Protocol Analysis',
     year: '2026',
     authors: 'Minhajuddin, M.',
@@ -45,8 +52,41 @@ const PAPERS = [
     abstract:
       'A 12-week research internship investigating QKD protocols, focusing on security models, error rates, and practical implementation challenges for quantum-safe communication.',
     status: { emoji: '🔭', label: 'Ongoing', cls: 'bg-stone-100 text-stone-600 border border-stone-200' },
+    topBar: 'from-violet-400/40 via-violet-500/40 to-violet-400/40',
   },
 ]
+
+const FILTERS = [
+  { id: 'all',       label: 'All Papers'     },
+  { id: 'hci',       label: 'HCI / XR'       },
+  { id: 'computing', label: 'Edge Computing'  },
+  { id: 'quantum',   label: 'Quantum'         },
+]
+
+function FilterTabs({ active, onChange }) {
+  return (
+    <div className="flex flex-wrap gap-2 mb-10" role="group" aria-label="Filter research papers">
+      {FILTERS.map(f => (
+        <button
+          key={f.id}
+          onClick={() => onChange(f.id)}
+          className={`relative px-4 py-2 rounded-full text-sm font-mono tracking-wide transition-colors duration-200 ${
+            active === f.id ? 'text-accent' : 'text-ink-muted hover:text-ink'
+          }`}
+        >
+          {active === f.id && (
+            <motion.div
+              layoutId="filter-pill"
+              className="absolute inset-0 bg-accent-soft border border-accent/15 rounded-full"
+              transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+            />
+          )}
+          <span className="relative z-10">{f.label}</span>
+        </button>
+      ))}
+    </div>
+  )
+}
 
 function Chevron({ open }) {
   return (
@@ -64,8 +104,9 @@ function Chevron({ open }) {
 }
 
 const cardVariants = {
-  hidden:  { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } },
+  hidden:  { opacity: 0, y: 32, scale: 0.98 },
+  visible: { opacity: 1, y: 0,  scale: 1,    transition: { duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] } },
+  exit:    { opacity: 0, y: -16, scale: 0.97, transition: { duration: 0.25 } },
 }
 
 function ResearchCard({ paper }) {
@@ -73,30 +114,36 @@ function ResearchCard({ paper }) {
 
   return (
     <motion.article
-      variants={cardVariants}
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.22, ease: 'easeOut' }}
       layout
-      className="group relative bg-white border border-border-soft rounded-2xl p-7 flex flex-col shadow-sm hover:shadow-[0_16px_40px_rgba(42,94,64,0.12)] hover:border-accent/20 transition-all duration-300 overflow-hidden"
+      variants={cardVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      whileHover={{ y: -5 }}
+      transition={{ duration: 0.22, ease: 'easeOut' }}
+      className="group relative bg-white border border-border-soft rounded-2xl flex flex-col shadow-sm hover:shadow-[0_16px_40px_rgba(42,94,64,0.10)] hover:border-accent/18 transition-all duration-300 overflow-hidden"
     >
-      {/* Warm hover glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl" />
+      {/* Status-colored top bar */}
+      <div className={`h-[3px] bg-gradient-to-r ${paper.topBar} flex-shrink-0`} />
 
-      <div className="relative z-10 flex flex-col flex-1">
+      {/* Hover glow */}
+      <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl" />
+
+      <div className="relative z-10 flex flex-col flex-1 p-7">
         {/* Tag + year */}
         <div className="flex items-center justify-between gap-4 mb-4">
-          <span className="font-mono px-2.5 py-1 bg-accent-soft border border-accent/15 text-accent text-[11px] tracking-wide rounded">
+          <span className="font-mono px-2.5 py-1 bg-accent-soft border border-accent/15 text-accent text-[11px] tracking-wide rounded-lg">
             {paper.tag}
           </span>
           <span className="font-mono text-[11px] text-ink-muted tabular-nums">{paper.year}</span>
         </div>
 
         <h3 className="font-display text-lg text-ink leading-snug mb-3">{paper.title}</h3>
-        <p className="text-xs text-ink-muted mb-1">{paper.authors}</p>
+        <p className="text-xs text-ink-muted mb-0.5">{paper.authors}</p>
         <p className="text-xs text-ink-muted italic mb-4">{paper.venue}</p>
 
         <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full w-fit ${paper.status.cls}`}>
-          <span>{paper.status.emoji}</span>
+          <span aria-hidden="true">{paper.status.emoji}</span>
           {paper.status.label}
         </span>
 
@@ -131,10 +178,11 @@ function ResearchCard({ paper }) {
 }
 
 export default function Research() {
-  const container = {
-    hidden:  {},
-    visible: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
-  }
+  const [activeFilter, setActiveFilter] = useState('all')
+
+  const filtered = activeFilter === 'all'
+    ? PAPERS
+    : PAPERS.filter(p => p.category === activeFilter)
 
   return (
     <section id="research" className="py-28 px-6 bg-warm-bg">
@@ -144,7 +192,7 @@ export default function Research() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="mb-16"
+          className="mb-12"
         >
           <p className="font-mono text-xs text-accent/70 mb-3 tracking-widest">{'// research'}</p>
           <h2 className="font-display text-4xl sm:text-5xl text-ink mb-4">
@@ -155,14 +203,14 @@ export default function Research() {
           </p>
         </motion.div>
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          className="grid sm:grid-cols-2 gap-5"
-        >
-          {PAPERS.map(paper => <ResearchCard key={paper.id} paper={paper} />)}
+        <FilterTabs active={activeFilter} onChange={setActiveFilter} />
+
+        <motion.div layout className="grid sm:grid-cols-2 gap-5">
+          <AnimatePresence mode="popLayout">
+            {filtered.map(paper => (
+              <ResearchCard key={paper.id} paper={paper} />
+            ))}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>

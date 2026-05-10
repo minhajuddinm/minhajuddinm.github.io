@@ -7,6 +7,7 @@ const EXPERIENCE = [
     org: 'University of Aberdeen',
     period: 'May 2026 – Aug 2026',
     badge: 'Upcoming',
+    badgeCls: 'bg-accent-soft text-accent border border-accent/15',
     bullets: [
       'Mitacs Globalink Research Award recipient.',
       'Investigating Quantum Key Distribution protocols.',
@@ -19,6 +20,7 @@ const EXPERIENCE = [
     org: 'ALCOMS, Algoma University',
     period: '2024 – Present',
     badge: null,
+    badgeCls: '',
     bullets: [
       'Founded the Computer Science Society from scratch.',
       'Organized Thunder Hacks hackathon (March 2025).',
@@ -31,6 +33,7 @@ const EXPERIENCE = [
     org: 'SLIDE Research Studio, Algoma University',
     period: '2024 – Present',
     badge: null,
+    badgeCls: '',
     bullets: [
       'Conducting HCI research on HYPAR (AR personalized packaging) and V.O.I.D. (VR locomotion).',
       'Collaborating with Dr. Somang Nam on XR and spatial computing research.',
@@ -42,6 +45,7 @@ const EXPERIENCE = [
     org: 'Algoma University',
     period: '2024 – Present',
     badge: null,
+    badgeCls: '',
     bullets: [
       'Developing EDOA, an adaptive task offloading framework for edge-cloud environments.',
       'Optimizing energy consumption and latency using dynamic decision algorithms.',
@@ -56,35 +60,35 @@ const itemVariants = {
 
 function TimelineEntry({ entry, isLast }) {
   return (
-    <motion.div variants={itemVariants} className="relative pl-9 pb-12 last:pb-0">
-      {/* Dot */}
+    <motion.div variants={itemVariants} className="relative pl-10 pb-12 last:pb-0">
+      {/* Glowing dot */}
       <motion.div
         initial={{ scale: 0 }}
         whileInView={{ scale: 1 }}
         viewport={{ once: true }}
         transition={{ type: 'spring', stiffness: 350, damping: 20, delay: 0.1 }}
-        className="absolute left-[3px] top-2 w-3.5 h-3.5 rounded-full bg-accent ring-4 ring-warm-bg shadow-[0_0_12px_rgba(42,94,64,0.4)]"
+        className="absolute left-0 top-2 w-4 h-4 rounded-full bg-accent ring-4 ring-warm-bg shadow-[0_0_16px_rgba(42,94,64,0.45)]"
         aria-hidden="true"
       />
 
-      {/* Animated line (draws down on scroll) */}
+      {/* Animated connector line */}
       {!isLast && (
         <motion.div
           initial={{ scaleY: 0 }}
           whileInView={{ scaleY: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.35 }}
+          transition={{ duration: 0.9, ease: 'easeOut', delay: 0.35 }}
           style={{ transformOrigin: 'top' }}
-          className="absolute left-[9px] top-5 bottom-0 w-px bg-border-soft"
+          className="absolute left-[7px] top-6 bottom-0 w-[2px] bg-gradient-to-b from-accent/30 via-border-soft to-border-soft/30"
           aria-hidden="true"
         />
       )}
 
       {/* Role + badge */}
-      <div className="flex flex-wrap items-baseline gap-3 mb-1.5">
+      <div className="flex flex-wrap items-baseline gap-2.5 mb-1.5">
         <h3 className="font-display text-xl text-ink">{entry.role}</h3>
         {entry.badge && (
-          <span className="font-mono px-2.5 py-0.5 bg-accent-soft text-accent text-[11px] rounded border border-accent/15">
+          <span className={`font-mono px-2.5 py-0.5 text-[11px] rounded-full border ${entry.badgeCls}`}>
             {entry.badge}
           </span>
         )}
