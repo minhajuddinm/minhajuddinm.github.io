@@ -114,7 +114,6 @@ function ResearchCard({ paper }) {
 
   return (
     <motion.article
-      layout
       variants={cardVariants}
       initial="hidden"
       animate="visible"
@@ -205,13 +204,13 @@ export default function Research() {
 
         <FilterTabs active={activeFilter} onChange={setActiveFilter} />
 
-        <motion.div layout className="grid sm:grid-cols-2 gap-5">
-          <AnimatePresence mode="popLayout">
+        <div className="grid sm:grid-cols-2 gap-5">
+          <AnimatePresence mode="wait">
             {filtered.map(paper => (
               <ResearchCard key={paper.id} paper={paper} />
             ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

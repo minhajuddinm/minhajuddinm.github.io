@@ -309,25 +309,6 @@ export default function Hero() {
           <MagneticButton href="#research" primary>Explore Research</MagneticButton>
           <MagneticButton href="#projects">View Projects</MagneticButton>
         </motion.div>
-
-        {/* Stats */}
-        <motion.div
-          variants={fadeUp(1.3)}
-          initial="hidden"
-          animate="visible"
-          className="mt-16 pt-10 border-t border-border-soft flex items-center justify-center gap-6 sm:gap-12"
-        >
-          {[
-            { n: '4',    label: 'Papers'      },
-            { n: '6+',   label: 'Projects'    },
-            { n: '100+', label: 'Members led' },
-          ].map(({ n, label }) => (
-            <div key={label} className="text-center group cursor-default">
-              <div className="font-display text-2xl sm:text-3xl text-ink group-hover:text-accent transition-colors duration-300">{n}</div>
-              <div className="font-mono text-[10px] text-ink-muted/55 uppercase tracking-widest mt-0.5">{label}</div>
-            </div>
-          ))}
-        </motion.div>
       </div>
 
       {/* Scroll indicator */}
