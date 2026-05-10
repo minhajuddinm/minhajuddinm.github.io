@@ -1,8 +1,29 @@
+# Dependencies
 node_modules/
+
+# Parcel cache & old output dirs
 .parcel-cache/
 dist/
 docs/
+
+# Source maps (not needed in repo)
 *.map
+
+# Node.js installer (never commit this)
+node-v*/
+
+# Agent / AI tool directories
+.agent/
+
+# GitHub Actions (not needed — build locally, commit output)
+.github/
+
+# IDE
+.vscode/
+
+# OS
 .DS_Store
 *.local
+
+# Claude Code
 .claude/
