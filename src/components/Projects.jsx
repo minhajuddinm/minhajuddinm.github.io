@@ -44,8 +44,8 @@ const PROJECTS = [
   {
     id: 6,
     name: 'Snappy',
-    description: 'Immersive XR companion that helps children understand medical procedures, reducing pre-procedure anxiety through clarity instead of distraction. Built at the XR Hackathon in Montreal.',
-    tags: ['Unity', 'C#', 'AR', 'VR', 'XR', 'Healthcare'],
+    description: 'Immersive XR companion that helps children understand medical procedures, reducing pre-procedure anxiety through clarity instead of distraction. Built at an XR Hackathon in Montreal.',
+    tags: ['Unity', 'C#', 'AR', 'VR', 'XR'],
     github: null,
     demo: null,
   },
@@ -67,88 +67,9 @@ function ExternalIcon() {
   )
 }
 
-function StarIcon() {
-  return (
-    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-    </svg>
-  )
-}
-
 const cardVariants = {
   hidden:  { opacity: 0, y: 32 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } },
-}
-
-function FeaturedCard({ project }) {
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-      whileHover={{ y: -4 }}
-      className="group relative bg-white border border-border-soft rounded-3xl overflow-hidden shadow-sm hover:shadow-[0_20px_56px_rgba(42,94,64,0.12)] hover:border-accent/20 transition-all duration-300 mb-5"
-    >
-      {/* Gradient top bar */}
-      <div className="h-1 bg-gradient-to-r from-accent/60 via-emerald-400/70 to-accent/60" />
-
-      {/* Hover glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.04] via-emerald-400/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-      <div className="relative z-10 p-8 sm:p-10">
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
-          <div>
-            {/* Featured badge */}
-            <div className="inline-flex items-center gap-1.5 mb-3 px-3 py-1 bg-accent-soft border border-accent/15 rounded-full">
-              <span className="text-accent"><StarIcon /></span>
-              <span className="font-mono text-[10px] text-accent/80 uppercase tracking-widest">Featured Project</span>
-            </div>
-            <h3 className="font-display text-2xl sm:text-3xl text-ink">{project.name}</h3>
-          </div>
-
-          <div className="flex flex-wrap gap-1.5 sm:justify-end">
-            {project.tags.map(tag => (
-              <span
-                key={tag}
-                className="font-mono px-2.5 py-1 bg-warm-bg border border-border-soft text-ink-muted text-[11px] tracking-wide rounded-lg"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <p className="text-ink leading-relaxed mb-2 text-lg max-w-2xl">{project.description}</p>
-        <p className="text-ink-muted leading-relaxed max-w-2xl text-sm">{project.longDescription}</p>
-
-        {(project.github || project.demo) && (
-          <div className="flex items-center gap-4 mt-6 pt-5 border-t border-border-soft">
-            {project.github && (
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 font-mono text-xs text-ink-muted hover:text-accent transition-colors"
-              >
-                <GitHubIcon /> GitHub
-              </a>
-            )}
-            {project.demo && (
-              <a
-                href={project.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 font-mono text-xs text-ink-muted hover:text-accent transition-colors"
-              >
-                <ExternalIcon /> Live
-              </a>
-            )}
-          </div>
-        )}
-      </div>
-    </motion.article>
-  )
 }
 
 function ProjectCard({ project }) {
@@ -226,8 +147,6 @@ export default function Projects() {
           <p className="font-mono text-xs text-accent/70 mb-3 tracking-widest">{'// projects'}</p>
           <h2 className="font-display text-4xl sm:text-5xl text-ink">Things I've Built</h2>
         </motion.div>
-
-        <FeaturedCard project={FEATURED} />
 
         <motion.div
           variants={container}

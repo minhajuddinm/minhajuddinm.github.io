@@ -309,6 +309,7 @@ export default function Hero() {
           <MagneticButton href="#research" primary>Explore Research</MagneticButton>
           <MagneticButton href="#projects">View Projects</MagneticButton>
         </motion.div>
+
       </div>
 
       {/* Scroll indicator */}
