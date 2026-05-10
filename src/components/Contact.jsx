@@ -1,26 +1,62 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Linkedin, Github, ArrowUpRight, Send, CheckCircle } from 'lucide-react'
+
+function EmailIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+      <polyline points="22,6 12,13 2,6" />
+    </svg>
+  )
+}
+
+function LinkedInIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+  )
+}
+
+function GitHubIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+    </svg>
+  )
+}
+
+function ArrowUpRightIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <line x1="7" y1="17" x2="17" y2="7" />
+      <polyline points="7 7 17 7 17 17" />
+    </svg>
+  )
+}
+
+function SendIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <line x1="22" y1="2" x2="11" y2="13" />
+      <polygon points="22 2 15 22 11 13 2 9 22 2" />
+    </svg>
+  )
+}
+
+function CheckCircleIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+      <polyline points="22 4 12 14.01 9 11.01" />
+    </svg>
+  )
+}
 
 const CONTACT_LINKS = [
-  {
-    label: 'Email',
-    value: 'minhaj112204@gmail.com',
-    href: 'mailto:minhaj112204@gmail.com',
-    icon: <Mail size={18} />,
-  },
-  {
-    label: 'LinkedIn',
-    value: 'linkedin.com/in/muhammad-minhajuddin76',
-    href: 'https://linkedin.com/in/muhammad-minhajuddin76',
-    icon: <Linkedin size={18} />,
-  },
-  {
-    label: 'GitHub',
-    value: 'github.com/minhajuddinm',
-    href: 'https://github.com/minhajuddinm',
-    icon: <Github size={18} />,
-  },
+  { label: 'Email',    value: 'minhaj112204@gmail.com',                href: 'mailto:minhaj112204@gmail.com',                icon: <EmailIcon />    },
+  { label: 'LinkedIn', value: 'linkedin.com/in/muhammad-minhajuddin76', href: 'https://linkedin.com/in/muhammad-minhajuddin76', icon: <LinkedInIcon /> },
+  { label: 'GitHub',   value: 'github.com/minhajuddinm',               href: 'https://github.com/minhajuddinm',              icon: <GitHubIcon />   },
 ]
 
 const INPUT_CLASS =
@@ -102,11 +138,9 @@ export default function Contact() {
                   <p className="font-mono text-[9px] text-ink-muted/60 uppercase tracking-widest mb-0.5">{label}</p>
                   <p className="text-sm font-medium text-ink group-hover:text-accent transition-colors truncate">{value}</p>
                 </div>
-                <ArrowUpRight
-                  size={15}
-                  className="text-ink-muted/30 group-hover:text-accent/60 transition-colors shrink-0"
-                  aria-hidden="true"
-                />
+                <span className="text-ink-muted/30 group-hover:text-accent/60 transition-colors shrink-0">
+                  <ArrowUpRightIcon />
+                </span>
               </motion.a>
             ))}
 
@@ -115,7 +149,7 @@ export default function Contact() {
               variants={fadeUp}
               className="mt-6 p-4 bg-accent-soft border border-accent/12 rounded-2xl"
             >
-              <div className="flex items-center gap-2 mb-1">
+              <div className="flex items-center gap-2 mb-1.5">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
@@ -171,7 +205,7 @@ export default function Contact() {
                   animate={{ opacity: 1, y: 0 }}
                   className="flex items-center gap-2.5 px-4 py-3 bg-emerald-50 border border-emerald-200 rounded-xl"
                 >
-                  <CheckCircle size={16} className="text-emerald-600 shrink-0" aria-hidden="true" />
+                  <span className="text-emerald-600 shrink-0"><CheckCircleIcon /></span>
                   <p className="text-sm font-medium text-emerald-700">Message sent — I'll be in touch soon!</p>
                 </motion.div>
               ) : (
@@ -182,7 +216,7 @@ export default function Contact() {
                   transition={{ duration: 0.18, ease: 'easeOut' }}
                   className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-accent text-white rounded-xl text-sm font-bold shadow-md shadow-accent/20 hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/25 transition-all duration-200"
                 >
-                  <Send size={15} aria-hidden="true" />
+                  <SendIcon />
                   Send Message
                 </motion.button>
               )}
