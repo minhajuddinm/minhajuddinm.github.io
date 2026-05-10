@@ -11,12 +11,15 @@ class ErrorBoundary extends React.Component {
   static getDerivedStateFromError(error) {
     return { error }
   }
+  componentDidCatch(error, info) {
+    console.error('[ErrorBoundary] caught:', error, info)
+  }
   render() {
     if (this.state.error) {
       return (
-        <div style={{ padding: '2rem', fontFamily: 'monospace', color: '#111' }}>
-          <h2>Something went wrong</h2>
-          <pre style={{ color: '#c00', whiteSpace: 'pre-wrap' }}>
+        <div style={{ padding: '2rem', fontFamily: 'monospace', background: '#F8F6F2', color: '#111', minHeight: '100vh' }}>
+          <h2 style={{ color: '#c00' }}>Something went wrong</h2>
+          <pre style={{ color: '#c00', whiteSpace: 'pre-wrap', fontSize: '13px' }}>
             {this.state.error.message}
           </pre>
         </div>
