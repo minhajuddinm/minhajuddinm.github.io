@@ -1,12 +1,8 @@
 node_modules/
-dist/
 .parcel-cache/
+dist/
+docs/
+*.map
 .DS_Store
 *.local
-
-# Local Claude Code settings
 .claude/
-
-# Old static site files (replaced by React/Vite)
-css/
-js/

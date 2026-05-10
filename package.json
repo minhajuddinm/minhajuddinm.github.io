@@ -2,11 +2,12 @@
   "name": "minhaj-portfolio",
   "private": true,
   "version": "1.0.0",
-  "source": "index.html",
+  "source": "src/index.html",
   "scripts": {
-    "dev": "parcel --port 3000",
-    "build": "parcel build --dist-dir docs --public-url /",
-    "preview": "npx serve dist -l 4000"
+    "dev": "parcel src/index.html --port 3000",
+    "prebuild": "node scripts/clean.js",
+    "build": "parcel build src/index.html --dist-dir . --public-url /",
+    "preview": "npx serve . -l 4000"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",
