@@ -1,17 +1,5 @@
 import { motion } from 'framer-motion'
 
-const FEATURED = {
-  id: 0,
-  name: 'Snappy',
-  description:
-    'Immersive XR companion that helps children understand medical procedures, reducing pre-procedure anxiety through clarity instead of distraction. Built at the XR Hackathon in Montreal.',
-  longDescription:
-    'Snappy uses spatial computing to create a calm, engaging companion experience for pediatric patients. By walking children through procedures in an immersive yet gentle XR environment, it replaces fear with understanding.',
-  tags: ['Unity', 'C#', 'AR', 'VR', 'XR', 'Healthcare'],
-  github: null,
-  demo: null,
-}
-
 const PROJECTS = [
   {
     id: 1,
@@ -51,6 +39,14 @@ const PROJECTS = [
     description: 'Simulation tool for testing the EDOA edge-cloud task offloading algorithm.',
     tags: ['Python', 'Matplotlib', 'NumPy'],
     github: '#',
+    demo: null,
+  },
+  {
+    id: 6,
+    name: 'Snappy',
+    description: 'Immersive XR companion that helps children understand medical procedures, reducing pre-procedure anxiety through clarity instead of distraction. Built at the XR Hackathon in Montreal.',
+    tags: ['Unity', 'C#', 'AR', 'VR', 'XR', 'Healthcare'],
+    github: null,
     demo: null,
   },
 ]
