@@ -46,8 +46,8 @@ const PROJECTS = [
     name: 'Snappy',
     description: 'Immersive XR companion that helps children understand medical procedures, reducing pre-procedure anxiety through clarity instead of distraction. Built at an XR Hackathon in Montreal.',
     tags: ['Unity', 'C#', 'AR', 'VR', 'XR'],
-    github: null,
-    demo: null,
+    github: 'https://github.com/minhajuddinm/Snappy01',
+    demo: 'https://www.youtube.com/watch?v=F3fzr3j_ySQ',
   },
 ]
 
