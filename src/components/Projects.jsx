@@ -49,14 +49,6 @@ const PROJECTS = [
     github: null,
     demo: null,
   },
-  {
-    id: 7,
-    name: 'LoomXR',
-    description: 'B2B SaaS platform delivering luxury AR packaging experiences for brands. Commercialized from HYPAR research.',
-    tags: ['React', 'Three.js', 'WebAR', 'SaaS'],
-    github: null,
-    demo: 'https://loomxr.vercel.app',
-  },
 ]
 
 function GitHubIcon() {
