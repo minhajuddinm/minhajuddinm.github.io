@@ -206,7 +206,7 @@ export default function Contact() {
                   className="flex items-center gap-2.5 px-4 py-3 bg-emerald-50 border border-emerald-200 rounded-xl"
                 >
                   <span className="text-emerald-600 shrink-0"><CheckCircleIcon /></span>
-                  <p className="text-sm font-medium text-emerald-700">Message sent — I'll be in touch soon!</p>
+                  <p className="text-sm font-medium text-emerald-700">Message sent. I'll be in touch soon!</p>
                 </motion.div>
               ) : (
                 <motion.button

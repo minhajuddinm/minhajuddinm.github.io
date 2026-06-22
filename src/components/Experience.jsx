@@ -6,7 +6,7 @@ const EXPERIENCE = [
     role: 'Research Intern',
     org: 'University of Aberdeen',
     period: 'May 2026 – Aug 2026',
-    badge: 'Upcoming',
+    badge: 'Current',
     badgeCls: 'bg-accent-soft text-accent border border-accent/15',
     bullets: [
       'Mitacs Globalink Research Award recipient.',
@@ -29,9 +29,9 @@ const EXPERIENCE = [
   },
   {
     id: 3,
-    role: 'Undergraduate Researcher — HCI',
+    role: 'Undergraduate Researcher · HCI',
     org: 'SLIDE Research Studio, Algoma University',
-    period: '2024 – Present',
+    period: '2025 – Present',
     badge: null,
     badgeCls: '',
     bullets: [
@@ -41,9 +41,9 @@ const EXPERIENCE = [
   },
   {
     id: 4,
-    role: 'Research Assistant — Edge-Cloud Computing',
+    role: 'Research Assistant · Edge-Cloud Computing',
     org: 'Algoma University',
-    period: '2024 – Present',
+    period: '2024 – Apr 2026',
     badge: null,
     badgeCls: '',
     bullets: [

@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 const INFO = [
-  { label: 'Education',   icon: '🎓', text: 'Algoma University, BCS Honours — Dec 2026' },
+  { label: 'Education',   icon: '🎓', text: 'Algoma University, BCS Honours · Dec 2026' },
   { label: 'Location',    icon: '📍', text: 'Brampton, Ontario, Canada' },
   { label: 'Research Lab',icon: '🔬', text: 'SLIDE Research Studio' },
   { label: 'Internship',  icon: '✈️', text: 'Mitacs Globalink · University of Aberdeen (2026)' },
@@ -14,7 +14,7 @@ const SKILLS = [
 ]
 
 const STATS = [
-  { to: 4,   suffix: '',   label: 'Research Papers' },
+  { to: 6,   suffix: '',   label: 'Research Papers' },
   { to: 6,   suffix: '+',  label: 'Projects Built'  },
   { to: 100, suffix: '+',  label: 'ALCOMS Members'  },
   { to: 2,   suffix: '',   label: 'Years Researching'},
@@ -159,7 +159,7 @@ export default function About() {
               and quantum cryptography.
             </p>
             <p className="text-ink-muted leading-relaxed">
-              Research-driven and builder-minded — he writes papers and ships real things.
+              Research-driven and builder-minded: he writes papers and ships real things.
             </p>
             <SkillMarquee />
           </motion.div>

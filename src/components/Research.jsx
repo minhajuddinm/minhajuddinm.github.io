@@ -9,7 +9,7 @@ const PAPERS = [
     title: 'Towards Adaptive and Energy-Aware Task Offloading in Edge-Cloud Environments',
     year: '2026',
     authors: 'Minhajuddin, M. et al.',
-    venue: 'IEEE Syscon 2026 — Accepted',
+    venue: 'IEEE SysCon 2026 · Published',
     abstract:
       'This paper proposes EDOA, an adaptive task offloading framework for edge-cloud environments, optimizing energy consumption and latency using a dynamic decision algorithm.',
     status: { emoji: '✅', label: 'Published', cls: 'bg-emerald-50 text-emerald-700 border border-emerald-200' },
@@ -22,7 +22,7 @@ const PAPERS = [
     title: 'HYPAR: Hyper-Personalized Packaging in Augmented Reality',
     year: '2026',
     authors: 'Minhajuddin, M. et al.',
-    venue: 'ISEMV 2026 — Under Review',
+    venue: 'ISEMV 2026 · Under Review',
     abstract:
       'HYPAR investigates how AR can deliver personalized packaging experiences, exploring real-time visual customization of product packaging through mobile AR interfaces.',
     status: { emoji: '🔄', label: 'Under Review', cls: 'bg-amber-50 text-amber-700 border border-amber-200' },
@@ -35,7 +35,7 @@ const PAPERS = [
     title: 'V.O.I.D.: Evaluating Locomotion Methods in Virtual Reality',
     year: '2026',
     authors: 'Minhajuddin, M. et al.',
-    venue: 'VRST 2026 — Under Review',
+    venue: 'ACM SUI 2026 · Under Review',
     abstract:
       'A comparative study evaluating different locomotion techniques in virtual reality environments, measuring comfort, presence, and task performance across methods.',
     status: { emoji: '🔄', label: 'Under Review', cls: 'bg-amber-50 text-amber-700 border border-amber-200' },
@@ -48,11 +48,39 @@ const PAPERS = [
     title: 'Quantum Key Distribution Protocol Analysis',
     year: '2026',
     authors: 'Minhajuddin, M.',
-    venue: 'Mitacs Globalink Project — University of Aberdeen, 2026',
+    venue: 'Mitacs Globalink Project · University of Aberdeen, 2026',
     abstract:
       'A 12-week research internship investigating QKD protocols, focusing on security models, error rates, and practical implementation challenges for quantum-safe communication.',
     status: { emoji: '🔭', label: 'Ongoing', cls: 'bg-stone-100 text-stone-600 border border-stone-200' },
     topBar: 'from-violet-400/40 via-violet-500/40 to-violet-400/40',
+  },
+  {
+    id: 5,
+    tag: 'HCI / XR',
+    category: 'hci',
+    title: 'A.U.R.A.: Augmented User Responsive Assistance',
+    year: '2026',
+    authors: 'Minhajuddin, M. et al.',
+    venue: 'HCII 2026 · Late Breaking Work · Accepted',
+    // [PLACEHOLDER: refine abstract]
+    abstract:
+      'A.U.R.A. is an augmented reality system designed to provide context-aware, responsive user assistance through adaptive spatial overlays and intelligent interaction models.',
+    status: { emoji: '✅', label: 'Accepted', cls: 'bg-emerald-50 text-emerald-700 border border-emerald-200' },
+    topBar: 'from-emerald-400/50 via-emerald-500/50 to-emerald-400/50',
+  },
+  {
+    id: 6,
+    tag: 'MR / HCI',
+    category: 'hci',
+    title: 'PRISM: Mixed Reality Visual Analytics',
+    year: '2026',
+    authors: 'Minhajuddin, M. et al.',
+    venue: 'IEEE ISMAR 2026 · Poster · Under Review',
+    // [PLACEHOLDER: refine abstract]
+    abstract:
+      'PRISM is a Unity-based mixed reality system that enables immersive, multi-modal visual analytics by embedding interactive data visualizations directly into physical environments.',
+    status: { emoji: '🔄', label: 'Under Review', cls: 'bg-amber-50 text-amber-700 border border-amber-200' },
+    topBar: 'from-amber-400/50 via-amber-500/50 to-amber-400/50',
   },
 ]
 

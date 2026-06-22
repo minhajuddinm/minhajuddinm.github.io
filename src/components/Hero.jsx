@@ -296,7 +296,7 @@ export default function Hero() {
           animate="visible"
           className="text-base sm:text-lg text-ink-muted mb-12 leading-relaxed max-w-xl mx-auto"
         >
-          Muhammad Minhajuddin — Computer Science Researcher &amp; Developer at Algoma University.
+          Muhammad Minhajuddin, Computer Science Researcher &amp; Developer at Algoma University.
         </motion.p>
 
         {/* CTAs */}
