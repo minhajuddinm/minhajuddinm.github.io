@@ -28,6 +28,31 @@ const EXPERIENCE = [
     ],
   },
   {
+    id: 5,
+    role: 'Co-founder & CEO',
+    org: 'LoomXR',
+    period: '2026 – Present',
+    badge: null,
+    badgeCls: '',
+    bullets: [
+      'Building a B2B SaaS platform for luxury AR packaging experiences.',
+      'Commercializing HYPAR research into a market-ready product.',
+      'Leading product, grant strategy, and the Three.js web experience.',
+    ],
+  },
+  {
+    id: 6,
+    role: 'Co-founder & CEO',
+    org: 'Boundless Reality Origin Studios Inc. (BROS)',
+    period: '2026 – Present',
+    badge: null,
+    badgeCls: '',
+    bullets: [
+      'Building accessible XR experiences as an Ontario-incorporated studio.',
+      'Developing Eyes of the Soul, an accessible VR detective game for Blind and Low Vision players.',
+    ],
+  },
+  {
     id: 3,
     role: 'Undergraduate Researcher · HCI',
     org: 'SLIDE Research Studio, Algoma University',

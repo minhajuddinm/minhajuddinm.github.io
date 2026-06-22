@@ -15,7 +15,7 @@ const SKILLS = [
 
 const STATS = [
   { to: 6,   suffix: '',   label: 'Research Papers' },
-  { to: 6,   suffix: '+',  label: 'Projects Built'  },
+  { to: 7,   suffix: '+',  label: 'Projects Built'  },
   { to: 100, suffix: '+',  label: 'ALCOMS Members'  },
   { to: 2,   suffix: '',   label: 'Years Researching'},
 ]
@@ -158,8 +158,11 @@ export default function About() {
               President. His work spans HCI, Mixed Reality, Generative AI, edge-cloud computing,
               and quantum cryptography.
             </p>
-            <p className="text-ink-muted leading-relaxed">
+            <p className="text-ink-muted leading-relaxed mb-4">
               Research-driven and builder-minded: he writes papers and ships real things.
+            </p>
+            <p className="text-ink-muted leading-relaxed">
+              He co-founds and leads startups alongside his research: LoomXR (luxury AR packaging) and BROS Inc (accessible XR experiences).
             </p>
             <SkillMarquee />
           </motion.div>

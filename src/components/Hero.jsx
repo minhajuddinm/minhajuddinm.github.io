@@ -255,7 +255,7 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Headline — word-by-word reveal */}
+        {/* Headline: word-by-word reveal */}
         <motion.h1
           className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl text-ink leading-[1.12] mb-6 tracking-tight"
           initial="hidden"

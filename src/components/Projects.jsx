@@ -4,8 +4,8 @@ const PROJECTS = [
   {
     id: 1,
     name: 'Eyes of the Soul',
-    description: 'A VR narrative game built in Unity with a psychological horror / exploration theme.',
-    tags: ['Unity', 'C#', 'VR', 'Meta SDK'],
+    description: 'An accessible VR detective game for Blind and Low Vision players, built in Unity. Developed under Boundless Reality Origin Studios Inc. (BROS).',
+    tags: ['Unity', 'C#', 'VR', 'Meta SDK', 'Accessibility'],
     github: '#',
     demo: null,
   },
@@ -48,6 +48,14 @@ const PROJECTS = [
     tags: ['Unity', 'C#', 'AR', 'VR', 'XR'],
     github: null,
     demo: null,
+  },
+  {
+    id: 7,
+    name: 'LoomXR',
+    description: 'B2B SaaS platform delivering luxury AR packaging experiences for brands. Commercialized from HYPAR research.',
+    tags: ['React', 'Three.js', 'WebAR', 'SaaS'],
+    github: null,
+    demo: 'https://loomxr.vercel.app',
   },
 ]
 
