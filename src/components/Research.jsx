@@ -80,6 +80,19 @@ const PAPERS = [
     status: { emoji: '✅', label: 'Presented', cls: 'bg-emerald-50 text-emerald-700 border border-emerald-200' },
     topBar: 'from-emerald-400/50 via-emerald-500/50 to-emerald-400/50',
   },
+  {
+    id: 7,
+    tag: 'MR / HCI',
+    category: 'hci',
+    title: 'PRISM: Mixed Reality Visual Analytics',
+    year: '2026',
+    authors: 'Minhajuddin, M. et al.',
+    venue: 'IEEE ISMAR 2026 · Poster · Under Review',
+    abstract:
+      'PRISM is a Unity-based mixed reality system that enables immersive, multi-modal visual analytics by embedding interactive data visualizations directly into physical environments.',
+    status: { emoji: '🔄', label: 'Under Review', cls: 'bg-amber-50 text-amber-700 border border-amber-200' },
+    topBar: 'from-amber-400/50 via-amber-500/50 to-amber-400/50',
+  },
 ]
 
 const FILTERS = [
