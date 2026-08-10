@@ -48,7 +48,7 @@ const PAPERS = [
     title: 'A.U.R.A.: An Embodied Conversational AI Mentor in Mixed Reality for Proactive University Student Support',
     year: '2026',
     authors: 'Minhajuddin, M. et al.',
-    venue: 'HCII 2026 · Under Publication',
+    venue: 'HCII 2026 · Poster · Under Publication',
     abstract:
       'A.U.R.A. is an embodied conversational AI mentor situated in mixed reality that proactively supports university students, combining spatial presence and adaptive dialogue to guide academic and wellbeing needs.',
     status: { emoji: '📝', label: 'Under Publication', cls: 'bg-blue-50 text-blue-700 border border-blue-200' },
