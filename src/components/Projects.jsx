@@ -49,6 +49,14 @@ const PROJECTS = [
     github: 'https://github.com/minhajuddinm/Snappy01',
     demo: 'https://www.youtube.com/watch?v=F3fzr3j_ySQ',
   },
+  {
+    id: 7,
+    name: 'OSCE SIM',
+    description: 'A VR clinical-reasoning trainer for medical students on Meta Quest: interview an AI patient by voice, order tests from an AI nurse, commit a diagnosis, and receive an AI-graded debrief with per-question coaching.',
+    tags: ['Unity', 'C#', 'VR', 'Meta Quest', 'OpenAI Realtime API'],
+    github: 'https://github.com/SLIDE-Studio/PatientSim',
+    demo: 'https://www.youtube.com/watch?v=zg7NFme48mw&t=17s',
+  },
 ]
 
 function GitHubIcon() {
