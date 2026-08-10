@@ -238,7 +238,7 @@ export default function Hero() {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
           </span>
           <span className="font-mono text-[11px] text-emerald-700/70 tracking-wide">
-            Currently: Mitacs Research Intern · Aberdeen, UK
+            Currently: Undergrad Researcher · ON, Canada
           </span>
         </motion.div>
 
