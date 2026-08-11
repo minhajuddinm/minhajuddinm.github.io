@@ -106,13 +106,26 @@ const PAPERS = [
     status: { emoji: '🔄', label: 'Under Review', cls: 'bg-amber-50 text-amber-700 border border-amber-200' },
     topBar: 'from-amber-400/50 via-amber-500/50 to-amber-400/50',
   },
+  {
+    id: 9,
+    tag: 'Quantum AI',
+    category: 'quantum',
+    title: 'A Survey on Quantum AI Communications: Protocols, Optimization, and Applications',
+    year: '2026',
+    authors: 'Sharma, S., Minhajuddin, M., Mukhija, R. et al.',
+    venue: 'IEEE Access · Survey Paper · Under Review',
+    abstract:
+      'A survey organizing quantum AI and communications research into a bidirectional taxonomy — quantum-enhanced learning for classical network problems, and classical AI for quantum communication infrastructure — spanning 6G, edge and semantic communications, QKD parameter optimization and attack detection, and a comparative analysis of post-quantum cryptography, QKD, and hybrid PQC-QKD architectures.',
+    status: { emoji: '🔄', label: 'Under Review', cls: 'bg-amber-50 text-amber-700 border border-amber-200' },
+    topBar: 'from-amber-400/50 via-amber-500/50 to-amber-400/50',
+  },
 ]
 
 const FILTERS = [
   { id: 'all',       label: 'All Papers'     },
+  { id: 'quantum',   label: 'Quantum'         },
   { id: 'hci',       label: 'HCI / XR'       },
   { id: 'computing', label: 'Edge Computing'  },
-  { id: 'quantum',   label: 'Quantum'         },
 ]
 
 function FilterTabs({ active, onChange }) {
