@@ -42,6 +42,19 @@ const PAPERS = [
     topBar: 'from-blue-400/50 via-blue-500/50 to-blue-400/50',
   },
   {
+    id: 10,
+    tag: 'VR / HCI',
+    category: 'hci',
+    title: 'Towards Designing the Elbow Flexion and Extension as a Usable, Hands-Free Locomotion Method for Multitasking in Virtual Reality',
+    year: '2026',
+    authors: 'Varghese, J., Minhajuddin, M., Ranabhat, R. et al.',
+    venue: 'IEEE TVCG · Journal Paper · Under Review',
+    abstract:
+      'A journal extension of V.O.I.D. that presents Elbow Flexion and Extension (EFE), a locomotion method mapping one arm\'s vertical hand velocity to forward movement so the other hand stays free for concurrent tasks. A within-subjects study with 40 participants compares EFE against controller and micro-gesture locomotion on usability, presence, and task performance.',
+    status: { emoji: '🔄', label: 'Under Review', cls: 'bg-amber-50 text-amber-700 border border-amber-200' },
+    topBar: 'from-amber-400/50 via-amber-500/50 to-amber-400/50',
+  },
+  {
     id: 4,
     tag: 'MR / AI',
     category: 'hci',
