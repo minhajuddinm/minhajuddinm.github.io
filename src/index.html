@@ -7,6 +7,18 @@
   <meta property="og:title" content="Minhaj · CS Researcher & Developer" />
   <meta property="og:description" content="CS Honours student at Algoma University researching HCI, Mixed Reality, and Intelligent Systems." />
   <title>Minhaj · CS Researcher & Developer</title>
+  <meta name="theme-color" content="#F8F6F2" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#090D0B" media="(prefers-color-scheme: dark)" />
+  <script>
+    (function () {
+      var t = null
+      try { t = localStorage.getItem('theme') } catch (e) {}
+      if (t !== 'light' && t !== 'dark') {
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      }
+      document.documentElement.setAttribute('data-theme', t)
+    })()
+  </script>
   <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />

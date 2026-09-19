@@ -1,16 +1,20 @@
 /** @type {import('tailwindcss').Config} */
+const v = name => `rgb(var(--${name}) / <alpha-value>)`
+
 module.exports = {
   content: ['./index.html', './src/**/*.{js,jsx}'],
+  darkMode: ['selector', '[data-theme="dark"]'],
   theme: {
     extend: {
       colors: {
-        accent: '#2A5E40',          // Forest green — rich, distinctive, not AI
-        'accent-soft': '#EBF4EE',   // Pale sage tint
-        'warm-bg': '#F8F6F2',       // Warm parchment
-        surface: '#FFFFFF',
-        ink: '#111710',             // Warm near-black (slight green undertone)
-        'ink-muted': '#5C6B5E',     // Warm sage-gray
-        'border-soft': '#DDE5DE',   // Soft sage-green border
+        accent: v('accent'),
+        'accent-soft': v('accent-soft'),
+        'warm-bg': v('bg'),
+        surface: v('surface'),
+        ink: v('ink'),
+        'ink-muted': v('ink-muted'),
+        'border-soft': v('border'),
+        glow: v('glow'),
       },
       fontFamily: {
         display: ['"DM Serif Display"', 'serif'],

@@ -1,4 +1,7 @@
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll, useSpring } from 'framer-motion'
+import SectionHeading from './SectionHeading.jsx'
+import { spotlightMove } from '../lib/motion.js'
 
 const EXPERIENCE = [
   {
@@ -6,12 +9,12 @@ const EXPERIENCE = [
     role: 'Research Intern',
     org: 'University of Aberdeen',
     period: 'May 2026 – Aug 2026',
-    badge: 'Current',
-    badgeCls: 'bg-accent-soft text-accent border border-accent/15',
+    badge: null,
+    badgeCls: '',
     bullets: [
       'Mitacs Globalink Research Award recipient.',
-      'Investigating Quantum Key Distribution protocols.',
-      'Collaborating with faculty on quantum-safe communication research.',
+      'Investigated Quantum Key Distribution protocols.',
+      'Collaborated with faculty on quantum-safe communication research.',
     ],
   },
   {
@@ -68,12 +71,12 @@ const EXPERIENCE = [
     id: 4,
     role: 'Research Assistant · Edge-Cloud Computing',
     org: 'Algoma University',
-    period: '2024 – Apr 2026',
+    period: '2024 – Jul 2026',
     badge: null,
     badgeCls: '',
     bullets: [
-      'Developing EDOA, an adaptive task offloading framework for edge-cloud environments.',
-      'Optimizing energy consumption and latency using dynamic decision algorithms.',
+      'Developed EDOA, an adaptive task offloading framework for edge-cloud environments.',
+      'Optimized energy consumption and latency using dynamic decision algorithms.',
     ],
   },
 ]
@@ -92,22 +95,10 @@ function TimelineEntry({ entry, isLast }) {
         whileInView={{ scale: 1 }}
         viewport={{ once: true }}
         transition={{ type: 'spring', stiffness: 350, damping: 20, delay: 0.1 }}
-        className="absolute left-0 top-2 w-4 h-4 rounded-full bg-accent ring-4 ring-warm-bg shadow-[0_0_16px_rgba(42,94,64,0.45)]"
+        className="absolute left-0 top-2 w-4 h-4 rounded-full bg-accent ring-4 ring-warm-bg shadow-[0_0_16px_rgb(var(--glow)/0.55)]"
         aria-hidden="true"
       />
 
-      {/* Animated connector line */}
-      {!isLast && (
-        <motion.div
-          initial={{ scaleY: 0 }}
-          whileInView={{ scaleY: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.9, ease: 'easeOut', delay: 0.35 }}
-          style={{ transformOrigin: 'top' }}
-          className="absolute left-[7px] top-6 bottom-0 w-[2px] bg-gradient-to-b from-accent/30 via-border-soft to-border-soft/30"
-          aria-hidden="true"
-        />
-      )}
 
       {/* Role + badge */}
       <div className="flex flex-wrap items-baseline gap-2.5 mb-1.5">
@@ -139,24 +130,18 @@ function TimelineEntry({ entry, isLast }) {
 }
 
 export default function Experience() {
+  const railRef = useRef(null)
+  const { scrollYProgress } = useScroll({ target: railRef, offset: ['start 75%', 'end 60%'] })
+  const draw = useSpring(scrollYProgress, { stiffness: 120, damping: 30 })
   const container = {
     hidden:  {},
     visible: { transition: { staggerChildren: 0.18 } },
   }
 
   return (
-    <section id="experience" className="py-28 px-6 bg-warm-bg">
+    <section id="experience" className="relative py-28 sm:py-36 px-5 sm:px-8 bg-warm-bg">
       <div className="max-w-3xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="mb-16"
-        >
-          <p className="font-mono text-xs text-accent/70 mb-3 tracking-widest">{'// experience'}</p>
-          <h2 className="font-display text-4xl sm:text-5xl text-ink">Timeline</h2>
-        </motion.div>
+        <SectionHeading index="05" label="experience" title="Timeline" className="mb-16" />
 
         <motion.div
           variants={container}
@@ -164,7 +149,15 @@ export default function Experience() {
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
           className="relative"
+          ref={railRef}
         >
+          {/* Rail drawn with scroll */}
+          <div className="absolute left-[7px] top-2 bottom-2 w-[2px] bg-border-soft rounded-full" aria-hidden="true" />
+          <motion.div
+            style={{ scaleY: draw, transformOrigin: 'top' }}
+            className="absolute left-[7px] top-2 bottom-2 w-[2px] rounded-full bg-gradient-to-b from-accent via-glow to-accent"
+            aria-hidden="true"
+          />
           {EXPERIENCE.map((entry, i) => (
             <TimelineEntry key={entry.id} entry={entry} isLast={i === EXPERIENCE.length - 1} />
           ))}

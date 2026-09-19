@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import SectionHeading from './SectionHeading.jsx'
+import { spotlightMove } from '../lib/motion.js'
 
 function EmailIcon() {
   return (
@@ -13,7 +15,7 @@ function EmailIcon() {
 function LinkedInIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
     </svg>
   )
 }
@@ -60,7 +62,7 @@ const CONTACT_LINKS = [
 ]
 
 const INPUT_CLASS =
-  'w-full px-4 py-3 bg-white border border-border-soft rounded-xl text-sm text-ink ' +
+  'w-full px-4 py-3 bg-surface border border-border-soft rounded-xl text-sm text-ink ' +
   'placeholder:text-ink-muted/40 focus:outline-none focus:border-accent focus:ring-2 ' +
   'focus:ring-accent/10 transition-all duration-200 font-body'
 
@@ -77,39 +79,33 @@ const stagger = {
 export default function Contact() {
   const [sent, setSent] = useState(false)
 
+  /* No backend: hand the message to the visitor's email client */
   function handleSubmit(e) {
     e.preventDefault()
+    const f = new FormData(e.currentTarget)
+    const subject = `Portfolio message from ${f.get('name')}`
+    const body = `${f.get('message')}\n\n${f.get('name')} (${f.get('email')})`
+    window.location.href = `mailto:minhaj112204@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
     setSent(true)
   }
 
   return (
-    <section id="contact" className="relative py-28 px-6 bg-surface overflow-hidden">
+    <section id="contact" className="relative py-28 sm:py-36 px-5 sm:px-8 bg-surface overflow-hidden">
       {/* Subtle orb background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div
           className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full animate-orb-slow"
-          style={{ background: 'radial-gradient(circle at center, rgba(42,94,64,0.06) 0%, transparent 65%)' }}
+          style={{ background: 'radial-gradient(circle at center, rgb(var(--accent) / 0.07) 0%, transparent 65%)' }}
         />
         <div
           className="absolute -bottom-40 -right-40 w-[450px] h-[450px] rounded-full animate-orb-med"
-          style={{ background: 'radial-gradient(circle at center, rgba(52,211,153,0.05) 0%, transparent 65%)' }}
+          style={{ background: 'radial-gradient(circle at center, rgb(var(--glow) / 0.06) 0%, transparent 65%)' }}
         />
       </div>
 
-      <div className="max-w-5xl mx-auto relative z-10">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          className="mb-16"
-        >
-          <p className="font-mono text-xs text-accent/70 mb-3 tracking-widest">{'// contact'}</p>
-          <h2 className="font-display text-4xl sm:text-5xl text-ink mb-4">Let's Connect</h2>
-          <p className="text-ink-muted max-w-md leading-relaxed">
-            Open to research collaborations, internship opportunities, and interesting conversations.
-          </p>
-        </motion.div>
+      <div className="max-w-6xl mx-auto relative z-10">
+        <SectionHeading index="06" label="contact" title="Let's Connect"
+          sub="Open to research collaborations, internship opportunities, and interesting conversations." className="mb-16" />
 
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
           {/* Social link cards */}
@@ -129,9 +125,9 @@ export default function Contact() {
                 rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 whileHover={{ x: 4, y: -2 }}
                 transition={{ duration: 0.2, ease: 'easeOut' }}
-                className="flex items-center gap-4 group p-4 bg-warm-bg border border-border-soft rounded-2xl hover:border-accent/25 hover:bg-white hover:shadow-md hover:shadow-accent/5 transition-all duration-200"
+                className="flex items-center gap-4 group p-4 bg-warm-bg border border-border-soft rounded-2xl hover:border-accent/25 hover:bg-surface hover:shadow-md hover:shadow-accent/5 transition-all duration-200"
               >
-                <span className="w-11 h-11 flex items-center justify-center rounded-xl bg-white border border-border-soft text-accent group-hover:bg-accent group-hover:text-white group-hover:border-accent transition-all duration-200 shrink-0 shadow-sm">
+                <span className="w-11 h-11 flex items-center justify-center rounded-xl bg-surface border border-border-soft text-accent group-hover:bg-accent group-hover:text-warm-bg group-hover:border-accent transition-all duration-200 shrink-0 shadow-sm">
                   {icon}
                 </span>
                 <div className="min-w-0 flex-1">
@@ -151,8 +147,8 @@ export default function Contact() {
             >
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-glow opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-glow" />
                 </span>
                 <span className="font-mono text-[10px] text-accent uppercase tracking-widest">Available for opportunities</span>
               </div>
@@ -203,10 +199,10 @@ export default function Contact() {
                 <motion.div
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-2.5 px-4 py-3 bg-emerald-50 border border-emerald-200 rounded-xl"
+                  className="flex items-center gap-2.5 px-4 py-3 bg-accent-soft border border-accent/25 rounded-xl"
                 >
-                  <span className="text-emerald-600 shrink-0"><CheckCircleIcon /></span>
-                  <p className="text-sm font-medium text-emerald-700">Message sent. I'll be in touch soon!</p>
+                  <span className="text-accent shrink-0"><CheckCircleIcon /></span>
+                  <p className="text-sm font-medium text-accent">Your email app should open with the message ready to send.</p>
                 </motion.div>
               ) : (
                 <motion.button
@@ -214,10 +210,10 @@ export default function Contact() {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ duration: 0.18, ease: 'easeOut' }}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-accent text-white rounded-xl text-sm font-bold shadow-md shadow-accent/20 hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/25 transition-all duration-200"
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-accent text-warm-bg rounded-xl text-sm font-bold shadow-md shadow-accent/20 hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/25 transition-all duration-200"
                 >
                   <SendIcon />
-                  Send Message
+                  Send via email
                 </motion.button>
               )}
             </motion.div>

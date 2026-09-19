@@ -2,93 +2,130 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Theme tokens (space-separated RGB so Tailwind alpha modifiers work) */
+:root {
+  --bg: 248 246 242;
+  --surface: 255 255 255;
+  --ink: 17 23 16;
+  --ink-muted: 92 107 94;
+  --border: 221 229 222;
+  --accent: 42 94 64;
+  --accent-soft: 235 244 238;
+  --glow: 52 211 153;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: 9 13 11;
+  --surface: 15 21 18;
+  --ink: 232 238 233;
+  --ink-muted: 150 166 154;
+  --border: 34 46 39;
+  --accent: 126 214 164;
+  --accent-soft: 20 38 29;
+  --glow: 94 234 173;
+  color-scheme: dark;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #F8F6F2;
-    overflow-x: hidden;
+    background-color: rgb(var(--bg));
+    overflow-x: clip;
   }
 
   body {
     @apply bg-warm-bg text-ink font-body antialiased;
     scrollbar-width: none;
-    color-scheme: light;
-    overflow-x: hidden;
+    overflow-x: clip;
+    transition: background-color .4s ease, color .4s ease;
   }
 
-  body::-webkit-scrollbar {
-    display: none;
-  }
+  body::-webkit-scrollbar { display: none; }
 
-  h1, h2, h3, h4 {
-    @apply font-display;
+  h1, h2, h3, h4 { @apply font-display; }
+
+  ::selection { background: rgb(var(--accent) / .22); }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 }
 
 @layer utilities {
-  .preserve-3d {
-    transform-style: preserve-3d;
-  }
-  .perspective-1000 {
-    perspective: 1000px;
-  }
+  .preserve-3d { transform-style: preserve-3d; }
+  .perspective-1000 { perspective: 1000px; }
 }
+
+/* Theme switch: circular reveal via the View Transitions API */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) { z-index: 2; }
+::view-transition-old(root) { z-index: 1; }
+
+/* Hide native cursor only when the custom one is active */
+html.has-cursor, html.has-cursor a, html.has-cursor button, html.has-cursor [role="button"] {
+  cursor: none;
+}
+html.has-cursor input, html.has-cursor textarea { cursor: text; }
+
+/* Spotlight cards: a soft light that follows the pointer */
+.spotlight {
+  --mx: 50%;
+  --my: 50%;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s ease;
+  background: radial-gradient(420px circle at var(--mx) var(--my), rgb(var(--accent) / .10), transparent 45%);
+  z-index: 0;
+}
+.spotlight:hover::before { opacity: 1; }
 
 /* Infinite skill marquee */
 @keyframes marquee-scroll {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-
 .marquee-track {
   display: flex;
   width: max-content;
   animation: marquee-scroll 24s linear infinite;
 }
+.marquee-track:hover { animation-play-state: paused; }
 
-.marquee-track:hover {
-  animation-play-state: paused;
+/* Grain overlay to give flat surfaces some texture */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+:root[data-theme="dark"] .grain::after { opacity: .06; }
 
-/* Gradient orb drift — GPU-accelerated via transform only */
-@keyframes orb-drift {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25%       { transform: translate(22px, -28px) scale(1.04); }
-  50%       { transform: translate(-14px, 16px) scale(0.97); }
-  75%       { transform: translate(12px, 22px) scale(1.02); }
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .35; }
 }
+.animate-twinkle { animation: twinkle 2.4s ease-in-out infinite; }
 
-.animate-orb {
-  animation: orb-drift 20s ease-in-out infinite;
-}
-
-.animate-orb-slow {
-  animation: orb-drift 28s ease-in-out infinite reverse;
-}
-
-.animate-orb-med {
-  animation: orb-drift 16s ease-in-out infinite;
-  animation-delay: -8s;
-}
-
-/* Gentle float for decorative panels */
-@keyframes float-gentle {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-8px); }
-}
-
-.animate-float {
-  animation: float-gentle 5s ease-in-out infinite;
-}
-
-/* Shimmer for skeleton states */
-@keyframes shimmer-sweep {
-  0%   { background-position: -200% center; }
-  100% { background-position:  200% center; }
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, transparent 25%, rgba(42,94,64,0.06) 50%, transparent 75%);
-  background-size: 200% auto;
-  animation: shimmer-sweep 2s linear infinite;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
 }

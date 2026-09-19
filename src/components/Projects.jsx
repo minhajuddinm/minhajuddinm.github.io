@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion'
+import SectionHeading from './SectionHeading.jsx'
+import { spotlightMove } from '../lib/motion.js'
 
 const PROJECTS = [
   {
@@ -6,7 +8,7 @@ const PROJECTS = [
     name: 'Eyes of the Soul',
     description: 'An accessible VR detective game for Blind and Low Vision players, built in Unity. Developed under Boundless Reality Origin Studios Inc. (BROS).',
     tags: ['Unity', 'C#', 'VR', 'Meta SDK', 'Accessibility'],
-    github: '#',
+    github: null,
     demo: null,
   },
   {
@@ -14,7 +16,7 @@ const PROJECTS = [
     name: 'Thunder Hacks',
     description: 'Organized a 24-hour hackathon for Algoma University students.',
     tags: ['Event Mgmt', 'Web', 'React'],
-    github: '#',
+    github: 'https://github.com/minhajuddinm/thunderhacks-2026',
     demo: 'https://thunderhacks.algomau.ca',
   },
   {
@@ -22,7 +24,7 @@ const PROJECTS = [
     name: 'ALCOMS Website',
     description: 'Built and maintained the official site for the Algoma University Computer Science Society.',
     tags: ['React', 'TailwindCSS', 'Vite'],
-    github: '#',
+    github: null,
     demo: 'https://alcoms.ca',
   },
   {
@@ -30,7 +32,7 @@ const PROJECTS = [
     name: 'HYPAR Prototype',
     description: 'AR mobile prototype for hyper-personalized product packaging using markerless tracking.',
     tags: ['Unity', 'AR Foundation', 'C#'],
-    github: '#',
+    github: 'https://github.com/minhajuddinm/HYPAR-Gen-AI-Texture-XR',
     demo: null,
   },
   {
@@ -38,7 +40,7 @@ const PROJECTS = [
     name: 'EDOA Simulator',
     description: 'Simulation tool for testing the EDOA edge-cloud task offloading algorithm.',
     tags: ['Python', 'Matplotlib', 'NumPy'],
-    github: '#',
+    github: null,
     demo: null,
   },
   {
@@ -87,7 +89,8 @@ function ProjectCard({ project }) {
       whileHover={{ y: -5 }}
       transition={{ duration: 0.22, ease: 'easeOut' }}
       layout
-      className="group relative bg-white border border-border-soft rounded-2xl flex flex-col shadow-sm hover:shadow-[0_16px_40px_rgba(42,94,64,0.10)] hover:border-accent/18 transition-all duration-300 overflow-hidden"
+      onMouseMove={spotlightMove}
+      className="spotlight group relative bg-surface border border-border-soft rounded-2xl flex flex-col shadow-sm hover:shadow-[0_16px_40px_rgb(var(--accent)/0.10)] hover:border-accent/18 transition-all duration-300 overflow-hidden"
     >
       <div className="h-[2px] bg-gradient-to-r from-border-soft via-accent/20 to-border-soft flex-shrink-0" />
       <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.035] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
@@ -107,30 +110,32 @@ function ProjectCard({ project }) {
           ))}
         </div>
 
-        <div className="flex items-center gap-4 pt-4 border-t border-border-soft">
-          {project.github && (
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 font-mono text-[11px] text-ink-muted hover:text-accent transition-colors"
-              aria-label={`${project.name} on GitHub`}
-            >
-              <GitHubIcon /> GitHub
-            </a>
-          )}
-          {project.demo && (
-            <a
-              href={project.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 font-mono text-[11px] text-ink-muted hover:text-accent transition-colors"
-              aria-label={`${project.name} live demo`}
-            >
-              <ExternalIcon /> Live
-            </a>
-          )}
-        </div>
+        {(project.github || project.demo) && (
+          <div className="flex items-center gap-4 pt-4 border-t border-border-soft">
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 font-mono text-[11px] text-ink-muted hover:text-accent transition-colors"
+                aria-label={`${project.name} on GitHub`}
+              >
+                <GitHubIcon /> GitHub
+              </a>
+            )}
+            {project.demo && (
+              <a
+                href={project.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 font-mono text-[11px] text-ink-muted hover:text-accent transition-colors"
+                aria-label={`${project.name} live demo`}
+              >
+                <ExternalIcon /> Live
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </motion.article>
   )
@@ -143,18 +148,9 @@ export default function Projects() {
   }
 
   return (
-    <section id="projects" className="py-28 px-6 bg-surface">
-      <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="mb-12"
-        >
-          <p className="font-mono text-xs text-accent/70 mb-3 tracking-widest">{'// projects'}</p>
-          <h2 className="font-display text-4xl sm:text-5xl text-ink">Things I've Built</h2>
-        </motion.div>
+    <section id="projects" className="relative py-28 sm:py-36 px-5 sm:px-8 bg-surface">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeading index="03" label="projects" title="Things I've Built" className="mb-12" />
 
         <motion.div
           variants={container}

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar.jsx'
-import Hero from './components/Hero.jsx'
+import Constellation from './components/Constellation.jsx'
+import Cursor from './components/Cursor.jsx'
+import VelocityMarquee from './components/VelocityMarquee.jsx'
 import About from './components/About.jsx'
 import Research from './components/Research.jsx'
 import Projects from './components/Projects.jsx'
@@ -24,7 +26,7 @@ function ScrollProgress() {
 
   return (
     <div
-      className="fixed top-0 left-0 h-[2px] bg-accent z-[100]"
+      className="fixed top-0 left-0 h-[2px] bg-gradient-to-r from-accent to-glow z-[100]"
       style={{ width: `${width}%`, transition: 'width 0.05s linear' }}
     />
   )
@@ -33,11 +35,13 @@ function ScrollProgress() {
 export default function App() {
   return (
     <>
+      <Cursor />
       <ScrollProgress />
       <Navbar />
       <main>
-        <Hero />
+        <Constellation />
         <About />
+        <VelocityMarquee items={['Human-Computer Interaction', 'Mixed Reality', 'Quantum Communication', 'Edge-Cloud Computing', 'Generative AI']} />
         <Research />
         <Projects />
         <Ventures />

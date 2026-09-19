@@ -1,5 +1,8 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
+import SectionHeading from './SectionHeading.jsx'
+import { ACCEPTED_COUNT } from '../data/papers.js'
+import { spotlightMove } from '../lib/motion.js'
 
 const INFO = [
   { label: 'Education',   icon: '🎓', text: 'Algoma University, BCS Honours · Dec 2026' },
@@ -14,7 +17,7 @@ const SKILLS = [
 ]
 
 const STATS = [
-  { to: 6,   suffix: '',   label: 'Research Papers' },
+  { to: ACCEPTED_COUNT, suffix: '', label: 'Accepted Papers' },
   { to: 7,   suffix: '+',  label: 'Projects Built'  },
   { to: 100, suffix: '+',  label: 'ALCOMS Members'  },
   { to: 2,   suffix: '',   label: 'Years Researching'},
@@ -79,7 +82,7 @@ function Avatar() {
       {/* Animated gradient ring */}
       <div
         className="absolute inset-0 rounded-full p-[2.5px]"
-        style={{ background: 'linear-gradient(135deg, #2A5E40 0%, #34D399 50%, #2A5E40 100%)' }}
+        style={{ background: 'linear-gradient(135deg, rgb(var(--accent)) 0%, rgb(var(--glow)) 50%, rgb(var(--accent)) 100%)' }}
       >
         <div className="w-full h-full rounded-full bg-accent-soft flex items-center justify-center">
           <span className="font-display text-3xl text-accent select-none">M</span>
@@ -87,8 +90,8 @@ function Avatar() {
       </div>
       {/* Online indicator */}
       <span className="absolute bottom-0.5 right-0.5 flex h-4 w-4">
-        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
-        <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500 border-2 border-surface" />
+        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-glow opacity-60" />
+        <span className="relative inline-flex rounded-full h-4 w-4 bg-glow border-2 border-surface" />
       </span>
     </motion.div>
   )
@@ -106,19 +109,10 @@ const stagger = {
 
 export default function About() {
   return (
-    <section id="about" className="py-28 px-6 bg-surface">
-      <div className="max-w-5xl mx-auto">
+    <section id="about" className="relative py-28 sm:py-36 px-5 sm:px-8 bg-surface">
+      <div className="max-w-6xl mx-auto">
 
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          className="mb-16"
-        >
-          <p className="font-mono text-xs text-accent/70 mb-3 tracking-widest">{'// about'}</p>
-          <h2 className="font-display text-4xl sm:text-5xl text-ink">Who I Am</h2>
-        </motion.div>
+        <SectionHeading index="01" label="about" title="Who I Am" className="mb-16" />
 
         {/* Stats row with count-up */}
         <motion.div
@@ -170,12 +164,13 @@ export default function About() {
           {/* Right: Info card */}
           <motion.div variants={fadeUp} className="min-w-0">
             <motion.div
+              onMouseMove={spotlightMove}
               whileHover={{ y: -6 }}
               transition={{ duration: 0.22, ease: 'easeOut' }}
-              className="relative bg-white border border-border-soft rounded-2xl overflow-hidden shadow-sm hover:shadow-[0_20px_48px_rgba(42,94,64,0.10)] hover:border-accent/20 transition-all duration-300"
+              className="spotlight relative bg-surface border border-border-soft rounded-2xl overflow-hidden shadow-sm hover:shadow-[0_20px_48px_rgb(var(--accent)/0.10)] hover:border-accent/20 transition-all duration-300"
             >
               {/* Gradient top band */}
-              <div className="h-1 bg-gradient-to-r from-accent/50 via-emerald-400/60 to-accent/50" />
+              <div className="h-1 bg-gradient-to-r from-accent/50 via-glow/60 to-accent/50" />
 
               <div className="relative p-8">
                 {/* Background glow */}

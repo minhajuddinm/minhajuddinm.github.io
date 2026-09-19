@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion'
+import SectionHeading from './SectionHeading.jsx'
+import { spotlightMove } from '../lib/motion.js'
 
 const VENTURES = [
   {
@@ -12,7 +14,7 @@ const VENTURES = [
     tags: ['React', 'Three.js', 'WebAR', 'SaaS'],
     url: 'https://loomxr.vercel.app',
     ctaLabel: 'Visit LoomXR',
-    topBar: 'from-emerald-400/50 via-emerald-500/50 to-emerald-400/50',
+    topBar: 'from-accent/40 via-glow/60 to-accent/40',
   },
   {
     id: 2,
@@ -39,7 +41,7 @@ function VentureMonogram({ letter }) {
     <div className="relative w-16 h-16 mb-6 flex-shrink-0">
       <div
         className="absolute inset-0 rounded-full p-[2.5px]"
-        style={{ background: 'linear-gradient(135deg, #2A5E40 0%, #34D399 50%, #2A5E40 100%)' }}
+        style={{ background: 'linear-gradient(135deg, rgb(var(--accent)) 0%, rgb(var(--glow)) 50%, rgb(var(--accent)) 100%)' }}
       >
         <div className="w-full h-full rounded-full bg-accent-soft flex items-center justify-center">
           <span className="font-display text-2xl text-accent select-none">{letter}</span>
@@ -68,7 +70,8 @@ function VentureCard({ venture }) {
       variants={cardVariants}
       whileHover={{ y: -6 }}
       transition={{ duration: 0.22, ease: 'easeOut' }}
-      className="group relative bg-white border border-border-soft rounded-2xl flex flex-col shadow-sm hover:shadow-[0_20px_48px_rgba(42,94,64,0.12)] hover:border-accent/20 transition-all duration-300 overflow-hidden"
+      onMouseMove={spotlightMove}
+      className="spotlight group relative bg-surface border border-border-soft rounded-2xl flex flex-col shadow-sm hover:shadow-[0_20px_48px_rgb(var(--accent)/0.12)] hover:border-accent/20 transition-all duration-300 overflow-hidden"
     >
       <div className={`h-[3px] bg-gradient-to-r ${venture.topBar} flex-shrink-0`} />
       <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl" />
@@ -107,7 +110,7 @@ function VentureCard({ venture }) {
           href={venture.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="relative inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-accent text-white rounded-full text-sm font-bold shadow-lg shadow-accent/30 hover:shadow-xl hover:shadow-accent/45 transition-shadow duration-300 overflow-hidden self-start w-full sm:w-auto"
+          className="relative inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-accent text-warm-bg rounded-full text-sm font-bold shadow-lg shadow-accent/30 hover:shadow-xl hover:shadow-accent/45 transition-shadow duration-300 overflow-hidden self-start w-full sm:w-auto"
         >
           <span className="absolute inset-0 bg-gradient-to-br from-white/15 to-transparent rounded-full pointer-events-none" />
           <span className="relative">{venture.ctaLabel}</span>
@@ -125,21 +128,10 @@ export default function Ventures() {
   }
 
   return (
-    <section id="ventures" className="py-28 px-6 bg-warm-bg">
-      <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="mb-12"
-        >
-          <p className="font-mono text-xs text-accent/70 mb-3 tracking-widest">{'// ventures'}</p>
-          <h2 className="font-display text-4xl sm:text-5xl text-ink mb-4">Ventures</h2>
-          <p className="text-ink-muted max-w-xl leading-relaxed text-lg font-light">
-            Companies I have founded and lead.
-          </p>
-        </motion.div>
+    <section id="ventures" className="relative py-28 sm:py-36 px-5 sm:px-8 bg-warm-bg">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeading index="04" label="ventures" title="Ventures"
+          sub="Companies I have founded and lead." className="mb-12" />
 
         <motion.div
           variants={container}

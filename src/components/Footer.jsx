@@ -25,7 +25,7 @@ export default function Footer() {
           <div>
             <p className="font-display text-base text-ink mb-0.5">Muhammad Minhajuddin</p>
             <p className="font-mono text-xs text-ink-muted/55">
-              {new Date().getFullYear()} &nbsp;·&nbsp; Built with React &amp; TailwindCSS
+              {new Date().getFullYear()} &nbsp;·&nbsp; Built with React, Three.js &amp; TailwindCSS
             </p>
           </div>
 
@@ -34,7 +34,7 @@ export default function Footer() {
               href="https://github.com/minhajuddinm"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-white border border-border-soft text-ink-muted hover:text-accent hover:border-accent/25 hover:shadow-md transition-all duration-200"
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-surface border border-border-soft text-ink-muted hover:text-accent hover:border-accent/25 hover:shadow-md transition-all duration-200"
               aria-label="GitHub"
             >
               <GitHubIcon />
@@ -43,7 +43,7 @@ export default function Footer() {
               href="https://linkedin.com/in/muhammad-minhajuddin76"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-white border border-border-soft text-ink-muted hover:text-accent hover:border-accent/25 hover:shadow-md transition-all duration-200"
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-surface border border-border-soft text-ink-muted hover:text-accent hover:border-accent/25 hover:shadow-md transition-all duration-200"
               aria-label="LinkedIn"
             >
               <LinkedInIcon />
