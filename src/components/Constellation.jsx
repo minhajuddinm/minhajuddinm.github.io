@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { PAPERS, CLUSTERS, STATUS_META } from '../data/papers.js'
+import { PAPERS, CLUSTERS, LINKS, STATUS_META } from '../data/papers.js'
 import { useTheme } from '../lib/theme.js'
 import { useMediaQuery, EASE } from '../lib/motion.js'
 
@@ -15,13 +15,15 @@ import { useMediaQuery, EASE } from '../lib/motion.js'
 
 /* Legend colours (kept in sync with constellationScene.js) */
 const PALETTE = {
-  dark:  { published: '#7ED6A4', accepted: '#8EC5FF', review: '#FFC46B' },
-  light: { published: '#1F7A4D', accepted: '#2B63C9', review: '#C2740C' },
+  dark:  { published: '#7ED6A4', accepted: '#8EC5FF', review: '#FFC46B', wip: '#C4B5FD' },
+  light: { published: '#1F7A4D', accepted: '#2B63C9', review: '#C2740C', wip: '#7C3AED' },
 }
 
-/* Stage boundaries along the pinned scroll (0..1) */
-const STAGES = [0.18, 0.40, 0.62, 0.83]
-const stageOf = p => (p < STAGES[0] ? 0 : p < STAGES[1] ? 1 : p < STAGES[2] ? 2 : p < STAGES[3] ? 3 : 4)
+/* Stage boundaries along the pinned scroll (0..1): intro, one stage per field, outro.
+   Keep in sync with the camera keyframes in constellationScene.js */
+const STAGES = [0.2, 0.49, 0.76]
+const stageOf = p => { let s = 0; while (s < STAGES.length && p >= STAGES[s]) s++; return s }
+const OUTRO = CLUSTERS.length + 1
 
 
 export default function Constellation() {
@@ -76,7 +78,7 @@ export default function Constellation() {
       if (!alive) return
       handle = mountScene({
         canvas: canvasRef.current, desktop, reduce, progressRef, themeRef, labelsRef, clusterLabelsRef,
-        papers: PAPERS, clusters: CLUSTERS,
+        papers: PAPERS, clusters: CLUSTERS, links: LINKS,
         onHover: p => setHovered(p),
         onSelect: p => setSelected(p),
       })
@@ -93,7 +95,7 @@ export default function Constellation() {
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
-  const focusCluster = stage >= 1 && stage <= 3 ? CLUSTERS[stage - 1] : null
+  const focusCluster = stage >= 1 && stage <= CLUSTERS.length ? CLUSTERS[stage - 1] : null
 
   const openInList = useCallback((p) => {
     setSelected(null)
@@ -103,13 +105,14 @@ export default function Constellation() {
 
   const total = PAPERS.length
   const published = PAPERS.filter(p => p.statusKey === 'published').length
+  const accepted = PAPERS.filter(p => p.statusKey === 'accepted').length
 
   return (
     <section
       id="hero"
       ref={sectionRef}
       className="relative bg-warm-bg"
-      style={{ height: tour ? '420vh' : 'auto' }}
+      style={{ height: tour ? '340vh' : 'auto' }}
       aria-label="Introduction and research map"
     >
       <div className={`${tour ? 'sticky top-0 h-screen' : desktop ? 'relative h-screen min-h-[640px]' : 'relative min-h-[100svh]'} overflow-hidden grain`}>
@@ -151,7 +154,7 @@ export default function Constellation() {
             <div
               key={c.id}
               ref={el => { clusterLabelsRef.current[c.id] = el }}
-              className={`absolute left-0 top-0 will-change-transform transition-opacity duration-500 ${(stage === 0 || stage === 4) && ready ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute left-0 top-0 will-change-transform transition-opacity duration-500 ${(stage === 0 || stage === OUTRO) && ready ? 'opacity-100' : 'opacity-0'}`}
             >
               <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-accent whitespace-nowrap">
                 {c.label} · {byCluster[c.id].length}
@@ -174,7 +177,7 @@ export default function Constellation() {
                   onPick={setSelected}
                 />
               )}
-              {stage === 4 && <Outro key="outro" total={total} published={published} />}
+              {stage === OUTRO && <Outro key="outro" total={total} published={published} accepted={accepted} />}
             </AnimatePresence>
           </div>
         </div>
@@ -182,7 +185,7 @@ export default function Constellation() {
         {/* Stage rail */}
         {tour && (
           <div className="absolute right-5 top-1/2 -translate-y-1/2 z-10 flex flex-col gap-3" aria-hidden="true">
-            {[0, 1, 2, 3, 4].map(i => (
+            {Array.from({ length: OUTRO + 1 }, (_, i) => (
               <span key={i} className={`block w-[3px] rounded-full transition-all duration-500 ${stage === i ? 'h-8 bg-accent' : 'h-3 bg-ink/20'}`} />
             ))}
           </div>
@@ -190,7 +193,7 @@ export default function Constellation() {
 
         {/* Legend */}
         <div className="absolute left-5 sm:left-8 bottom-6 z-10 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[10px] text-ink-muted" aria-hidden="true">
-          {['published', 'accepted', 'review'].map(k => (
+          {['published', 'accepted', 'review', 'wip'].map(k => (
             <span key={k} className="flex items-center gap-1.5">
               <span
                 className={`w-2 h-2 rounded-full ${k === 'review' ? 'animate-twinkle' : ''}`}
@@ -297,7 +300,7 @@ function Intro({ tour, total }) {
 
       <p className="text-base sm:text-lg text-ink-muted leading-relaxed mb-8 max-w-md">
         Muhammad Minhajuddin. Computer Science researcher at Algoma University working on
-        HCI, mixed reality and quantum communication.
+        quantum communication, HCI and mixed reality.
       </p>
 
       <div className="flex flex-wrap gap-3">
@@ -321,7 +324,7 @@ function Intro({ tour, total }) {
 function ClusterCaption({ index, cluster, papers, onPick }) {
   return (
     <motion.div {...block}>
-      <p className="font-mono text-[11px] text-accent mb-3 tracking-widest">0{index} / 03 · FIELD</p>
+      <p className="font-mono text-[11px] text-accent mb-3 tracking-widest">0{index} / 0{CLUSTERS.length} · FIELD</p>
       <h2 className="font-display text-5xl sm:text-6xl text-ink mb-3 tracking-tight">{cluster.label}</h2>
       <p className="text-ink-muted mb-6 leading-relaxed">{cluster.blurb}</p>
       <ul className="space-y-1.5">
@@ -343,14 +346,14 @@ function ClusterCaption({ index, cluster, papers, onPick }) {
   )
 }
 
-function Outro({ total, published }) {
+function Outro({ total, published, accepted }) {
   return (
     <motion.div {...block}>
       <p className="font-mono text-[11px] text-accent mb-3 tracking-widest">THE MAP SO FAR</p>
-      <h2 className="font-display text-5xl sm:text-6xl text-ink mb-4 tracking-tight">{total} papers, 3 fields.</h2>
+      <h2 className="font-display text-5xl sm:text-6xl text-ink mb-4 tracking-tight">{total} papers, {CLUSTERS.length} fields.</h2>
       <p className="text-ink-muted mb-8 leading-relaxed max-w-md">
-        {published} published, the rest accepted or under review, including a journal submission to IEEE TVCG.
-        The dashed line links the V.O.I.D. poster to its journal extension.
+        {published} published, {accepted} accepted, and the rest under review or in progress, including journal work
+        for IEEE TVCG and IEEE TNSM. Dashed lines link each conference paper to its journal extension.
       </p>
       <a href="#research" data-cursor="view" className="inline-flex px-7 py-3.5 bg-accent text-warm-bg rounded-full text-sm font-bold shadow-lg shadow-accent/25 hover:-translate-y-0.5 transition-all duration-300">
         Read the full list

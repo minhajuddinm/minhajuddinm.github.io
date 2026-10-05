@@ -2,14 +2,13 @@
 import { AdditiveBlending,BufferAttribute,BufferGeometry,CanvasTexture,Clock,Float32BufferAttribute,Group,Line,LineBasicMaterial,LineDashedMaterial,LineSegments,NormalBlending,PerspectiveCamera,Points,PointsMaterial,Raycaster,SRGBColorSpace,Scene,Sprite,SpriteMaterial,Vector2,Vector3,WebGLRenderer } from 'three'
 
 const CENTERS = {
-  hci:       new Vector3(-3.6, 0.9, 0),
-  quantum:   new Vector3(3.8, 1.5, -2.4),
-  computing: new Vector3(0.7, -2.6, 1.4),
+  quantum: new Vector3(3.6, 1.2, -2.0),
+  hci:     new Vector3(-3.4, -0.4, 0.6),
 }
 
 export const PALETTE = {
-  dark:  { published: '#7ED6A4', accepted: '#8EC5FF', review: '#FFC46B', dust: '#9fb3a6', line: '#7ED6A4', nebula: '#5EEAAD' },
-  light: { published: '#1F7A4D', accepted: '#2B63C9', review: '#C2740C', dust: '#48584c', line: '#2A5E40', nebula: '#2A5E40' },
+  dark:  { published: '#7ED6A4', accepted: '#8EC5FF', review: '#FFC46B', wip: '#C4B5FD', dust: '#9fb3a6', line: '#7ED6A4', nebula: '#5EEAAD' },
+  light: { published: '#1F7A4D', accepted: '#2B63C9', review: '#C2740C', wip: '#7C3AED', dust: '#48584c', line: '#2A5E40', nebula: '#2A5E40' },
 }
 
 const SIZE = { journal: 1.0, full: 0.8, survey: 0.8, poster: 0.6, demo: 0.6 }
@@ -47,7 +46,7 @@ function dotTexture() {
 
 const ss = t => { const c = Math.max(0, Math.min(1, t)); return c * c * (3 - 2 * c) }
 
-export function mountScene({ canvas, desktop, reduce, progressRef, themeRef, labelsRef, clusterLabelsRef, papers, clusters, onHover, onSelect }) {
+export function mountScene({ canvas, desktop, reduce, progressRef, themeRef, labelsRef, clusterLabelsRef, papers, clusters, links = [], onHover, onSelect }) {
     
     let renderer
     try {
@@ -146,16 +145,14 @@ export function mountScene({ canvas, desktop, reduce, progressRef, themeRef, lab
       rings.push(ring)
     })
 
-    /* The TVCG journal paper extends the V.O.I.D. poster: draw that link */
-    const voidStar = stars.find(s => s.userData.paper.id === 3)
-    const tvcgStar = stars.find(s => s.userData.paper.id === 10)
-    let linkLine = null
-    if (voidStar && tvcgStar) {
-      const g = new BufferGeometry().setFromPoints([voidStar.position, tvcgStar.position])
-      linkLine = new Line(g, lineMatLink)
-      linkLine.computeLineDistances()
-      world.add(linkLine)
-    }
+    /* Dashed links from a conference paper to its journal extension */
+    const starOf = id => stars.find(s => s.userData.paper.id === id)
+    const linkLines = links.map(([a, b]) => [starOf(a), starOf(b)]).filter(([a, b]) => a && b).map(([a, b]) => {
+      const line = new Line(new BufferGeometry().setFromPoints([a.position, b.position]), lineMatLink)
+      line.computeLineDistances()
+      world.add(line)
+      return line
+    })
 
     /* Theme colours */
     function paint(t) {
@@ -185,7 +182,7 @@ export function mountScene({ canvas, desktop, reduce, progressRef, themeRef, lab
       ...clusters.map((c, i) => {
         const ctr = CENTERS[c.id]
         return {
-          t: [0.29, 0.51, 0.72][i],
+          t: [0.35, 0.62][i],
           target: ctr.clone().add(off),
           pos: ctr.clone().add(off).add(new Vector3(0, 0.3, desktop ? 6.8 : 8)),
         }
@@ -269,7 +266,7 @@ export function mountScene({ canvas, desktop, reduce, progressRef, themeRef, lab
       if (!reduce) {
         dust.rotation.y = t * 0.012
         rings.forEach((r, i) => { r.rotation.z = t * (0.05 + i * 0.02) })
-        if (linkLine) lineMatLink.dashOffset = -t * 0.3
+        if (linkLines.length) lineMatLink.dashOffset = -t * 0.3
       }
 
       const hov = pick()

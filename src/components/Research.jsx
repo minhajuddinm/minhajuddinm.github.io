@@ -1,15 +1,10 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { PAPERS, STATUS_META } from '../data/papers.js'
+import { PAPERS, CLUSTERS, STATUS_META } from '../data/papers.js'
 import { EASE, spotlightMove } from '../lib/motion.js'
 import SectionHeading from './SectionHeading.jsx'
 
-const FILTERS = [
-  { id: 'all',       label: 'All'            },
-  { id: 'hci',       label: 'HCI / XR'       },
-  { id: 'quantum',   label: 'Quantum'        },
-  { id: 'computing', label: 'Edge Computing' },
-]
+const FILTERS = [{ id: 'all', label: 'All' }, ...CLUSTERS.map(c => ({ id: c.id, label: c.label }))]
 
 const KIND_LABEL = { journal: 'Journal', full: 'Full paper', survey: 'Survey', poster: 'Poster', demo: 'Demo' }
 
@@ -54,6 +49,7 @@ const DOT = {
   published: 'bg-emerald-500 dark:bg-emerald-300',
   accepted:  'bg-sky-500 dark:bg-sky-300',
   review:    'bg-amber-500 dark:bg-amber-300 animate-twinkle',
+  wip:       'bg-violet-500 dark:bg-violet-300',
 }
 
 function ResearchCard({ paper, index, flash }) {
@@ -148,7 +144,7 @@ export default function Research() {
           index="02"
           label="research"
           title="Publications & Active Work"
-          sub="Human-computer interaction, spatial computing, quantum communication and intelligent systems."
+          sub="Quantum communication and simulation, human-computer interaction, spatial computing and intelligent systems."
           className="mb-12"
         />
 
