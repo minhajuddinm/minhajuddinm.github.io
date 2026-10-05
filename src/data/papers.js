@@ -34,11 +34,11 @@ const RAW = [
     title: 'Noise-Aware Simulation and Statistical Eavesdropping Detection in BB84, Six-State, and E91 Quantum Key Distribution Protocols',
     year: '2027',
     authors: 'Vidhi, Minhajuddin, M. et al.',
-    venue: 'IEEE CCNC 2027 · Full Paper · Work in Progress',
+    venue: 'IEEE CCNC 2027 · Work-in-Progress Paper · Accepted',
     abstract:
       'A unified Qiskit study of BB84, six-state, and E91 QKD protocols under matched ideal, synthetic-noise, and real-device conditions, deriving noise-calibrated eavesdropper-detection thresholds and characterizing the detection-versus-key-rate tradeoff against a tunable attacker.',
-    status: { emoji: '🛠️', label: 'Work in Progress', cls: 'bg-violet-50 text-violet-700 border border-violet-200' },
-    topBar: 'from-violet-400/50 via-violet-500/50 to-violet-400/50',
+    status: { emoji: '📝', label: 'Under Publication', cls: 'bg-blue-50 text-blue-700 border border-blue-200' },
+    topBar: 'from-blue-400/50 via-blue-500/50 to-blue-400/50',
   },
   {
     id: 11,
@@ -47,10 +47,10 @@ const RAW = [
     title: 'Detection Blind Regions Under Collective Probe Attacks in BB84, Six-State, and E91 Quantum Key Distribution',
     year: '2027',
     authors: 'Vidhi, Minhajuddin, M., Islam, S. M. R., Sultana, A.',
-    venue: 'IEEE CCECE 2027 · Full Paper · Work in Progress',
+    venue: 'IEEE CCECE 2027 · Full Paper · In Preparation',
     abstract:
       'Replaces the intercept-and-resend attacker with a collective probe attack, implemented in Qiskit as the Stinespring dilation of a Pauli channel, and computes the eavesdropper\'s Holevo information exactly. At equal information leakage, the blind region of per-session QBER and CHSH detectors grows by a factor of up to 4.6 under noise and, for BB84 and six-state, extends to the error rate at which the secret key rate reaches zero.',
-    status: { emoji: '🛠️', label: 'Work in Progress', cls: 'bg-violet-50 text-violet-700 border border-violet-200' },
+    status: { emoji: '🛠️', label: 'In Preparation', cls: 'bg-violet-50 text-violet-700 border border-violet-200' },
     topBar: 'from-violet-400/50 via-violet-500/50 to-violet-400/50',
   },
   {
@@ -60,10 +60,10 @@ const RAW = [
     title: 'Reference-State Sensitivity of Perturbative Trotter Error Estimates for Fermi–Hubbard Lattices',
     year: '2027',
     authors: 'Minhajuddin, M., Vidhi, Asad, A.',
-    venue: 'IEEE CCECE 2027 · Full Paper · Work in Progress',
+    venue: 'IEEE CCECE 2027 · Full Paper · In Preparation',
     abstract:
       'Evaluates the perturbative Trotter error estimate in PennyLane on 8–16 qubit Fermi–Hubbard lattices using classically cheap reference states (free-fermion, Néel, Gutzwiller, UHF). Using the hypervirial identity, the second-order error is written as a one-parameter family of forms; the symmetric member reduces reference-state error, and the hypervirial residual serves as a reliability check that is necessary but not sufficient.',
-    status: { emoji: '🛠️', label: 'Work in Progress', cls: 'bg-violet-50 text-violet-700 border border-violet-200' },
+    status: { emoji: '🛠️', label: 'In Preparation', cls: 'bg-violet-50 text-violet-700 border border-violet-200' },
     topBar: 'from-violet-400/50 via-violet-500/50 to-violet-400/50',
   },
   {
@@ -73,10 +73,10 @@ const RAW = [
     title: 'Attributing Eavesdropping on Quantum Key Distribution Links: Calibrated and Sequential Detection for BB84, Six-State, and E91 Under Noise, Collective Attacks, and Hardware',
     year: '2027',
     authors: 'Vidhi, Minhajuddin, M., Islam, S. M. R., Sultana, A.',
-    venue: 'IEEE Transactions on Network and Service Management · Journal Paper · Work in Progress',
+    venue: 'IEEE Transactions on Network and Service Management · Journal Paper · In Preparation',
     abstract:
       'A journal extension of the CCNC and CCECE QKD studies that treats eavesdropping detection as an attribution problem separate from secrecy. It adds receiver operating characteristics, a sequential CUSUM detector over consecutive sessions, per-protocol asymptotic and composable finite-key rates, IBM hardware runs, and operating rules for QKD networks.',
-    status: { emoji: '🛠️', label: 'Work in Progress', cls: 'bg-violet-50 text-violet-700 border border-violet-200' },
+    status: { emoji: '🛠️', label: 'In Preparation', cls: 'bg-violet-50 text-violet-700 border border-violet-200' },
     topBar: 'from-violet-400/50 via-violet-500/50 to-violet-400/50',
   },
 
@@ -174,11 +174,12 @@ const RAW = [
   },
 ]
 
-const STATUS_KEY = { 'Published': 'published', 'Under Publication': 'accepted', 'Under Review': 'review', 'Work in Progress': 'wip' }
+const STATUS_KEY = { 'Published': 'published', 'Under Publication': 'accepted', 'Under Review': 'review', 'In Preparation': 'wip' }
 
 function kindOf(venue) {
   const v = venue.toLowerCase()
   if (v.includes('journal') || v.includes('tvcg')) return 'journal'
+  if (v.includes('work-in-progress')) return 'wip'
   if (v.includes('survey')) return 'survey'
   if (v.includes('full')) return 'full'
   if (v.includes('demo')) return 'demo'
@@ -212,7 +213,7 @@ export const STATUS_META = {
   published: { label: 'Published',         cls: 'bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-400/10 dark:text-emerald-300 dark:border-emerald-400/25' },
   accepted:  { label: 'Accepted',          cls: 'bg-sky-50 text-sky-700 border border-sky-200 dark:bg-sky-400/10 dark:text-sky-300 dark:border-sky-400/25' },
   review:    { label: 'Under Review',      cls: 'bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-400/10 dark:text-amber-300 dark:border-amber-400/25' },
-  wip:       { label: 'Work in Progress',  cls: 'bg-violet-50 text-violet-700 border border-violet-200 dark:bg-violet-400/10 dark:text-violet-300 dark:border-violet-400/25' },
+  wip:       { label: 'In Preparation',  cls: 'bg-violet-50 text-violet-700 border border-violet-200 dark:bg-violet-400/10 dark:text-violet-300 dark:border-violet-400/25' },
 }
 
 /* Papers that are accepted or published (used for the About counter) */

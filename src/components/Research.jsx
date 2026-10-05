@@ -6,7 +6,7 @@ import SectionHeading from './SectionHeading.jsx'
 
 const FILTERS = [{ id: 'all', label: 'All' }, ...CLUSTERS.map(c => ({ id: c.id, label: c.label }))]
 
-const KIND_LABEL = { journal: 'Journal', full: 'Full paper', survey: 'Survey', poster: 'Poster', demo: 'Demo' }
+const KIND_LABEL = { journal: 'Journal', full: 'Full paper', survey: 'Survey', wip: 'Work-in-progress paper', poster: 'Poster', demo: 'Demo' }
 
 function FilterTabs({ active, onChange }) {
   return (

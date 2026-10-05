@@ -11,7 +11,7 @@ export const PALETTE = {
   light: { published: '#1F7A4D', accepted: '#2B63C9', review: '#C2740C', wip: '#7C3AED', dust: '#48584c', line: '#2A5E40', nebula: '#2A5E40' },
 }
 
-const SIZE = { journal: 1.0, full: 0.8, survey: 0.8, poster: 0.6, demo: 0.6 }
+const SIZE = { journal: 1.0, full: 0.8, survey: 0.8, wip: 0.7, poster: 0.6, demo: 0.6 }
 
 /* Deterministic pseudo-random so the sky is the same on every visit */
 function rng(seed) {

@@ -352,7 +352,7 @@ function Outro({ total, published, accepted }) {
       <p className="font-mono text-[11px] text-accent mb-3 tracking-widest">THE MAP SO FAR</p>
       <h2 className="font-display text-5xl sm:text-6xl text-ink mb-4 tracking-tight">{total} papers, {CLUSTERS.length} fields.</h2>
       <p className="text-ink-muted mb-8 leading-relaxed max-w-md">
-        {published} published, {accepted} accepted, and the rest under review or in progress, including journal work
+        {published} published, {accepted} accepted, and the rest under review or in preparation, including journal work
         for IEEE TVCG and IEEE TNSM. Dashed lines link each conference paper to its journal extension.
       </p>
       <a href="#research" data-cursor="view" className="inline-flex px-7 py-3.5 bg-accent text-warm-bg rounded-full text-sm font-bold shadow-lg shadow-accent/25 hover:-translate-y-0.5 transition-all duration-300">
