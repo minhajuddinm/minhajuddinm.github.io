@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Muhammad Minhajuddin</title>
+<meta name="description" content="HCI and AR researcher at Algoma University. Founder and CEO of LoomXR Labs Inc.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&display=swap">
+<style>
+/* Concept: the page is a packaging dieline laid on a cutting mat. Solid magenta = cut, dashed cyan = fold.
+   Each link is a panel of the box. Matte black board on a grey mat. */
+:root {
+  --mat: #2e5a4c;        /* cutting mat */
+  --mat-line: #3f6e5f;
+  --board: #c9a274;      /* kraft board */
+  --board-dark: #b48d5f;
+  --ink: #23170c;
+  --cut: #e2007a;        /* registration magenta */
+  --fold: #0096d6;       /* process cyan */
+  --sans: "Schibsted Grotesk", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+:root { --mat:#6b6f76; --mat-line:#7a7e85; --board:#16171a; --board-dark:#24262b; --ink:#f2f2ef; --legend:#f2f2ef; }
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background-color: var(--mat);
+  background-image:
+    linear-gradient(var(--mat-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--mat-line) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink); font-family: var(--sans); font-size: 16px; min-height: 100vh;
+}
+.sheet { max-width: 420px; margin: 0 auto; padding-inline: 16px; padding-block: calc(36px + env(safe-area-inset-top, 0px)) calc(40px + env(safe-area-inset-bottom, 0px)); }
+.net { position: relative; width: min(100%, 340px); margin: 0 auto; }
+.flap { display: block; width: calc(100% - 68px); height: auto; margin-inline: 34px; }
+.net > a.panel { margin-inline: 34px; }
+.row { display: grid; grid-template-columns: 34px 1fr 34px; }
+.side { display: block; width: 100%; height: 100%; }
+.panel {
+  display: block; position: relative; background: var(--board); color: var(--ink); text-decoration: none;
+  border-left: 2px solid var(--cut); border-right: 2px solid var(--cut);
+  border-top: 2px dashed var(--fold);
+  padding: 22px 20px; min-height: 104px;
+}
+.row .panel { border-left-style: dashed; border-left-color: var(--fold); border-right-style: dashed; border-right-color: var(--fold); }
+.front { padding: 26px 20px 24px; }
+h1 { font-weight: 800; font-size: 30px; line-height: 1.02; letter-spacing: -0.02em; margin: 0 0 12px; text-wrap: balance; }
+.roles { margin: 0; font-size: 14.5px; line-height: 1.45; }
+.roles span { display: block; }
+.dim { position: absolute; right: 10px; bottom: 8px; font-size: 11px; color: var(--ink); opacity: .5; font-variant-numeric: tabular-nums; }
+a.panel { display: flex; flex-direction: column; justify-content: center; gap: 3px; transition: background-color .12s; }
+a.panel:hover { background: var(--board-dark); }
+a.panel:focus-visible { outline: 3px solid var(--fold); outline-offset: -6px; }
+.what { font-weight: 700; font-size: 21px; letter-spacing: -0.01em; }
+.where { font-size: 14px; opacity: .78; overflow-wrap: anywhere; }
+.panel:last-of-type { border-bottom: 2px dashed var(--fold); }
+.reg { position: absolute; width: 22px; height: 22px; }
+.reg::before, .reg::after { content: ""; position: absolute; background: var(--legend, #fff); }
+.reg::before { left: 10px; top: 0; width: 2px; height: 22px; }
+.reg::after { top: 10px; left: 0; height: 2px; width: 22px; }
+.reg { border: 2px solid var(--legend, #fff); border-radius: 50%; }
+.reg.tl { left: 0; top: -8px; } .reg.br { right: 0; bottom: -8px; }
+.legend { margin: 22px auto 0; width: min(100%, 340px); display: flex; gap: 18px; color: var(--legend, #e6efe9); font-size: 13px; }
+.legend i { display: inline-block; width: 22px; height: 0; vertical-align: middle; margin-right: 6px; }
+.legend .c i { border-top: 2px solid var(--cut); }
+.legend .f i { border-top: 2px dashed var(--fold); }
+@media (max-width: 380px) { .row { grid-template-columns: 22px 1fr 22px; } .flap { width: calc(100% - 44px); margin-inline: 22px; } .net > a.panel { margin-inline: 22px; } h1 { font-size: 26px; } .reg { display: none; } }
+@media (prefers-reduced-motion: reduce) { a.panel { transition: none; } }
+</style>
+</head>
+<body>
+<main class="sheet">
+  <div class="net">
+    <span class="reg tl" aria-hidden="true"></span>
+    <!-- lid tuck flap -->
+    <svg class="flap" viewBox="0 0 340 46" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M1 46 L1 22 C1 8 12 1 26 1 L314 1 C328 1 339 8 339 22 L339 46" style="fill:var(--board);stroke:var(--cut)" stroke-width="2"/>
+    </svg>
+    <!-- front panel with dust flaps either side -->
+    <div class="row">
+      <svg class="side" viewBox="0 0 34 100" preserveAspectRatio="none" aria-hidden="true"><path d="M34 0 L6 14 L6 86 L34 100" style="fill:var(--board);stroke:var(--cut)" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>
+      <section class="panel front">
+        <h1>Muhammad Minhajuddin</h1>
+        <p class="roles">
+          <span>HCI and AR researcher, Algoma University</span>
+          <span>Founder and CEO, LoomXR Labs</span>
+        </p>
+        <span class="dim" aria-hidden="true">front</span>
+      </section>
+      <svg class="side" viewBox="0 0 34 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 L28 14 L28 86 L0 100" style="fill:var(--board);stroke:var(--cut)" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>
+    </div>
+    <a class="panel" href="https://minhajuddinm.github.io" target="_blank" rel="noopener"><span class="what">Portfolio</span><span class="where">Papers, projects and talks</span></a>
+    <a class="panel" href="https://github.com/minhajuddinm" target="_blank" rel="noopener"><span class="what">GitHub</span><span class="where">github.com/minhajuddinm</span></a>
+    <a class="panel" href="https://www.linkedin.com/in/muhammad-minhajuddin76" target="_blank" rel="noopener"><span class="what">LinkedIn</span><span class="where">muhammad-minhajuddin76</span></a>
+    <a class="panel" href="mailto:mminhajuddin@algomau.ca"><span class="what">Email</span><span class="where">mminhajuddin@algomau.ca</span></a>
+    <!-- glue tab -->
+    <svg class="flap" viewBox="0 0 340 34" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M1 0 L22 33 L318 33 L339 0" style="fill:var(--board);stroke:var(--cut)" stroke-width="2"/>
+    </svg>
+    <span class="reg br" aria-hidden="true"></span>
+  </div>
+  <div class="legend" aria-hidden="true"><span class="c"><i></i>cut</span><span class="f"><i></i>fold</span></div>
+</main>
+</body>
+</html>
