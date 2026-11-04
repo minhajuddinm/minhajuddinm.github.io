@@ -7,8 +7,8 @@ const RAW = [
     category: 'quantum',
     title: 'A Structured Review of Distributed Quantum Computing: Infrastructure, Protocols, Applications, Compilation, and Security',
     year: '2026',
-    authors: 'Irfan, M., Tran, K., Minhajuddin, M. et al.',
-    venue: 'IEEE Access · Survey Paper · Under Review',
+    authors: 'Minhajuddin, M., Tran, K., Grewal, A., Kaur, R., Asad, A.',
+    venue: 'MDPI Electronics · Survey Paper · Under Review',
     abstract:
       'A structured review of 124 studies (2020–2026) on distributed quantum computing, organized around five pillars — infrastructure, protocols, applications, compilation, and security — consolidating how these layers constrain one another and outlining open research directions.',
     status: { emoji: '🔄', label: 'Under Review', cls: 'bg-amber-50 text-amber-700 border border-amber-200' },
