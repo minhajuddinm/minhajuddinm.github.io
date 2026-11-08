@@ -156,7 +156,7 @@ export default function About() {
               Research-driven and builder-minded: he writes papers and ships real things.
             </p>
             <p className="text-ink-muted leading-relaxed">
-              He co-founds and leads startups alongside his research: LoomXR (luxury AR packaging) and BROS Inc (accessible XR experiences).
+              He co-founds and leads startups alongside his research: LoomXR Labs Inc. (personalized packaging previewed in web AR) and BROS Inc (accessible XR experiences).
             </p>
             <SkillMarquee />
           </motion.div>

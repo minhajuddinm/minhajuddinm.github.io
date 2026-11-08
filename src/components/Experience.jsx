@@ -33,12 +33,12 @@ const EXPERIENCE = [
   {
     id: 5,
     role: 'Co-founder & CEO',
-    org: 'LoomXR',
+    org: 'LoomXR Labs Inc.',
     period: '2026 – Present',
     badge: null,
     badgeCls: '',
     bullets: [
-      'Building a B2B SaaS platform for luxury AR packaging experiences.',
+      'Building a web AR platform that lets shoppers preview personalized packaging on the real product in their phone browser.',
       'Commercializing HYPAR research into a market-ready product.',
       'Leading product, grant strategy, and the Three.js web experience.',
     ],
