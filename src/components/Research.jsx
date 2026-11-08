@@ -85,10 +85,22 @@ function ResearchCard({ paper, index, flash }) {
         <p className="text-xs text-ink-muted mb-0.5">{paper.authors}</p>
         <p className="text-xs text-ink-muted italic mb-5">{paper.venue}</p>
 
-        <span className={`inline-flex items-center gap-2 px-2.5 py-1 text-xs font-medium rounded-full w-fit ${st.cls}`}>
-          <span className={`w-1.5 h-1.5 rounded-full ${DOT[paper.statusKey]}`} aria-hidden="true" />
-          {st.label}
-        </span>
+        <div className="flex flex-wrap items-center gap-3">
+          <span className={`inline-flex items-center gap-2 px-2.5 py-1 text-xs font-medium rounded-full w-fit ${st.cls}`}>
+            <span className={`w-1.5 h-1.5 rounded-full ${DOT[paper.statusKey]}`} aria-hidden="true" />
+            {st.label}
+          </span>
+          {paper.link && (
+            <a
+              href={paper.link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-[11px] text-accent hover:opacity-70 transition-opacity"
+            >
+              {paper.link.label} ↗
+            </a>
+          )}
+        </div>
 
         <AnimatePresence initial={false}>
           {expanded && (
