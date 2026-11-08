@@ -33,7 +33,7 @@ const PROJECTS = [
     description: 'Built and maintained the official site for the Algoma University Computer Science Society.',
     tags: ['React', 'TailwindCSS', 'Vite'],
     github: null,
-    demo: 'https://alcoms.ca',
+    demo: 'https://alcoms.algomau.ca',
   },
   {
     id: 4,
