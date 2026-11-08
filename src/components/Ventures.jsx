@@ -12,7 +12,7 @@ const VENTURES = [
     description:
       'A B2B SaaS platform delivering luxury AR packaging experiences for premium brands. Commercialized from HYPAR research into a market-ready product.',
     tags: ['React', 'Three.js', 'WebAR', 'SaaS'],
-    url: 'https://loomxr.vercel.app',
+    url: 'https://www.loomxrlabs.com/',
     ctaLabel: 'Visit LoomXR',
     topBar: 'from-accent/40 via-glow/60 to-accent/40',
   },
