@@ -9,7 +9,7 @@ const PROJECTS = [
     description: 'A quantum computing learning platform built with a team for the University of Waterloo IBM Qiskit Fall Fest 2026. Twenty-seven courses and 119 lessons take learners from qubits and gates to Grover search, QAOA, cryptography, and chemistry, with live Qiskit circuit experiments, saved progress, daily quizzes, and a WebXR lab for Meta Quest.',
     tags: ['React', 'TypeScript', 'FastAPI', 'Qiskit', 'WebXR'],
     github: 'https://github.com/minhajuddinm/quantum-grover',
-    demo: null,
+    demo: 'https://quantum-grove-learn.vercel.app/',
   },
   {
     id: 1,
