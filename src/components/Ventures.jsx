@@ -6,13 +6,13 @@ const VENTURES = [
   {
     id: 1,
     monogram: 'L',
-    name: 'LoomXR',
+    name: 'LoomXR Labs Inc.',
     role: 'Co-founder & CEO',
     period: '2026 – Present',
     description:
-      'A B2B SaaS platform delivering luxury AR packaging experiences for premium brands. Commercialized from HYPAR research into a market-ready product.',
+      'A web AR platform for consumer brands. Shoppers scan a product, answer a few questions about their taste, and see a personalized packaging design on the real box in their phone browser, with no app to install. Commercialized from HYPAR research.',
     tags: ['React', 'Three.js', 'WebAR', 'SaaS'],
-    url: 'https://loomxr.vercel.app',
+    url: 'https://www.loomxrlabs.com/',
     ctaLabel: 'Visit LoomXR',
     topBar: 'from-accent/40 via-glow/60 to-accent/40',
   },

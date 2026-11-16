@@ -4,10 +4,19 @@ import { spotlightMove } from '../lib/motion.js'
 
 const PROJECTS = [
   {
+    id: 8,
+    name: 'Quantum Grove',
+    type: 'Learning platform',
+    featured: 'lg',
+    description: 'A quantum computing learning platform built with a team for the University of Waterloo IBM Qiskit Fall Fest 2026. Twenty-seven courses and 119 lessons take learners from qubits and gates to Grover search, QAOA, cryptography, and chemistry, with live Qiskit circuit experiments, saved progress, daily quizzes, and a WebXR lab for Meta Quest.',
+    tags: ['React', 'TypeScript', 'FastAPI', 'Qiskit', 'WebXR'],
+    github: 'https://github.com/minhajuddinm/quantum-grover',
+    demo: 'https://quantum-grove-learn.vercel.app/',
+  },
+  {
     id: 1,
     name: 'Eyes of the Soul',
     type: 'VR game',
-    featured: 'sm',
     description: 'An accessible VR detective game for Blind and Low Vision players, built in Unity. Developed under Boundless Reality Origin Studios Inc. (BROS).',
     tags: ['Unity', 'C#', 'VR', 'Meta SDK', 'Accessibility'],
     github: null,
@@ -29,7 +38,7 @@ const PROJECTS = [
     description: 'Built and maintained the official site for the Algoma University Computer Science Society.',
     tags: ['React', 'TailwindCSS', 'Vite'],
     github: null,
-    demo: 'https://alcoms.ca',
+    demo: 'https://alcoms.algomau.ca',
   },
   {
     id: 4,
@@ -62,7 +71,6 @@ const PROJECTS = [
     id: 7,
     name: 'OSCE SIM',
     type: 'VR trainer',
-    featured: 'lg',
     description: 'A VR clinical-reasoning trainer for medical students on Meta Quest: interview an AI patient by voice, order tests from an AI nurse, commit a diagnosis, and receive an AI-graded debrief with per-question coaching.',
     tags: ['Unity', 'C#', 'VR', 'Meta Quest', 'OpenAI Realtime API'],
     github: 'https://github.com/SLIDE-Studio/PatientSim',
@@ -101,8 +109,8 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } },
 }
 
-/* Featured cards span two columns so the grid closes with no orphan:
-   'sm' spans from the two-column layout up, 'lg' only in the three-column layout. */
+/* The featured card spans two columns so the grid closes with no orphan:
+   8 projects fill the two-column layout as is, and 8 + 1 span fills the three-column one. */
 const SPAN = { sm: 'sm:col-span-2', lg: 'lg:col-span-2' }
 
 const LINK_CLASS =

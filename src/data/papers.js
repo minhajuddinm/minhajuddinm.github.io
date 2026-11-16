@@ -10,20 +10,8 @@ const RAW = [
     authors: 'Minhajuddin, M., Tran, K., Grewal, A., Kaur, R., Asad, A.',
     venue: 'MDPI Electronics · Survey Paper · Under Review',
     abstract:
-      'A structured review of 124 studies (2020–2026) on distributed quantum computing, organized around five pillars — infrastructure, protocols, applications, compilation, and security — consolidating how these layers constrain one another and outlining open research directions.',
-    status: { emoji: '🔄', label: 'Under Review', cls: 'bg-amber-50 text-amber-700 border border-amber-200' },
-    topBar: 'from-amber-400/50 via-amber-500/50 to-amber-400/50',
-  },
-  {
-    id: 9,
-    tag: 'Quantum AI',
-    category: 'quantum',
-    title: 'A Survey on Quantum AI Communications: Protocols, Optimization, and Applications',
-    year: '2026',
-    authors: 'Sharma, S., Minhajuddin, M., Mukhija, R. et al.',
-    venue: 'IEEE Access · Survey Paper · Under Review',
-    abstract:
-      'A survey organizing quantum AI and communications research into a bidirectional taxonomy — quantum-enhanced learning for classical network problems, and classical AI for quantum communication infrastructure — spanning 6G, edge and semantic communications, QKD parameter optimization and attack detection, and a comparative analysis of post-quantum cryptography, QKD, and hybrid PQC-QKD architectures.',
+      'A structured review of 126 studies, mainly from 2020 to 2026, on distributed quantum computing. It organizes the literature into five pillars (infrastructure, protocols, applications, compilation, and security), identifies interconnect rate and fidelity, classical control latency, remote-operation overhead, and coherence as coupled limits on distributed execution, and sets out open problems in distributed fault tolerance, transduction, benchmarking, and integrated security.',
+    link: { label: 'Preprint (DOI)', url: 'https://doi.org/10.20944/preprints202611.0456.v1' },
     status: { emoji: '🔄', label: 'Under Review', cls: 'bg-amber-50 text-amber-700 border border-amber-200' },
     topBar: 'from-amber-400/50 via-amber-500/50 to-amber-400/50',
   },
@@ -189,7 +177,7 @@ function kindOf(venue) {
 /* Short names used on the star map */
 const SHORT = {
   1: 'EDOA', 2: 'HYPAR', 3: 'V.O.I.D.', 10: 'EFE Locomotion', 4: 'A.U.R.A.', 5: 'Echolocation Interfaces',
-  6: 'PRISM', 7: 'Distributed QC Review', 8: 'Noise-Aware QKD Detection', 9: 'Quantum AI Comms Survey',
+  6: 'PRISM', 7: 'Distributed QC Review', 8: 'Noise-Aware QKD Detection',
   11: 'QKD Collective Probe Attacks', 12: 'Trotter Error Estimates', 13: 'QKD Attribution Journal',
 }
 
@@ -202,7 +190,7 @@ export const PAPERS = RAW.map(p => ({
 
 /* Order here is the order of the filters and of the constellation tour */
 export const CLUSTERS = [
-  { id: 'quantum', label: 'Quantum',       blurb: 'QKD security, Trotter error estimation, distributed quantum computing and quantum AI' },
+  { id: 'quantum', label: 'Quantum',       blurb: 'QKD security, Trotter error estimation, and distributed quantum computing' },
   { id: 'hci',     label: 'HCI & Systems', blurb: 'Locomotion, embodied AI, visual analytics, accessible VR and energy-aware edge-cloud offloading' },
 ]
 

@@ -76,18 +76,18 @@ function StatusChip({ statusKey, className = '' }) {
   )
 }
 
-/* Shown only when a paper has a `url` in papers.js */
+/* Shown only when a paper has a `link: { label, url }` in papers.js */
 function PaperLink({ paper }) {
-  if (!paper.url) return null
+  if (!paper.link) return null
   return (
     <a
-      href={paper.url}
+      href={paper.link.url}
       target="_blank"
       rel="noopener noreferrer"
       className="inline-flex items-center gap-1.5 min-h-[44px] font-mono text-xs text-accent hover:underline underline-offset-4"
-      aria-label={`Read ${paper.short}`}
+      aria-label={`${paper.link.label}: ${paper.short}`}
     >
-      Read paper
+      {paper.link.label}
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M7 17 17 7M8 7h9v9" />
       </svg>
