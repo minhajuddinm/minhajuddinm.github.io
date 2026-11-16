@@ -4,7 +4,7 @@ import SectionHeading from './SectionHeading.jsx'
 import { ACCEPTED_COUNT } from '../data/papers.js'
 import { spotlightMove } from '../lib/motion.js'
 
-const PORTRAIT = new URL('../assets/portrait.jpg', import.meta.url).href
+const PORTRAIT = new URL('../assets/portrait.webp', import.meta.url).href
 
 /* Line icons in the same stroke style as the rest of the site */
 const ICON = {
@@ -23,7 +23,7 @@ function InfoIcon({ name }) {
 }
 
 const INFO = [
-  { label: 'Education',   icon: 'education', text: 'Algoma University, BCS Honours · Dec 2026' },
+  { label: 'Education',   icon: 'education', text: 'Starting MSc in Computer Science (Thesis), Algoma University · BCS Honours, Dec 2026' },
   { label: 'Location',    icon: 'location',  text: 'Brampton, Ontario, Canada' },
   { label: 'Research Lab',icon: 'lab',       text: 'SLIDE Research Studio' },
   { label: 'Internship',  icon: 'globe',     text: 'Mitacs Globalink · University of Aberdeen (2026)' },
@@ -99,9 +99,9 @@ function Avatar() {
     >
       <img
         src={PORTRAIT}
-        alt="Muhammad Minhajuddin, smiling, in a grey checked blazer and black shirt"
-        width="800"
-        height="1000"
+        alt="Muhammad Minhajuddin, smiling, wearing glasses and a grey checked blazer over a black shirt in a bright office"
+        width="1024"
+        height="1024"
         loading="lazy"
         decoding="async"
         className="block w-full h-auto aspect-[4/5] object-cover rounded-[0.95rem]"
@@ -157,8 +157,8 @@ export default function About() {
           <motion.div variants={fadeUp} className="min-w-0">
             <Avatar />
             <p className="text-lg text-ink leading-relaxed mb-4">
-              Minhaj is a final-year Computer Science Honours student at Algoma University,
-              graduating December 2026.
+              Minhaj is finishing his Computer Science Honours degree at Algoma University in
+              December 2026 and is starting a thesis-based Master of Science in Computer Science there.
             </p>
             <p className="text-ink-muted leading-relaxed mb-4">
               He co-founded ALCOMS (Algoma University Computer Science Society) and serves as its

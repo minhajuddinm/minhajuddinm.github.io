@@ -191,7 +191,7 @@ export default function Contact() {
                 <span className="font-mono text-xs text-accent uppercase tracking-[0.18em]">Available for opportunities</span>
               </div>
               <p className="text-sm text-ink-muted leading-relaxed">
-                Graduating Dec 2026. Open to research roles, internships, and collaborations starting late 2026.
+                Finishing my Honours degree in Dec 2026, then starting a thesis-based MSc in Computer Science at Algoma. Open to research collaborations and internships.
               </p>
             </motion.div>
           </motion.div>

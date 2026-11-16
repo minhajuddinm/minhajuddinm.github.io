@@ -325,8 +325,8 @@ function Intro({ tour, total }) {
       </p>
 
       <p className="text-base sm:text-lg text-ink-muted leading-relaxed mb-7 max-w-md">
-        Undergraduate Computer Science researcher at Algoma University in Brampton, Ontario,
-        working on quantum communication, HCI and mixed reality.
+        Computer Science researcher at Algoma University in Brampton, Ontario, starting a
+        thesis-based MSc and working on quantum communication, HCI and mixed reality.
       </p>
 
       <div className="flex flex-wrap gap-3">

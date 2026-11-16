@@ -21,7 +21,7 @@ const RAW = [
     category: 'quantum',
     title: 'Noise-Aware Simulation and Statistical Eavesdropping Detection in BB84, Six-State, and E91 Quantum Key Distribution Protocols',
     year: '2027',
-    authors: 'Vidhi, Minhajuddin, M. et al.',
+    authors: 'Minhajuddin, M., Vidhi et al.',
     venue: 'IEEE CCNC 2027 · Work-in-Progress Paper · Accepted',
     abstract:
       'A unified Qiskit study of BB84, six-state, and E91 QKD protocols under matched ideal, synthetic-noise, and real-device conditions, deriving noise-calibrated eavesdropper-detection thresholds and characterizing the detection-versus-key-rate tradeoff against a tunable attacker.',
@@ -34,7 +34,7 @@ const RAW = [
     category: 'quantum',
     title: 'Detection Blind Regions Under Collective Probe Attacks in BB84, Six-State, and E91 Quantum Key Distribution',
     year: '2027',
-    authors: 'Vidhi, Minhajuddin, M., Islam, S. M. R., Sultana, A.',
+    authors: 'Minhajuddin, M., Vidhi, Islam, S. M. R., Sultana, A.',
     venue: 'IEEE CCECE 2027 · Full Paper · In Preparation',
     abstract:
       'Replaces the intercept-and-resend attacker with a collective probe attack, implemented in Qiskit as the Stinespring dilation of a Pauli channel, and computes the eavesdropper\'s Holevo information exactly. At equal information leakage, the blind region of per-session QBER and CHSH detectors grows by a factor of up to 4.6 under noise and, for BB84 and six-state, extends to the error rate at which the secret key rate reaches zero.',
@@ -60,7 +60,7 @@ const RAW = [
     category: 'quantum',
     title: 'Attributing Eavesdropping on Quantum Key Distribution Links: Calibrated and Sequential Detection for BB84, Six-State, and E91 Under Noise, Collective Attacks, and Hardware',
     year: '2027',
-    authors: 'Vidhi, Minhajuddin, M., Islam, S. M. R., Sultana, A.',
+    authors: 'Minhajuddin, M., Vidhi, Islam, S. M. R., Sultana, A.',
     venue: 'IEEE Transactions on Network and Service Management · Journal Paper · In Preparation',
     abstract:
       'A journal extension of the CCNC and CCECE QKD studies that treats eavesdropping detection as an attribution problem separate from secrecy. It adds receiver operating characteristics, a sequential CUSUM detector over consecutive sessions, per-protocol asymptotic and composable finite-key rates, IBM hardware runs, and operating rules for QKD networks.',

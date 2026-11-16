@@ -2,7 +2,6 @@ import { motion, useScroll, useSpring } from 'framer-motion'
 import Navbar from './components/Navbar.jsx'
 import Constellation from './components/Constellation.jsx'
 import Cursor from './components/Cursor.jsx'
-import VelocityMarquee from './components/VelocityMarquee.jsx'
 import About from './components/About.jsx'
 import Research from './components/Research.jsx'
 import Projects from './components/Projects.jsx'
@@ -34,7 +33,6 @@ export default function App() {
       <main>
         <Constellation />
         <About />
-        <VelocityMarquee items={['Human-Computer Interaction', 'Mixed Reality', 'Quantum Communication', 'Edge-Cloud Computing', 'Generative AI']} />
         <Research />
         <Projects />
         <Ventures />
