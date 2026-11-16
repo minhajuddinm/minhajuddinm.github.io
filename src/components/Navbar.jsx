@@ -17,17 +17,18 @@ function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="relative w-9 h-9 rounded-full flex items-center justify-center text-ink-muted hover:text-accent hover:bg-accent-soft transition-colors"
+      className="relative w-11 h-11 rounded-full flex items-center justify-center text-ink-muted hover:text-accent hover:bg-accent-soft transition-colors"
       aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}
       title={dark ? 'Light theme' : 'Dark theme'}
     >
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
         <mask id="moon-mask">
           <rect x="0" y="0" width="24" height="24" fill="white" />
-          <motion.circle r="9" fill="black" animate={{ cx: dark ? 17 : 30, cy: dark ? 7 : 0 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} />
+          {/* Plain SVG geometry with a CSS transition: the attributes exist from the first paint */}
+          <circle r="9" fill="black" cx={dark ? 17 : 30} cy={dark ? 7 : 0} style={{ transition: 'cx .5s cubic-bezier(.16,1,.3,1), cy .5s cubic-bezier(.16,1,.3,1), r .5s cubic-bezier(.16,1,.3,1)' }} />
         </mask>
-        <motion.circle cx="12" cy="12" fill="currentColor" stroke="none" mask="url(#moon-mask)" animate={{ r: dark ? 8 : 4.5 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} />
-        <motion.g animate={{ opacity: dark ? 0 : 1, rotate: dark ? -45 : 0, scale: dark ? 0.6 : 1 }} style={{ originX: '12px', originY: '12px' }} transition={{ duration: 0.4 }}>
+        <circle cx="12" cy="12" fill="currentColor" stroke="none" mask="url(#moon-mask)" r={dark ? 8 : 4.5} style={{ transition: 'cx .5s cubic-bezier(.16,1,.3,1), cy .5s cubic-bezier(.16,1,.3,1), r .5s cubic-bezier(.16,1,.3,1)' }} />
+        <motion.g initial={false} animate={{ opacity: dark ? 0 : 1, rotate: dark ? -45 : 0, scale: dark ? 0.6 : 1 }} style={{ originX: '12px', originY: '12px' }} transition={{ duration: 0.4 }}>
           {[0, 45, 90, 135, 180, 225, 270, 315].map(a => (
             <line key={a} x1="12" y1="2.5" x2="12" y2="4.5" transform={`rotate(${a} 12 12)`} />
           ))}
@@ -63,6 +64,13 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [menuOpen])
 
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = e => { if (e.key === 'Escape') setMenuOpen(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [menuOpen])
+
   return (
     <motion.div
       initial={{ y: -100 }}
@@ -71,14 +79,14 @@ export default function Navbar() {
       className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none"
     >
       <nav
-        className={`pointer-events-auto transition-all duration-300 rounded-full pl-6 pr-2 py-2 flex items-center justify-between gap-6 w-full md:w-auto ${
+        className={`pointer-events-auto transition-all duration-300 rounded-full pl-6 pr-1.5 py-1.5 flex items-center justify-between gap-6 w-full md:w-auto ${
           scrolled
             ? 'bg-surface/80 backdrop-blur-2xl shadow-lg shadow-black/5 border border-border-soft'
             : 'bg-surface/30 backdrop-blur-xl border border-transparent'
         }`}
         aria-label="Primary navigation"
       >
-        <a href="#hero" className="font-display text-xl text-ink hover:text-accent transition-colors flex items-center gap-2">
+        <a href="#hero" className="font-display text-xl text-ink hover:text-accent transition-colors flex items-center gap-2 min-h-[44px]">
           <span className="w-2 h-2 rounded-full bg-accent shadow-[0_0_10px_rgb(var(--glow))]" aria-hidden="true" />
           Minhaj
         </a>
@@ -109,7 +117,7 @@ export default function Navbar() {
         <div className="flex items-center gap-1">
           <ThemeToggle />
           <button
-            className="md:hidden flex flex-col gap-1.5 p-2.5"
+            className="md:hidden w-11 h-11 flex flex-col items-center justify-center gap-1.5"
             aria-label="Toggle navigation menu"
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen(p => !p)}

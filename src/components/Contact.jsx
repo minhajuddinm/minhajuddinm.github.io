@@ -46,6 +46,41 @@ function SendIcon() {
   )
 }
 
+function CopyIcon({ done }) {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {done
+        ? <polyline points="20 6 9 17 4 12" />
+        : <><rect x="9" y="9" width="12" height="12" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></>}
+    </svg>
+  )
+}
+
+const EMAIL = 'minhaj112204@gmail.com'
+
+/* Copies the address for visitors with no mail app set up */
+function CopyEmail() {
+  const [copied, setCopied] = useState(false)
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(EMAIL)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch (e) { /* clipboard blocked: the mailto link still works */ }
+  }
+  return (
+    <button
+      type="button"
+      onClick={copy}
+      className="absolute right-3 top-1/2 -translate-y-1/2 z-10 inline-flex items-center gap-1.5 min-h-[44px] md:min-h-[36px] px-3.5 rounded-full border border-border-soft bg-surface font-mono text-xs text-ink-muted hover:text-accent hover:border-accent/40 transition-colors"
+      aria-label="Copy email address"
+    >
+      <CopyIcon done={copied} />
+      <span aria-live="polite">{copied ? 'Copied' : 'Copy'}</span>
+    </button>
+  )
+}
+
 function CheckCircleIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -56,14 +91,14 @@ function CheckCircleIcon() {
 }
 
 const CONTACT_LINKS = [
-  { label: 'Email',    value: 'minhaj112204@gmail.com',                href: 'mailto:minhaj112204@gmail.com',                icon: <EmailIcon />    },
+  { label: 'Email',    value: EMAIL,                href: `mailto:${EMAIL}`,                icon: <EmailIcon />    },
   { label: 'LinkedIn', value: 'linkedin.com/in/muhammad-minhajuddin76', href: 'https://linkedin.com/in/muhammad-minhajuddin76', icon: <LinkedInIcon /> },
   { label: 'GitHub',   value: 'github.com/minhajuddinm',               href: 'https://github.com/minhajuddinm',              icon: <GitHubIcon />   },
 ]
 
 const INPUT_CLASS =
-  'w-full px-4 py-3 bg-surface border border-border-soft rounded-xl text-sm text-ink ' +
-  'placeholder:text-ink-muted/40 focus:outline-none focus:border-accent focus:ring-2 ' +
+  'w-full px-4 py-3 bg-surface border border-border-soft rounded-xl text-base text-ink ' +
+  'placeholder:text-ink-muted focus:outline-none focus:border-accent focus:ring-2 ' +
   'focus:ring-accent/10 transition-all duration-200 font-body'
 
 const fadeUp = {
@@ -85,7 +120,7 @@ export default function Contact() {
     const f = new FormData(e.currentTarget)
     const subject = `Portfolio message from ${f.get('name')}`
     const body = `${f.get('message')}\n\n${f.get('name')} (${f.get('email')})`
-    window.location.href = `mailto:minhaj112204@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
     setSent(true)
   }
 
@@ -114,12 +149,11 @@ export default function Contact() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
-            className="space-y-3"
+            className="space-y-3 min-w-0"
           >
             {CONTACT_LINKS.map(({ label, value, href, icon }) => (
+              <motion.div key={label} variants={fadeUp} className="relative">
               <motion.a
-                key={label}
-                variants={fadeUp}
                 href={href}
                 target={href.startsWith('http') ? '_blank' : undefined}
                 rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
@@ -130,14 +164,18 @@ export default function Contact() {
                 <span className="w-11 h-11 flex items-center justify-center rounded-xl bg-surface border border-border-soft text-accent group-hover:bg-accent group-hover:text-warm-bg group-hover:border-accent transition-all duration-200 shrink-0 shadow-sm">
                   {icon}
                 </span>
-                <div className="min-w-0 flex-1">
-                  <p className="font-mono text-[9px] text-ink-muted/60 uppercase tracking-widest mb-0.5">{label}</p>
-                  <p className="text-sm font-medium text-ink group-hover:text-accent transition-colors truncate">{value}</p>
+                <div className={`min-w-0 flex-1 ${label === 'Email' ? 'pr-24' : ''}`}>
+                  <p className="eyebrow mb-0.5">{label}</p>
+                  <p className="text-[15px] font-medium text-ink group-hover:text-accent transition-colors truncate">{value}</p>
                 </div>
-                <span className="text-ink-muted/30 group-hover:text-accent/60 transition-colors shrink-0">
-                  <ArrowUpRightIcon />
-                </span>
+                {label !== 'Email' && (
+                  <span className="text-ink-muted group-hover:text-accent transition-colors shrink-0">
+                    <ArrowUpRightIcon />
+                  </span>
+                )}
               </motion.a>
+              {label === 'Email' && <CopyEmail />}
+              </motion.div>
             ))}
 
             {/* Availability note */}
@@ -150,9 +188,9 @@ export default function Contact() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-glow opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-glow" />
                 </span>
-                <span className="font-mono text-[10px] text-accent uppercase tracking-widest">Available for opportunities</span>
+                <span className="font-mono text-xs text-accent uppercase tracking-[0.18em]">Available for opportunities</span>
               </div>
-              <p className="text-xs text-ink-muted leading-relaxed">
+              <p className="text-sm text-ink-muted leading-relaxed">
                 Graduating Dec 2026. Open to research roles, internships, and collaborations starting late 2026.
               </p>
             </motion.div>
@@ -164,7 +202,7 @@ export default function Contact() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
-            className="space-y-4"
+            className="space-y-4 min-w-0"
             onSubmit={handleSubmit}
           >
             {[
@@ -172,7 +210,7 @@ export default function Contact() {
               { id: 'email', type: 'email', label: 'Email', placeholder: 'you@example.com' },
             ].map(({ id, type, label, placeholder }) => (
               <motion.div key={id} variants={fadeUp}>
-                <label htmlFor={id} className="block font-mono text-[10px] text-ink-muted/60 uppercase tracking-widest mb-2">
+                <label htmlFor={id} className="block eyebrow mb-2">
                   {label}
                 </label>
                 <input
@@ -184,7 +222,7 @@ export default function Contact() {
             ))}
 
             <motion.div variants={fadeUp}>
-              <label htmlFor="message" className="block font-mono text-[10px] text-ink-muted/60 uppercase tracking-widest mb-2">
+              <label htmlFor="message" className="block eyebrow mb-2">
                 Message
               </label>
               <textarea

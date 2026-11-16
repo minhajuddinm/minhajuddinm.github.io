@@ -6,6 +6,8 @@ const PROJECTS = [
   {
     id: 1,
     name: 'Eyes of the Soul',
+    type: 'VR game',
+    featured: 'sm',
     description: 'An accessible VR detective game for Blind and Low Vision players, built in Unity. Developed under Boundless Reality Origin Studios Inc. (BROS).',
     tags: ['Unity', 'C#', 'VR', 'Meta SDK', 'Accessibility'],
     github: null,
@@ -14,7 +16,8 @@ const PROJECTS = [
   {
     id: 2,
     name: 'Thunder Hacks',
-    description: 'Organized a 24-hour hackathon for Algoma University students.',
+    type: 'Hackathon',
+    description: 'A 24-hour hackathon for Algoma University students. Two editions run so far, in March and October 2026, with the third set for October 2027.',
     tags: ['Event Mgmt', 'Web', 'React'],
     github: 'https://github.com/minhajuddinm/thunderhacks-2026',
     demo: 'https://thunderhacks.algomau.ca',
@@ -22,6 +25,7 @@ const PROJECTS = [
   {
     id: 3,
     name: 'ALCOMS Website',
+    type: 'Website',
     description: 'Built and maintained the official site for the Algoma University Computer Science Society.',
     tags: ['React', 'TailwindCSS', 'Vite'],
     github: null,
@@ -30,6 +34,7 @@ const PROJECTS = [
   {
     id: 4,
     name: 'HYPAR Prototype',
+    type: 'AR prototype',
     description: 'AR mobile prototype for hyper-personalized product packaging using markerless tracking.',
     tags: ['Unity', 'AR Foundation', 'C#'],
     github: 'https://github.com/minhajuddinm/HYPAR-Gen-AI-Texture-XR',
@@ -38,6 +43,7 @@ const PROJECTS = [
   {
     id: 5,
     name: 'EDOA Simulator',
+    type: 'Simulation',
     description: 'Simulation tool for testing the EDOA edge-cloud task offloading algorithm.',
     tags: ['Python', 'Matplotlib', 'NumPy'],
     github: null,
@@ -46,6 +52,7 @@ const PROJECTS = [
   {
     id: 6,
     name: 'Snappy',
+    type: 'XR companion',
     description: 'Immersive XR companion that helps children understand medical procedures, reducing pre-procedure anxiety through clarity instead of distraction. Built at an XR Hackathon in Montreal.',
     tags: ['Unity', 'C#', 'AR', 'VR', 'XR'],
     github: 'https://github.com/minhajuddinm/Snappy01',
@@ -54,6 +61,8 @@ const PROJECTS = [
   {
     id: 7,
     name: 'OSCE SIM',
+    type: 'VR trainer',
+    featured: 'lg',
     description: 'A VR clinical-reasoning trainer for medical students on Meta Quest: interview an AI patient by voice, order tests from an AI nurse, commit a diagnosis, and receive an AI-graded debrief with per-question coaching.',
     tags: ['Unity', 'C#', 'VR', 'Meta Quest', 'OpenAI Realtime API'],
     github: 'https://github.com/SLIDE-Studio/PatientSim',
@@ -77,65 +86,86 @@ function ExternalIcon() {
   )
 }
 
+function PlayIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M8 5v14l11-7z" />
+    </svg>
+  )
+}
+
+const isVideo = url => /youtube\.com|youtu\.be|vimeo\.com/.test(url)
+
 const cardVariants = {
   hidden:  { opacity: 0, y: 32 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } },
 }
 
-function ProjectCard({ project }) {
+/* Featured cards span two columns so the grid closes with no orphan:
+   'sm' spans from the two-column layout up, 'lg' only in the three-column layout. */
+const SPAN = { sm: 'sm:col-span-2', lg: 'lg:col-span-2' }
+
+const LINK_CLASS =
+  'inline-flex items-center gap-1.5 min-h-[44px] md:min-h-[36px] px-3.5 rounded-full border border-border-soft font-mono text-xs text-ink-muted ' +
+  'hover:text-accent hover:border-accent/40 hover:bg-accent-soft transition-colors'
+
+function ProjectCard({ project, index }) {
+  const featured = !!project.featured
+  const video = project.demo && isVideo(project.demo)
   return (
     <motion.article
       variants={cardVariants}
       whileHover={{ y: -5 }}
       transition={{ duration: 0.22, ease: 'easeOut' }}
-      layout
       onMouseMove={spotlightMove}
-      className="spotlight group relative bg-surface border border-border-soft rounded-2xl flex flex-col shadow-sm hover:shadow-[0_16px_40px_rgb(var(--accent)/0.10)] hover:border-accent/18 transition-all duration-300 overflow-hidden"
+      className={`spotlight group relative bg-surface border border-border-soft rounded-2xl flex flex-col shadow-sm hover:shadow-[0_16px_40px_rgb(var(--accent)/0.10)] hover:border-accent/25 transition-[border-color,box-shadow] duration-300 overflow-hidden ${featured ? SPAN[project.featured] : ''}`}
     >
-      <div className="h-[2px] bg-gradient-to-r from-border-soft via-accent/20 to-border-soft flex-shrink-0" />
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.035] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      <div className={`h-[2px] flex-shrink-0 bg-gradient-to-r ${featured ? 'from-accent/50 via-glow/60 to-accent/50' : 'from-border-soft via-accent/20 to-border-soft'}`} />
+      {featured && <div className="dot-grid absolute inset-0 pointer-events-none" aria-hidden="true" />}
 
       <div className="relative z-10 flex flex-col flex-1 p-7">
-        <h3 className="font-display text-xl text-ink mb-3">{project.name}</h3>
-        <p className="text-sm text-ink-muted leading-relaxed flex-1 mb-5">{project.description}</p>
-
-        <div className="flex flex-wrap gap-1.5 mb-5">
-          {project.tags.map(tag => (
-            <span
-              key={tag}
-              className="font-mono px-2.5 py-1 bg-warm-bg border border-border-soft text-ink-muted text-[11px] tracking-wide rounded-lg"
-            >
-              {tag}
-            </span>
-          ))}
+        <div className="flex items-center justify-between gap-4 mb-5">
+          <span className="eyebrow flex items-center gap-2">
+            {featured && <span className="w-1.5 h-1.5 rounded-full bg-glow shadow-[0_0_8px_rgb(var(--glow))]" aria-hidden="true" />}
+            {featured ? `Featured · ${project.type}` : project.type}
+          </span>
+          <span className="font-mono text-xs text-ink-muted tabular-nums" aria-hidden="true">
+            {String(index + 1).padStart(2, '0')}
+          </span>
         </div>
 
-        {(project.github || project.demo) && (
-          <div className="flex items-center gap-4 pt-4 border-t border-border-soft">
-            {project.github && (
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 font-mono text-[11px] text-ink-muted hover:text-accent transition-colors"
-                aria-label={`${project.name} on GitHub`}
+        <h3 className={`font-display text-ink mb-3 group-hover:text-accent transition-colors duration-300 ${featured ? 'text-2xl sm:text-3xl' : 'text-xl'}`}>
+          {project.name}
+        </h3>
+        <p className={`text-ink-muted leading-relaxed flex-1 mb-6 ${featured ? 'text-base max-w-xl' : 'text-[15px]'}`}>{project.description}</p>
+
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-4">
+          <ul className="flex flex-wrap gap-1.5" aria-label="Built with">
+            {project.tags.map(tag => (
+              <li
+                key={tag}
+                className="font-mono px-2.5 py-1 bg-warm-bg border border-border-soft text-ink-muted text-xs tracking-wide rounded-lg"
               >
-                <GitHubIcon /> GitHub
-              </a>
-            )}
-            {project.demo && (
-              <a
-                href={project.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 font-mono text-[11px] text-ink-muted hover:text-accent transition-colors"
-                aria-label={`${project.name} live demo`}
-              >
-                <ExternalIcon /> Live
-              </a>
-            )}
-          </div>
-        )}
+                {tag}
+              </li>
+            ))}
+          </ul>
+
+          {(project.github || project.demo) && (
+            <div className="flex items-center gap-2">
+              {project.github && (
+                <a href={project.github} target="_blank" rel="noopener noreferrer" className={LINK_CLASS} aria-label={`${project.name} source on GitHub`}>
+                  <GitHubIcon /> Code
+                </a>
+              )}
+              {project.demo && (
+                <a href={project.demo} target="_blank" rel="noopener noreferrer" className={LINK_CLASS} aria-label={video ? `Watch the ${project.name} demo video` : `Open the ${project.name} site`}>
+                  {video ? <><PlayIcon /> Watch demo</> : <><ExternalIcon /> Visit site</>}
+                </a>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </motion.article>
   )
@@ -150,7 +180,8 @@ export default function Projects() {
   return (
     <section id="projects" className="relative py-28 sm:py-36 px-5 sm:px-8 bg-surface">
       <div className="max-w-6xl mx-auto">
-        <SectionHeading index="03" label="projects" title="Things I've Built" className="mb-12" />
+        <SectionHeading index="03" label="projects" title="Things I've Built"
+          sub="XR games, research prototypes and community projects." className="mb-12" />
 
         <motion.div
           variants={container}
@@ -159,7 +190,7 @@ export default function Projects() {
           viewport={{ once: true, margin: '-80px' }}
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
         >
-          {PROJECTS.map(p => <ProjectCard key={p.id} project={p} />)}
+          {PROJECTS.map((p, i) => <ProjectCard key={p.id} project={p} index={i} />)}
         </motion.div>
       </div>
     </section>

@@ -14,27 +14,47 @@ function LinkedInIcon() {
   )
 }
 
+const FOOTER_LINKS = [
+  { label: 'Research',   href: '#research'   },
+  { label: 'Projects',   href: '#projects'   },
+  { label: 'Ventures',   href: '#ventures'   },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Contact',    href: '#contact'    },
+]
+
+const ROUND_BTN =
+  'w-11 h-11 flex items-center justify-center rounded-full bg-surface border border-border-soft text-ink-muted ' +
+  'hover:text-accent hover:border-accent/25 hover:shadow-md transition-all duration-200'
+
 export default function Footer() {
   return (
     <footer className="border-t border-border-soft bg-warm-bg">
       {/* Gradient accent rule */}
       <div className="h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
 
-      <div className="py-8 px-6">
-        <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div className="py-8 px-5 sm:px-8">
+        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-x-8 gap-y-5">
           <div>
             <p className="font-display text-base text-ink mb-0.5">Muhammad Minhajuddin</p>
-            <p className="font-mono text-xs text-ink-muted/55">
+            <p className="font-mono text-xs text-ink-muted">
               {new Date().getFullYear()} &nbsp;·&nbsp; Built with React, Three.js &amp; TailwindCSS
             </p>
           </div>
+
+          <nav aria-label="Footer">
+            <ul className="flex flex-wrap gap-x-6 gap-y-0 font-mono text-xs text-ink-muted" role="list">
+              {FOOTER_LINKS.map(({ label, href }) => (
+                <li key={href}><a href={href} className="inline-flex items-center min-h-[44px] hover:text-accent transition-colors">{label}</a></li>
+              ))}
+            </ul>
+          </nav>
 
           <div className="flex items-center gap-3">
             <a
               href="https://github.com/minhajuddinm"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-surface border border-border-soft text-ink-muted hover:text-accent hover:border-accent/25 hover:shadow-md transition-all duration-200"
+              className="w-11 h-11 flex items-center justify-center rounded-full bg-surface border border-border-soft text-ink-muted hover:text-accent hover:border-accent/25 hover:shadow-md transition-all duration-200"
               aria-label="GitHub"
             >
               <GitHubIcon />
@@ -43,10 +63,13 @@ export default function Footer() {
               href="https://linkedin.com/in/muhammad-minhajuddin76"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-surface border border-border-soft text-ink-muted hover:text-accent hover:border-accent/25 hover:shadow-md transition-all duration-200"
+              className="w-11 h-11 flex items-center justify-center rounded-full bg-surface border border-border-soft text-ink-muted hover:text-accent hover:border-accent/25 hover:shadow-md transition-all duration-200"
               aria-label="LinkedIn"
             >
               <LinkedInIcon />
+            </a>
+            <a href="#hero" className={ROUND_BTN} aria-label="Back to top" title="Back to top">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" /></svg>
             </a>
           </div>
         </div>

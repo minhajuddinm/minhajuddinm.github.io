@@ -13,7 +13,7 @@ export default function SectionHeading({ index, label, title, sub, className = '
         transition={{ duration: 0.6, ease: EASE }}
         className="flex items-center gap-3 mb-4"
       >
-        <span className="font-mono text-[11px] text-accent tabular-nums">{index}</span>
+        <span className="font-mono text-xs text-accent tabular-nums">{index}</span>
         <motion.span
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
@@ -22,7 +22,7 @@ export default function SectionHeading({ index, label, title, sub, className = '
           style={{ originX: 0 }}
           className="h-px w-10 bg-accent/50"
         />
-        <span className="font-mono text-[11px] text-ink-muted uppercase tracking-[0.2em]">{label}</span>
+        <span className="font-mono text-xs text-ink-muted uppercase tracking-[0.2em]">{label}</span>
       </motion.div>
 
       <motion.h2

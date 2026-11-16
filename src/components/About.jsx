@@ -4,11 +4,29 @@ import SectionHeading from './SectionHeading.jsx'
 import { ACCEPTED_COUNT } from '../data/papers.js'
 import { spotlightMove } from '../lib/motion.js'
 
+const PORTRAIT = new URL('../assets/portrait.jpg', import.meta.url).href
+
+/* Line icons in the same stroke style as the rest of the site */
+const ICON = {
+  education: <><path d="M22 10 12 5 2 10l10 5 10-5z" /><path d="M6 12v5c0 1.1 2.7 2.5 6 2.5s6-1.4 6-2.5v-5" /><path d="M22 10v6" /></>,
+  location:  <><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z" /><circle cx="12" cy="10" r="2.5" /></>,
+  lab:       <><path d="M9 3h6" /><path d="M10 3v6.5L4.6 18.4A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.4-2.6L14 9.5V3" /><path d="M7.5 15h9" /></>,
+  globe:     <><circle cx="12" cy="12" r="9" /><path d="M3 12h18" /><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z" /></>,
+}
+
+function InfoIcon({ name }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {ICON[name]}
+    </svg>
+  )
+}
+
 const INFO = [
-  { label: 'Education',   icon: '🎓', text: 'Algoma University, BCS Honours · Dec 2026' },
-  { label: 'Location',    icon: '📍', text: 'Brampton, Ontario, Canada' },
-  { label: 'Research Lab',icon: '🔬', text: 'SLIDE Research Studio' },
-  { label: 'Internship',  icon: '✈️', text: 'Mitacs Globalink · University of Aberdeen (2026)' },
+  { label: 'Education',   icon: 'education', text: 'Algoma University, BCS Honours · Dec 2026' },
+  { label: 'Location',    icon: 'location',  text: 'Brampton, Ontario, Canada' },
+  { label: 'Research Lab',icon: 'lab',       text: 'SLIDE Research Studio' },
+  { label: 'Internship',  icon: 'globe',     text: 'Mitacs Globalink · University of Aberdeen (2026)' },
 ]
 
 const SKILLS = [
@@ -59,7 +77,7 @@ function SkillMarquee() {
         {doubled.map((skill, i) => (
           <span
             key={i}
-            className="px-3 py-1.5 font-mono text-[11px] text-ink-muted border border-border-soft rounded-lg bg-warm-bg whitespace-nowrap tracking-wide flex-shrink-0 hover:border-accent/30 hover:text-accent transition-colors duration-200 cursor-default"
+            className="px-3 py-1.5 font-mono text-xs text-ink-muted border border-border-soft rounded-lg bg-warm-bg whitespace-nowrap tracking-wide flex-shrink-0 hover:border-accent/30 hover:text-accent transition-colors duration-200 cursor-default"
           >
             {skill}
           </span>
@@ -69,31 +87,26 @@ function SkillMarquee() {
   )
 }
 
-/* Gradient-ring avatar with initials */
+/* Portrait: 4:5 head-and-shoulders photo in a soft frame */
 function Avatar() {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.85 }}
-      whileInView={{ opacity: 1, scale: 1 }}
+    <motion.figure
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="relative w-24 h-24 mb-8 mx-auto md:mx-0"
+      className="w-40 sm:w-48 mb-8 mx-auto md:mx-0 p-1.5 rounded-[1.25rem] bg-surface border border-border-soft shadow-[0_14px_36px_rgb(var(--accent)/0.12)]"
     >
-      {/* Animated gradient ring */}
-      <div
-        className="absolute inset-0 rounded-full p-[2.5px]"
-        style={{ background: 'linear-gradient(135deg, rgb(var(--accent)) 0%, rgb(var(--glow)) 50%, rgb(var(--accent)) 100%)' }}
-      >
-        <div className="w-full h-full rounded-full bg-accent-soft flex items-center justify-center">
-          <span className="font-display text-3xl text-accent select-none">M</span>
-        </div>
-      </div>
-      {/* Online indicator */}
-      <span className="absolute bottom-0.5 right-0.5 flex h-4 w-4">
-        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-glow opacity-60" />
-        <span className="relative inline-flex rounded-full h-4 w-4 bg-glow border-2 border-surface" />
-      </span>
-    </motion.div>
+      <img
+        src={PORTRAIT}
+        alt="Muhammad Minhajuddin, smiling, in a grey checked blazer and black shirt"
+        width="800"
+        height="1000"
+        loading="lazy"
+        decoding="async"
+        className="block w-full h-auto aspect-[4/5] object-cover rounded-[0.95rem]"
+      />
+    </motion.figure>
   )
 }
 
@@ -127,7 +140,7 @@ export default function About() {
               <div className="font-display text-4xl sm:text-5xl text-ink tabular-nums mb-1 group-hover:text-accent transition-colors duration-300">
                 <Counter to={to} suffix={suffix} />
               </div>
-              <div className="font-mono text-[10px] text-ink-muted/60 uppercase tracking-widest">{label}</div>
+              <div className="eyebrow">{label}</div>
             </motion.div>
           ))}
         </motion.div>
@@ -179,12 +192,12 @@ export default function About() {
                 <ul className="space-y-6 relative z-10">
                   {INFO.map(({ icon, label, text }) => (
                     <li key={text} className="flex items-start gap-4 group">
-                      <span className="text-xl shrink-0 p-2.5 bg-warm-bg rounded-xl border border-border-soft leading-none group-hover:border-accent/20 group-hover:bg-accent-soft transition-colors duration-200">
-                        {icon}
+                      <span className="shrink-0 w-11 h-11 flex items-center justify-center text-accent bg-warm-bg rounded-xl border border-border-soft group-hover:border-accent/30 group-hover:bg-accent-soft transition-colors duration-200">
+                        <InfoIcon name={icon} />
                       </span>
                       <div className="min-w-0 pt-0.5">
-                        <p className="font-mono text-[9px] text-accent/55 uppercase tracking-widest mb-0.5">{label}</p>
-                        <p className="text-sm font-medium text-ink leading-snug break-words">{text}</p>
+                        <p className="eyebrow mb-1">{label}</p>
+                        <p className="text-[15px] font-medium text-ink leading-snug break-words">{text}</p>
                       </div>
                     </li>
                   ))}

@@ -84,9 +84,9 @@ function VentureCard({ venture }) {
         </h3>
 
         <div className="flex flex-wrap items-center gap-2.5 mb-5">
-          <span className="font-mono text-xs text-accent font-medium">{venture.role}</span>
+          <span className="font-mono text-sm text-accent font-medium">{venture.role}</span>
           <span className="text-border-soft select-none">·</span>
-          <span className="font-mono px-2.5 py-1 bg-accent-soft border border-accent/15 text-accent text-[11px] tracking-wide rounded-full">
+          <span className="font-mono px-2.5 py-1 bg-accent-soft border border-accent/15 text-accent text-xs tracking-wide rounded-full">
             Active · {venture.period}
           </span>
         </div>
@@ -99,7 +99,7 @@ function VentureCard({ venture }) {
           {venture.tags.map(tag => (
             <span
               key={tag}
-              className="font-mono px-2.5 py-1 bg-warm-bg border border-border-soft text-ink-muted text-[11px] tracking-wide rounded-lg"
+              className="font-mono px-2.5 py-1 bg-warm-bg border border-border-soft text-ink-muted text-xs tracking-wide rounded-lg"
             >
               {tag}
             </span>

@@ -24,6 +24,9 @@ const PALETTE = {
 const STAGES = [0.2, 0.49, 0.76]
 const stageOf = p => { let s = 0; while (s < STAGES.length && p >= STAGES[s]) s++; return s }
 const OUTRO = CLUSTERS.length + 1
+/* Where the camera rests for each stage (the keyframe times in constellationScene.js) */
+const STAGE_STOPS = [0, 0.35, 0.62, 0.92]
+const STAGE_LABELS = ['Intro', ...CLUSTERS.map(c => c.label), 'Overview']
 
 
 export default function Constellation() {
@@ -103,6 +106,14 @@ export default function Constellation() {
     document.getElementById(`paper-${p.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }, [])
 
+  /* Stage rail: jump the pinned scroll to a stage's resting point */
+  const goToStage = useCallback((i) => {
+    const el = sectionRef.current
+    if (!el) return
+    const span = el.offsetHeight - window.innerHeight
+    window.scrollTo({ top: el.offsetTop + span * STAGE_STOPS[i], behavior: 'smooth' })
+  }, [])
+
   const total = PAPERS.length
   const published = PAPERS.filter(p => p.statusKey === 'published').length
   const accepted = PAPERS.filter(p => p.statusKey === 'accepted').length
@@ -119,13 +130,13 @@ export default function Constellation() {
         {/* Sky */}
         <canvas
           ref={canvasRef}
-          className={`absolute inset-x-0 top-0 w-full ${desktop ? 'h-full' : 'h-[60svh]'} transition-opacity duration-1000 ${ready ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute inset-x-0 top-0 w-full ${desktop ? 'h-full' : 'h-[44svh]'} transition-opacity duration-1000 ${ready ? 'opacity-100' : 'opacity-0'}`}
           aria-hidden="true"
         />
 
         {/* Gradient that keeps the text column readable */}
         <div
-          className={`absolute inset-x-0 top-0 pointer-events-none ${desktop ? 'h-full' : 'h-[60svh]'}`}
+          className={`absolute inset-x-0 top-0 pointer-events-none ${desktop ? 'h-full' : 'h-[44svh]'}`}
           style={{
             background: desktop
               ? 'linear-gradient(90deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .85) 30%, rgb(var(--bg) / 0) 58%)'
@@ -135,14 +146,14 @@ export default function Constellation() {
         />
 
         {/* Star labels */}
-        <div className={`absolute inset-x-0 top-0 pointer-events-none ${desktop ? 'h-full' : 'h-[60svh]'}`} aria-hidden="true">
+        <div className={`absolute inset-x-0 top-0 pointer-events-none ${desktop ? 'h-full' : 'h-[44svh]'}`} aria-hidden="true">
           {PAPERS.map(p => {
             const show = (focusCluster && focusCluster.id === p.category) || (hovered && hovered.id === p.id)
             return (
               <div key={p.id} ref={el => { labelsRef.current[p.id] = el }} className="absolute left-0 top-0 will-change-transform">
                 <div data-flip className="transition-transform duration-500">
                 <div
-                  className={`ml-4 -mt-2 whitespace-nowrap font-mono text-[11px] tracking-wide px-2 py-0.5 rounded-md bg-surface/80 backdrop-blur border border-border-soft text-ink transition-all duration-300 ${show ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-1'}`}
+                  className={`ml-4 -mt-2 whitespace-nowrap font-mono text-xs tracking-wide px-2 py-0.5 rounded-md bg-surface/80 backdrop-blur border border-border-soft text-ink transition-all duration-300 ${show ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-1'}`}
                 >
                   {p.short}
                 </div>
@@ -156,7 +167,7 @@ export default function Constellation() {
               ref={el => { clusterLabelsRef.current[c.id] = el }}
               className={`absolute left-0 top-0 will-change-transform transition-opacity duration-500 ${(stage === 0 || stage === OUTRO) && ready ? 'opacity-100' : 'opacity-0'}`}
             >
-              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-accent whitespace-nowrap">
+              <span className="font-mono text-xs uppercase tracking-[0.25em] text-accent whitespace-nowrap">
                 {c.label} · {byCluster[c.id].length}
               </span>
             </div>
@@ -164,7 +175,7 @@ export default function Constellation() {
         </div>
 
         {/* Text layer */}
-        <div className={`relative z-10 max-w-6xl mx-auto px-5 sm:px-8 pointer-events-none ${desktop ? 'h-full flex items-center' : 'pt-[50svh] pb-24'}`}>
+        <div className={`relative z-10 max-w-6xl mx-auto px-5 sm:px-8 pointer-events-none ${desktop ? 'h-full flex items-center' : 'pt-[34svh] pb-24'}`}>
           <div className="w-full md:max-w-[520px] pointer-events-auto" style={{ minHeight: tour ? 380 : undefined }}>
             <AnimatePresence mode="wait">
               {stage === 0 && <Intro key="intro" tour={tour} total={total} />}
@@ -184,15 +195,41 @@ export default function Constellation() {
 
         {/* Stage rail */}
         {tour && (
-          <div className="absolute right-5 top-1/2 -translate-y-1/2 z-10 flex flex-col gap-3" aria-hidden="true">
-            {Array.from({ length: OUTRO + 1 }, (_, i) => (
-              <span key={i} className={`block w-[3px] rounded-full transition-all duration-500 ${stage === i ? 'h-8 bg-accent' : 'h-3 bg-ink/20'}`} />
+          <nav className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex flex-col items-end" aria-label="Research map stages">
+            {STAGE_LABELS.map((label, i) => (
+              <button
+                key={label}
+                onClick={() => goToStage(i)}
+                aria-label={`Go to ${label}`}
+                aria-current={stage === i ? 'step' : undefined}
+                className="group flex items-center justify-end gap-3 py-1.5 pl-6 pr-2"
+              >
+                <span
+                  className={`font-mono text-xs uppercase tracking-[0.2em] whitespace-nowrap transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0 ${
+                    stage === i ? 'text-accent opacity-100 translate-x-0' : 'text-ink-muted opacity-0 translate-x-2'
+                  }`}
+                >
+                  {label}
+                </span>
+                <span className={`block w-[3px] rounded-full transition-all duration-500 ${stage === i ? 'h-8 bg-accent' : 'h-3 bg-ink/25 group-hover:bg-accent/60 group-hover:h-5'}`} />
+              </button>
             ))}
-          </div>
+          </nav>
+        )}
+
+        {/* Skip the tour */}
+        {tour && (
+          <a
+            href="#about"
+            className="absolute right-5 bottom-5 z-10 flex items-center gap-2 px-3 py-1.5 rounded-full font-mono text-xs uppercase tracking-[0.2em] text-ink-muted border border-border-soft bg-surface/60 backdrop-blur hover:text-accent hover:border-accent/40 transition-colors"
+          >
+            Skip tour
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
+          </a>
         )}
 
         {/* Legend */}
-        <div className="absolute left-5 sm:left-8 bottom-6 z-10 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[10px] text-ink-muted" aria-hidden="true">
+        <div className="absolute left-5 sm:left-8 bottom-6 z-10 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs text-ink-muted" aria-hidden="true">
           {['published', 'accepted', 'review', 'wip'].map(k => (
             <span key={k} className="flex items-center gap-1.5">
               <span
@@ -213,7 +250,7 @@ export default function Constellation() {
             className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
             aria-hidden="true"
           >
-            <span className="font-mono text-[10px] tracking-[0.25em] text-ink-muted uppercase">scroll to fly</span>
+            <span className="font-mono text-xs tracking-[0.25em] text-ink-muted uppercase">scroll to fly</span>
             <motion.span
               animate={{ scaleY: [1, 0.3, 1], opacity: [0.35, 1, 0.35] }}
               transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
@@ -266,41 +303,30 @@ const block = {
 }
 
 function Intro({ tour, total }) {
-  const words = ['Building', 'at', 'the', 'intersection', 'of']
   return (
     <motion.div {...block}>
-      <div className="flex items-center gap-2 mb-6">
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-glow opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-glow" />
-        </span>
-        <span className="font-mono text-[11px] text-ink-muted tracking-wide">Undergrad Researcher · Brampton, ON</span>
-      </div>
-
-      <h1 className="font-display text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-7xl text-ink tracking-tight mb-6">
-        {words.map((w, i) => (
-          <span key={i} className="inline-block overflow-hidden align-bottom mr-[0.25em] pb-[0.06em]">
+      <h1 className="font-display text-[2.75rem] leading-[1.02] sm:text-6xl lg:text-7xl text-ink tracking-tight mb-5">
+        {['Muhammad', 'Minhajuddin'].map((w, i) => (
+          <span key={w} className="block overflow-hidden pb-[0.08em]">
             <motion.span
-              className="inline-block"
+              className="block"
               initial={{ y: '110%' }}
               animate={{ y: '0%' }}
-              transition={{ duration: 0.9, ease: EASE, delay: 0.15 + i * 0.06 }}
+              transition={{ duration: 0.9, ease: EASE, delay: 0.15 + i * 0.08 }}
             >
               {w}
             </motion.span>
           </span>
         ))}
-        <CyclingWord />{' '}
-        <span className="inline-block overflow-hidden align-bottom pb-[0.06em]">
-          <motion.span className="inline-block" initial={{ y: '110%' }} animate={{ y: '0%' }} transition={{ duration: 0.9, ease: EASE, delay: 0.55 }}>
-            technology, and ideas.
-          </motion.span>
-        </span>
       </h1>
 
-      <p className="text-base sm:text-lg text-ink-muted leading-relaxed mb-8 max-w-md">
-        Muhammad Minhajuddin. Computer Science researcher at Algoma University working on
-        quantum communication, HCI and mixed reality.
+      <p className="font-display text-xl sm:text-2xl text-ink leading-snug mb-4 max-w-md">
+        Building at the intersection of <CyclingWord /> technology, and ideas.
+      </p>
+
+      <p className="text-base sm:text-lg text-ink-muted leading-relaxed mb-7 max-w-md">
+        Undergraduate Computer Science researcher at Algoma University in Brampton, Ontario,
+        working on quantum communication, HCI and mixed reality.
       </p>
 
       <div className="flex flex-wrap gap-3">
@@ -312,10 +338,10 @@ function Intro({ tour, total }) {
         </a>
       </div>
 
-      <p className="mt-8 font-mono text-[11px] text-ink-muted">
+      <p className="mt-7 font-mono text-xs text-ink-muted">
         {tour
           ? `Each star is one of ${total} papers. Scroll to fly through them, or click a star.`
-          : `Each star is one of ${total} papers. Click or tap a star to read it.`}
+          : `Each star is one of ${total} papers. Tap a star to read it.`}
       </p>
     </motion.div>
   )
@@ -324,7 +350,7 @@ function Intro({ tour, total }) {
 function ClusterCaption({ index, cluster, papers, onPick }) {
   return (
     <motion.div {...block}>
-      <p className="font-mono text-[11px] text-accent mb-3 tracking-widest">0{index} / 0{CLUSTERS.length} · FIELD</p>
+      <p className="font-mono text-xs text-accent mb-3 tracking-widest">0{index} / 0{CLUSTERS.length} · FIELD</p>
       <h2 className="font-display text-5xl sm:text-6xl text-ink mb-3 tracking-tight">{cluster.label}</h2>
       <p className="text-ink-muted mb-6 leading-relaxed">{cluster.blurb}</p>
       <ul className="space-y-1.5">
@@ -335,9 +361,9 @@ function ClusterCaption({ index, cluster, papers, onPick }) {
               data-cursor="open"
               className="group w-full text-left flex items-baseline gap-3 py-1.5 border-b border-border-soft/70 hover:border-accent/40 transition-colors"
             >
-              <span className="font-mono text-[10px] text-ink-muted tabular-nums w-8 shrink-0">{p.year}</span>
+              <span className="font-mono text-xs text-ink-muted tabular-nums w-8 shrink-0">{p.year}</span>
               <span className="text-sm text-ink group-hover:text-accent transition-colors leading-snug">{p.short}</span>
-              <span className="ml-auto font-mono text-[10px] text-ink-muted shrink-0">{p.venue.split(' · ')[0]}</span>
+              <span className="ml-auto font-mono text-xs text-ink-muted shrink-0">{p.venue.split(' · ')[0]}</span>
             </button>
           </motion.li>
         ))}
@@ -349,7 +375,7 @@ function ClusterCaption({ index, cluster, papers, onPick }) {
 function Outro({ total, published, accepted }) {
   return (
     <motion.div {...block}>
-      <p className="font-mono text-[11px] text-accent mb-3 tracking-widest">THE MAP SO FAR</p>
+      <p className="font-mono text-xs text-accent mb-3 tracking-widest">THE MAP SO FAR</p>
       <h2 className="font-display text-5xl sm:text-6xl text-ink mb-4 tracking-tight">{total} papers, {CLUSTERS.length} fields.</h2>
       <p className="text-ink-muted mb-8 leading-relaxed max-w-md">
         {published} published, {accepted} accepted, and the rest under review or in preparation, including journal work
@@ -374,18 +400,18 @@ function PaperPanel({ paper, onClose, onOpen }) {
       transition={{ duration: 0.45, ease: EASE }}
       className="absolute z-20 right-4 left-4 bottom-4 md:left-auto md:right-12 md:top-1/2 md:bottom-auto md:-translate-y-1/2 md:w-[400px] bg-surface/90 backdrop-blur-xl border border-border-soft rounded-2xl shadow-2xl shadow-black/10 p-6"
     >
-      <button onClick={onClose} className="absolute top-3 right-3 w-8 h-8 rounded-full text-ink-muted hover:text-ink hover:bg-accent-soft transition-colors" aria-label="Close">
+      <button onClick={onClose} className="absolute top-2 right-2 w-11 h-11 rounded-full text-ink-muted hover:text-ink hover:bg-accent-soft transition-colors" aria-label="Close">
         ✕
       </button>
       <div className="flex items-center gap-2 mb-3">
-        <span className="font-mono text-[10px] px-2 py-0.5 rounded-md bg-accent-soft text-accent border border-accent/15">{paper.tag}</span>
-        <span className={`text-[10px] px-2 py-0.5 rounded-full ${st.cls}`}>{st.label}</span>
+        <span className="font-mono text-xs px-2 py-0.5 rounded-md bg-accent-soft text-accent border border-accent/15">{paper.tag}</span>
+        <span className={`text-xs px-2 py-0.5 rounded-full ${st.cls}`}>{st.label}</span>
       </div>
       <h3 className="font-display text-xl text-ink leading-snug mb-2 pr-6">{paper.title}</h3>
       <p className="text-xs text-ink-muted mb-0.5">{paper.authors}</p>
       <p className="text-xs text-ink-muted italic mb-4">{paper.venue}</p>
       <p className="text-sm text-ink-muted leading-relaxed mb-5 max-h-40 overflow-auto">{paper.abstract}</p>
-      <button onClick={() => onOpen(paper)} className="font-mono text-[11px] text-accent hover:underline underline-offset-4">
+      <button onClick={() => onOpen(paper)} className="font-mono text-xs text-accent hover:underline underline-offset-4">
         see it in the publication list →
       </button>
     </motion.aside>

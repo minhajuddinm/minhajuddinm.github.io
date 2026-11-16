@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { motion, useScroll, useSpring } from 'framer-motion'
 import Navbar from './components/Navbar.jsx'
 import Constellation from './components/Constellation.jsx'
 import Cursor from './components/Cursor.jsx'
@@ -11,23 +11,15 @@ import Experience from './components/Experience.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 
+/* Reading progress. Driven by a transform so scrolling never triggers layout or a re-render. */
 function ScrollProgress() {
-  const [width, setWidth] = useState(0)
-
-  useEffect(() => {
-    function update() {
-      const { scrollTop, scrollHeight, clientHeight } = document.documentElement
-      const total = scrollHeight - clientHeight
-      setWidth(total > 0 ? (scrollTop / total) * 100 : 0)
-    }
-    window.addEventListener('scroll', update, { passive: true })
-    return () => window.removeEventListener('scroll', update)
-  }, [])
-
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, { stiffness: 220, damping: 40, restDelta: 0.001 })
   return (
-    <div
-      className="fixed top-0 left-0 h-[2px] bg-gradient-to-r from-accent to-glow z-[100]"
-      style={{ width: `${width}%`, transition: 'width 0.05s linear' }}
+    <motion.div
+      aria-hidden="true"
+      className="fixed top-0 inset-x-0 h-[2px] bg-gradient-to-r from-accent to-glow z-[100] origin-left"
+      style={{ scaleX }}
     />
   )
 }
@@ -35,6 +27,7 @@ function ScrollProgress() {
 export default function App() {
   return (
     <>
+      <a href="#about" className="skip-link">Skip to content</a>
       <Cursor />
       <ScrollProgress />
       <Navbar />
