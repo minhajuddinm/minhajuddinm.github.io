@@ -119,10 +119,10 @@ function TimelineEntry({ entry }) {
 
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 mb-1">
         <h3 className="font-display text-xl sm:text-2xl text-ink group-hover:text-accent transition-colors duration-300">{entry.role}</h3>
-        <span className="flex items-center gap-2 font-mono text-xs text-ink-muted whitespace-nowrap">
+        <span className="flex items-center gap-2 text-sm text-ink-muted tabular-nums whitespace-nowrap">
           {entry.period}
           {current && (
-            <span className="px-2 py-0.5 rounded-full bg-accent-soft border border-accent/20 text-accent text-xs uppercase tracking-[0.15em]">Now</span>
+            <span className="px-2 py-0.5 rounded-full bg-accent-soft border border-accent/20 text-accent text-xs">Now</span>
           )}
         </span>
       </div>
@@ -132,7 +132,7 @@ function TimelineEntry({ entry }) {
       <ul className="space-y-1.5">
         {entry.bullets.map((b, i) => (
           <li key={i} className="flex items-start gap-2.5 text-[15px] text-ink-muted">
-            <span className="text-accent/50 shrink-0 mt-px leading-5 select-none" aria-hidden="true">–</span>
+            <span className="shrink-0 mt-[0.72em] h-px w-2.5 bg-accent/50" aria-hidden="true" />
             <span className="leading-relaxed">{b}</span>
           </li>
         ))}
@@ -173,7 +173,7 @@ export default function Experience() {
                 <dd className="font-display text-3xl text-ink tabular-nums">{EXPERIENCE.length}</dd>
               </div>
             </dl>
-            <div className="flex items-center gap-5 font-mono text-xs text-ink-muted" aria-hidden="true">
+            <div className="flex items-center gap-5 text-sm text-ink-muted" aria-hidden="true">
               <span className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-accent shadow-[0_0_8px_rgb(var(--glow)/0.6)]" /> Current</span>
               <span className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full border-2 border-accent/60" /> Completed</span>
             </div>

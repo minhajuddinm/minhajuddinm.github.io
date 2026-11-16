@@ -71,7 +71,7 @@ function VentureCard({ venture }) {
       whileHover={{ y: -6 }}
       transition={{ duration: 0.22, ease: 'easeOut' }}
       onMouseMove={spotlightMove}
-      className="spotlight group relative bg-surface border border-border-soft rounded-2xl flex flex-col shadow-sm hover:shadow-[0_20px_48px_rgb(var(--accent)/0.12)] hover:border-accent/20 transition-all duration-300 overflow-hidden"
+      className="spotlight group relative bg-surface border border-border-soft rounded-2xl flex flex-col shadow-sm hover:shadow-[0_20px_48px_rgb(var(--accent)/0.12)] hover:border-accent/20 transition-[box-shadow,border-color] duration-300 overflow-hidden"
     >
       <div className={`h-[3px] bg-gradient-to-r ${venture.topBar} flex-shrink-0`} />
       <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl" />
@@ -84,10 +84,9 @@ function VentureCard({ venture }) {
         </h3>
 
         <div className="flex flex-wrap items-center gap-2.5 mb-5">
-          <span className="font-mono text-sm text-accent font-medium">{venture.role}</span>
-          <span className="text-border-soft select-none">·</span>
-          <span className="font-mono px-2.5 py-1 bg-accent-soft border border-accent/15 text-accent text-xs tracking-wide rounded-full">
-            Active · {venture.period}
+          <span className="text-sm text-accent font-semibold">{venture.role}</span>
+          <span className="px-2.5 py-1 bg-accent-soft border border-accent/15 text-accent text-xs rounded-full">
+            Active, {venture.period}
           </span>
         </div>
 

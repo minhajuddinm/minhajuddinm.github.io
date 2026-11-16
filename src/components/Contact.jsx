@@ -99,7 +99,7 @@ const CONTACT_LINKS = [
 const INPUT_CLASS =
   'w-full px-4 py-3 bg-surface border border-border-soft rounded-xl text-base text-ink ' +
   'placeholder:text-ink-muted focus:outline-none focus:border-accent focus:ring-2 ' +
-  'focus:ring-accent/10 transition-all duration-200 font-body'
+  'focus:ring-accent/10 transition-[border-color,box-shadow,background-color] duration-200 font-body'
 
 const fadeUp = {
   hidden:  { opacity: 0, y: 24 },
@@ -159,9 +159,9 @@ export default function Contact() {
                 rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 whileHover={{ x: 4, y: -2 }}
                 transition={{ duration: 0.2, ease: 'easeOut' }}
-                className="flex items-center gap-4 group p-4 bg-warm-bg border border-border-soft rounded-2xl hover:border-accent/25 hover:bg-surface hover:shadow-md hover:shadow-accent/5 transition-all duration-200"
+                className="flex items-center gap-4 group p-4 bg-warm-bg border border-border-soft rounded-2xl hover:border-accent/25 hover:bg-surface hover:shadow-md hover:shadow-accent/5 transition-[border-color,background-color,box-shadow] duration-200"
               >
-                <span className="w-11 h-11 flex items-center justify-center rounded-xl bg-surface border border-border-soft text-accent group-hover:bg-accent group-hover:text-warm-bg group-hover:border-accent transition-all duration-200 shrink-0 shadow-sm">
+                <span className="w-11 h-11 flex items-center justify-center rounded-xl bg-surface border border-border-soft text-accent group-hover:bg-accent group-hover:text-warm-bg group-hover:border-accent transition-colors duration-200 shrink-0 shadow-sm">
                   {icon}
                 </span>
                 <div className={`min-w-0 flex-1 ${label === 'Email' ? 'pr-24' : ''}`}>
@@ -183,13 +183,7 @@ export default function Contact() {
               variants={fadeUp}
               className="mt-6 p-4 bg-accent-soft border border-accent/12 rounded-2xl"
             >
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-glow opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-glow" />
-                </span>
-                <span className="font-mono text-xs text-accent uppercase tracking-[0.18em]">Available for opportunities</span>
-              </div>
+              <p className="text-sm font-semibold text-accent mb-1.5">Available for opportunities</p>
               <p className="text-sm text-ink-muted leading-relaxed">
                 Finishing my Honours degree in Dec 2026, then starting a thesis-based MSc in Computer Science at Algoma. Open to research collaborations and internships.
               </p>
@@ -248,7 +242,7 @@ export default function Contact() {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ duration: 0.18, ease: 'easeOut' }}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-accent text-warm-bg rounded-xl text-sm font-bold shadow-md shadow-accent/20 hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/25 transition-all duration-200"
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-accent text-warm-bg rounded-xl text-sm font-bold shadow-md shadow-accent/20 hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/25 transition-[background-color,box-shadow] duration-200"
                 >
                   <SendIcon />
                   Send via email

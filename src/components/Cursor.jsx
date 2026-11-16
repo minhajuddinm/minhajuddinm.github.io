@@ -61,7 +61,7 @@ export default function Cursor() {
         style={{ opacity: 0, transition: 'opacity .3s, background-color .3s, border-color .3s', willChange: 'transform' }}
         className="absolute left-0 top-0 w-9 h-9 rounded-full border border-accent/60 flex items-center justify-center data-[label='1']:bg-accent/90 data-[label='1']:border-accent"
       >
-        <span ref={label} className="font-mono text-[6px] uppercase tracking-widest text-warm-bg transition-opacity" />
+        <span ref={label} className="font-body text-[6px] font-bold text-warm-bg transition-opacity" />
       </div>
       <div ref={dot} style={{ opacity: 0, willChange: 'transform' }} className="absolute left-0 top-0 w-1.5 h-1.5 rounded-full bg-accent transition-[opacity] duration-200" />
     </div>

@@ -7,7 +7,7 @@ import { useMediaQuery, EASE } from '../lib/motion.js'
 /* ────────────────────────────────────────────────────────────
    Research constellation
    Every paper is a star. Stars sit in one cluster per field.
-   Desktop: the section pins and scrolling flies the camera
+   Sits below the hero and About. Desktop: the section pins and scrolling flies the camera
    cluster to cluster. Mobile / reduced motion: static map.
    The Three.js part lives in constellationScene.js and loads
    after first paint.
@@ -120,11 +120,11 @@ export default function Constellation() {
 
   return (
     <section
-      id="hero"
+      id="map"
       ref={sectionRef}
       className="relative bg-warm-bg"
       style={{ height: tour ? '340vh' : 'auto' }}
-      aria-label="Introduction and research map"
+      aria-label="Research map"
     >
       <div className={`${tour ? 'sticky top-0 h-screen' : desktop ? 'relative h-screen min-h-[640px]' : 'relative min-h-[100svh]'} overflow-hidden grain`}>
         {/* Sky */}
@@ -153,7 +153,7 @@ export default function Constellation() {
               <div key={p.id} ref={el => { labelsRef.current[p.id] = el }} className="absolute left-0 top-0 will-change-transform">
                 <div data-flip className="transition-transform duration-500">
                 <div
-                  className={`ml-4 -mt-2 whitespace-nowrap font-mono text-xs tracking-wide px-2 py-0.5 rounded-md bg-surface/80 backdrop-blur border border-border-soft text-ink transition-all duration-300 ${show ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-1'}`}
+                  className={`ml-4 -mt-2 whitespace-nowrap text-xs px-2 py-0.5 rounded-md bg-surface/80 backdrop-blur border border-border-soft text-ink transition-[opacity,transform] duration-300 ${show ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-1'}`}
                 >
                   {p.short}
                 </div>
@@ -167,8 +167,8 @@ export default function Constellation() {
               ref={el => { clusterLabelsRef.current[c.id] = el }}
               className={`absolute left-0 top-0 will-change-transform transition-opacity duration-500 ${(stage === 0 || stage === OUTRO) && ready ? 'opacity-100' : 'opacity-0'}`}
             >
-              <span className="font-mono text-xs uppercase tracking-[0.25em] text-accent whitespace-nowrap">
-                {c.label} · {byCluster[c.id].length}
+              <span className="text-sm font-medium text-accent whitespace-nowrap">
+                {c.label}, {byCluster[c.id].length} papers
               </span>
             </div>
           ))}
@@ -182,7 +182,6 @@ export default function Constellation() {
               {focusCluster && (
                 <ClusterCaption
                   key={focusCluster.id}
-                  index={stage}
                   cluster={focusCluster}
                   papers={byCluster[focusCluster.id]}
                   onPick={setSelected}
@@ -205,13 +204,13 @@ export default function Constellation() {
                 className="group flex items-center justify-end gap-3 py-1.5 pl-6 pr-2"
               >
                 <span
-                  className={`font-mono text-xs uppercase tracking-[0.2em] whitespace-nowrap transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0 ${
+                  className={`text-sm whitespace-nowrap transition-[opacity,transform,color] duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0 ${
                     stage === i ? 'text-accent opacity-100 translate-x-0' : 'text-ink-muted opacity-0 translate-x-2'
                   }`}
                 >
                   {label}
                 </span>
-                <span className={`block w-[3px] rounded-full transition-all duration-500 ${stage === i ? 'h-8 bg-accent' : 'h-3 bg-ink/25 group-hover:bg-accent/60 group-hover:h-5'}`} />
+                <span className={`block w-[3px] h-8 rounded-full origin-center transition-[transform,background-color] duration-500 ${stage === i ? 'scale-y-100 bg-accent' : 'scale-y-[0.4] bg-ink/25 group-hover:bg-accent/60 group-hover:scale-y-[0.65]'}`} />
               </button>
             ))}
           </nav>
@@ -220,8 +219,8 @@ export default function Constellation() {
         {/* Skip the tour */}
         {tour && (
           <a
-            href="#about"
-            className="absolute right-5 bottom-5 z-10 flex items-center gap-2 px-3 py-1.5 rounded-full font-mono text-xs uppercase tracking-[0.2em] text-ink-muted border border-border-soft bg-surface/60 backdrop-blur hover:text-accent hover:border-accent/40 transition-colors"
+            href="#research"
+            className="absolute right-5 bottom-5 z-10 flex items-center gap-2 px-3.5 py-2 rounded-full text-sm text-ink-muted border border-border-soft bg-surface/60 backdrop-blur hover:text-accent hover:border-accent/40 transition-colors"
           >
             Skip tour
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
@@ -229,7 +228,7 @@ export default function Constellation() {
         )}
 
         {/* Legend */}
-        <div className="absolute left-5 sm:left-8 bottom-6 z-10 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs text-ink-muted" aria-hidden="true">
+        <div className="absolute left-5 sm:left-8 bottom-6 z-10 flex flex-wrap gap-x-4 gap-y-1 text-xs text-ink-muted" aria-hidden="true">
           {['published', 'accepted', 'review', 'wip'].map(k => (
             <span key={k} className="flex items-center gap-1.5">
               <span
@@ -250,7 +249,7 @@ export default function Constellation() {
             className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
             aria-hidden="true"
           >
-            <span className="font-mono text-xs tracking-[0.25em] text-ink-muted uppercase">scroll to fly</span>
+            <span className="text-sm text-ink-muted">Scroll to fly</span>
             <motion.span
               animate={{ scaleY: [1, 0.3, 1], opacity: [0.35, 1, 0.35] }}
               transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
@@ -270,32 +269,6 @@ export default function Constellation() {
 
 /* ─── Text blocks ─── */
 
-const CYCLE = ['humans,', 'students,', 'researchers,', 'builders,']
-
-function CyclingWord() {
-  const [i, setI] = useState(0)
-  useEffect(() => {
-    const id = setInterval(() => setI(n => (n + 1) % CYCLE.length), 2400)
-    return () => clearInterval(id)
-  }, [])
-  return (
-    <span className="relative inline-block overflow-hidden align-bottom">
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.span
-          key={i}
-          initial={{ y: '100%' }}
-          animate={{ y: '0%' }}
-          exit={{ y: '-100%' }}
-          transition={{ duration: 0.45, ease: EASE }}
-          className="inline-block italic text-accent"
-        >
-          {CYCLE[i]}
-        </motion.span>
-      </AnimatePresence>
-    </span>
-  )
-}
-
 const block = {
   initial: { opacity: 0, y: 24, filter: 'blur(6px)' },
   animate: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: EASE } },
@@ -305,52 +278,22 @@ const block = {
 function Intro({ tour, total }) {
   return (
     <motion.div {...block}>
-      <h1 className="font-display text-[2.75rem] leading-[1.02] sm:text-6xl lg:text-7xl text-ink tracking-tight mb-5">
-        {['Muhammad', 'Minhajuddin'].map((w, i) => (
-          <span key={w} className="block overflow-hidden pb-[0.08em]">
-            <motion.span
-              className="block"
-              initial={{ y: '110%' }}
-              animate={{ y: '0%' }}
-              transition={{ duration: 0.9, ease: EASE, delay: 0.15 + i * 0.08 }}
-            >
-              {w}
-            </motion.span>
-          </span>
-        ))}
-      </h1>
-
-      <p className="font-display text-xl sm:text-2xl text-ink leading-snug mb-4 max-w-md">
-        Building at the intersection of <CyclingWord /> technology, and ideas.
-      </p>
-
+      <h2 className="font-display text-5xl sm:text-6xl text-ink tracking-tight mb-5">The research map</h2>
       <p className="text-base sm:text-lg text-ink-muted leading-relaxed mb-7 max-w-md">
-        Computer Science researcher at Algoma University in Brampton, Ontario, starting a
-        thesis-based MSc and working on quantum communication, HCI and mixed reality.
-      </p>
-
-      <div className="flex flex-wrap gap-3">
-        <a href="#research" data-cursor="view" className="px-7 py-3.5 bg-accent text-warm-bg rounded-full text-sm font-bold shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/40 hover:-translate-y-0.5 transition-all duration-300">
-          Publications
-        </a>
-        <a href="#projects" className="px-7 py-3.5 bg-surface/70 backdrop-blur border border-border-soft text-ink rounded-full text-sm font-bold hover:border-accent/40 hover:-translate-y-0.5 transition-all duration-300">
-          Projects
-        </a>
-      </div>
-
-      <p className="mt-7 font-mono text-xs text-ink-muted">
         {tour
           ? `Each star is one of ${total} papers. Scroll to fly through them, or click a star.`
           : `Each star is one of ${total} papers. Tap a star to read it.`}
       </p>
+      <a href="#research" data-cursor="view" className="inline-flex px-7 py-3.5 bg-accent text-warm-bg rounded-full text-sm font-bold whitespace-nowrap shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/40 hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300">
+        Open the publication list
+      </a>
     </motion.div>
   )
 }
 
-function ClusterCaption({ index, cluster, papers, onPick }) {
+function ClusterCaption({ cluster, papers, onPick }) {
   return (
     <motion.div {...block}>
-      <p className="font-mono text-xs text-accent mb-3 tracking-widest">0{index} / 0{CLUSTERS.length} · FIELD</p>
       <h2 className="font-display text-5xl sm:text-6xl text-ink mb-3 tracking-tight">{cluster.label}</h2>
       <p className="text-ink-muted mb-6 leading-relaxed">{cluster.blurb}</p>
       <ul className="space-y-1.5">
@@ -363,7 +306,7 @@ function ClusterCaption({ index, cluster, papers, onPick }) {
             >
               <span className="font-mono text-xs text-ink-muted tabular-nums w-8 shrink-0">{p.year}</span>
               <span className="text-sm text-ink group-hover:text-accent transition-colors leading-snug">{p.short}</span>
-              <span className="ml-auto font-mono text-xs text-ink-muted shrink-0">{p.venue.split(' · ')[0]}</span>
+              <span className="ml-auto text-xs text-ink-muted shrink-0">{p.venue.split(' · ')[0]}</span>
             </button>
           </motion.li>
         ))}
@@ -375,13 +318,12 @@ function ClusterCaption({ index, cluster, papers, onPick }) {
 function Outro({ total, published, accepted }) {
   return (
     <motion.div {...block}>
-      <p className="font-mono text-xs text-accent mb-3 tracking-widest">THE MAP SO FAR</p>
       <h2 className="font-display text-5xl sm:text-6xl text-ink mb-4 tracking-tight">{total} papers, {CLUSTERS.length} fields.</h2>
       <p className="text-ink-muted mb-8 leading-relaxed max-w-md">
         {published} published, {accepted} accepted, and the rest under review or in preparation, including journal work
         for IEEE TVCG and IEEE TNSM. Dashed lines link each conference paper to its journal extension.
       </p>
-      <a href="#research" data-cursor="view" className="inline-flex px-7 py-3.5 bg-accent text-warm-bg rounded-full text-sm font-bold shadow-lg shadow-accent/25 hover:-translate-y-0.5 transition-all duration-300">
+      <a href="#research" data-cursor="view" className="inline-flex px-7 py-3.5 bg-accent text-warm-bg rounded-full text-sm font-bold whitespace-nowrap shadow-lg shadow-accent/25 hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300">
         Read the full list
       </a>
     </motion.div>
@@ -398,21 +340,21 @@ function PaperPanel({ paper, onClose, onOpen }) {
       animate={{ opacity: 1, x: 0, scale: 1 }}
       exit={{ opacity: 0, x: 30, scale: 0.98 }}
       transition={{ duration: 0.45, ease: EASE }}
-      className="absolute z-20 right-4 left-4 bottom-4 md:left-auto md:right-12 md:top-1/2 md:bottom-auto md:-translate-y-1/2 md:w-[400px] bg-surface/90 backdrop-blur-xl border border-border-soft rounded-2xl shadow-2xl shadow-black/10 p-6"
+      className="absolute z-20 right-4 left-4 bottom-4 md:left-auto md:right-12 md:top-1/2 md:bottom-auto md:-translate-y-1/2 md:w-[400px] bg-surface/95 backdrop-blur-xl border border-border-soft rounded-2xl p-6"
     >
       <button onClick={onClose} className="absolute top-2 right-2 w-11 h-11 rounded-full text-ink-muted hover:text-ink hover:bg-accent-soft transition-colors" aria-label="Close">
         ✕
       </button>
       <div className="flex items-center gap-2 mb-3">
-        <span className="font-mono text-xs px-2 py-0.5 rounded-md bg-accent-soft text-accent border border-accent/15">{paper.tag}</span>
+        <span className="text-xs px-2 py-0.5 rounded-md bg-accent-soft text-accent border border-accent/15">{paper.tag}</span>
         <span className={`text-xs px-2 py-0.5 rounded-full ${st.cls}`}>{st.label}</span>
       </div>
       <h3 className="font-display text-xl text-ink leading-snug mb-2 pr-6">{paper.title}</h3>
       <p className="text-xs text-ink-muted mb-0.5">{paper.authors}</p>
-      <p className="text-xs text-ink-muted italic mb-4">{paper.venue}</p>
+      <p className="text-xs text-ink-muted italic mb-4">{paper.venue.split(' · ').join(', ')}</p>
       <p className="text-sm text-ink-muted leading-relaxed mb-5 max-h-40 overflow-auto">{paper.abstract}</p>
-      <button onClick={() => onOpen(paper)} className="font-mono text-xs text-accent hover:underline underline-offset-4">
-        see it in the publication list →
+      <button onClick={() => onOpen(paper)} className="text-sm font-medium text-accent whitespace-nowrap hover:underline underline-offset-4">
+        Open in the publication list
       </button>
     </motion.aside>
   )

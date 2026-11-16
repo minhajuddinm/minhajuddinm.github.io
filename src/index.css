@@ -1,3 +1,6 @@
+/* Hallmark · checked: 2026-11-15 · genre: editorial (inferred)
+ * floor: 0 FAIL (static tier; render tier not run, no puppeteer-core) · fixed: 7 (10a, 19, 20, 48, 54, 63, 67)
+ * built: the project · redesign: full (hero and About), polish (the rest) · hero: Stage · v2.0.0 */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -55,6 +58,7 @@
   ::-webkit-scrollbar-thumb:hover { background: rgb(var(--accent) / .7); }
 
   h1, h2, h3, h4 { @apply font-display; }
+  h1, h2 { text-wrap: balance; overflow-wrap: break-word; min-width: 0; }
 
   ::selection { background: rgb(var(--accent) / .22); }
 
@@ -63,12 +67,16 @@
     outline-offset: 3px;
     border-radius: 6px;
   }
+
+  /* Pressed and unavailable states for every control */
+  a:active, button:active { filter: brightness(.92); }
+  button:disabled, input:disabled, textarea:disabled { opacity: .55; cursor: not-allowed; }
 }
 
 @layer components {
-  /* Small mono label used above values and headings */
+  /* Small label beside a value: body face, sentence case, untracked */
   .eyebrow {
-    @apply font-mono text-xs uppercase tracking-[0.14em] text-ink-muted;
+    @apply font-body text-sm text-ink-muted;
   }
 
   /* Keyboard users jump past the nav and the pinned hero */
@@ -153,8 +161,8 @@ html.has-cursor input, html.has-cursor textarea { cursor: text; }
 .dot-grid {
   background-image: radial-gradient(rgb(var(--accent) / .28) 1px, transparent 1px);
   background-size: 18px 18px;
-  -webkit-mask-image: radial-gradient(120% 100% at 100% 0%, #000 0%, transparent 62%);
-          mask-image: radial-gradient(120% 100% at 100% 0%, #000 0%, transparent 62%);
+  -webkit-mask-image: radial-gradient(120% 100% at 100% 0%, rgb(var(--ink)) 0%, transparent 62%);
+          mask-image: radial-gradient(120% 100% at 100% 0%, rgb(var(--ink)) 0%, transparent 62%);
 }
 
 @keyframes twinkle {

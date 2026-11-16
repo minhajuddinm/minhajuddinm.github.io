@@ -1,30 +1,11 @@
 import { motion } from 'framer-motion'
 import { EASE } from '../lib/motion.js'
 
-/* Section label + title. Each word rises out of a mask. */
-export default function SectionHeading({ index, label, title, sub, className = 'mb-14' }) {
+/* Section title. Each word rises out of a mask. */
+export default function SectionHeading({ title, sub, className = 'mb-14' }) {
   const words = title.split(' ')
   return (
     <div className={className}>
-      <motion.div
-        initial={{ opacity: 0, x: -12 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.6, ease: EASE }}
-        className="flex items-center gap-3 mb-4"
-      >
-        <span className="font-mono text-xs text-accent tabular-nums">{index}</span>
-        <motion.span
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.9, ease: EASE, delay: 0.1 }}
-          style={{ originX: 0 }}
-          className="h-px w-10 bg-accent/50"
-        />
-        <span className="font-mono text-xs text-ink-muted uppercase tracking-[0.2em]">{label}</span>
-      </motion.div>
-
       <motion.h2
         initial="hidden"
         whileInView="visible"

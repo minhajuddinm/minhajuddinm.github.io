@@ -1,5 +1,6 @@
-import { motion, useScroll, useSpring } from 'framer-motion'
+import { motion, MotionConfig, useScroll, useSpring } from 'framer-motion'
 import Navbar from './components/Navbar.jsx'
+import Hero from './components/Hero.jsx'
 import Constellation from './components/Constellation.jsx'
 import Cursor from './components/Cursor.jsx'
 import About from './components/About.jsx'
@@ -25,14 +26,16 @@ function ScrollProgress() {
 
 export default function App() {
   return (
-    <>
+    /* reducedMotion="user": transforms stay still for visitors who ask for less motion */
+    <MotionConfig reducedMotion="user">
       <a href="#about" className="skip-link">Skip to content</a>
       <Cursor />
       <ScrollProgress />
       <Navbar />
       <main>
-        <Constellation />
+        <Hero />
         <About />
+        <Constellation />
         <Research />
         <Projects />
         <Ventures />
@@ -40,6 +43,6 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
-    </>
+    </MotionConfig>
   )
 }

@@ -135,7 +135,7 @@ function ProjectCard({ project, index }) {
         <div className="flex items-center justify-between gap-4 mb-5">
           <span className="eyebrow flex items-center gap-2">
             {featured && <span className="w-1.5 h-1.5 rounded-full bg-glow shadow-[0_0_8px_rgb(var(--glow))]" aria-hidden="true" />}
-            {featured ? `Featured · ${project.type}` : project.type}
+            {featured ? `${project.type}, featured` : project.type}
           </span>
           <span className="font-mono text-xs text-ink-muted tabular-nums" aria-hidden="true">
             {String(index + 1).padStart(2, '0')}

@@ -4,7 +4,7 @@ import { useTheme } from '../lib/theme.js'
 
 const NAV_LINKS = [
   { label: 'About',      href: '#about'      },
-  { label: 'Research',   href: '#research'   },
+  { label: 'Research',   href: '#map'        },
   { label: 'Projects',   href: '#projects'   },
   { label: 'Ventures',   href: '#ventures'   },
   { label: 'Experience', href: '#experience' },
@@ -79,7 +79,7 @@ export default function Navbar() {
       className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none"
     >
       <nav
-        className={`pointer-events-auto transition-all duration-300 rounded-full pl-6 pr-1.5 py-1.5 flex items-center justify-between gap-6 w-full md:w-auto ${
+        className={`pointer-events-auto transition-[background-color,border-color,box-shadow] duration-300 rounded-full pl-6 pr-1.5 py-1.5 flex items-center justify-between gap-6 w-full md:w-auto ${
           scrolled
             ? 'bg-surface/80 backdrop-blur-2xl shadow-lg shadow-black/5 border border-border-soft'
             : 'bg-surface/30 backdrop-blur-xl border border-transparent'
@@ -122,9 +122,9 @@ export default function Navbar() {
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen(p => !p)}
           >
-            <span className={`block w-5 h-0.5 bg-ink transition-all duration-200 origin-center ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+            <span className={`block w-5 h-0.5 bg-ink transition-transform duration-200 origin-center ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
             <span className={`block w-5 h-0.5 bg-ink transition-opacity duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`block w-5 h-0.5 bg-ink transition-all duration-200 origin-center ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+            <span className={`block w-5 h-0.5 bg-ink transition-transform duration-200 origin-center ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
           </button>
         </div>
       </nav>
